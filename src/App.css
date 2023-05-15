@@ -44,3 +44,13 @@
 #data {
   text-align: left;
 }
+
+button {
+  border: none;
+  /* height: 30px; */
+  cursor: pointer;
+}
+
+.data {
+  display: flexbox;
+}

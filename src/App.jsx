@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import './App.css'
 import { db } from './firebase-config';
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from 'firebase/firestore';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 
 function App() {
   const [newProc, setNewProc] = useState(0);
@@ -32,14 +34,20 @@ function App() {
     await deleteDoc(dadoDoc);
   };
 
-  useEffect(() => {
-    const getDados = async () => {
-      const data = await getDocs(dadosCollectionRef);
-      console.log(data);
-      setDados(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
-    };
+	const getDados = async () => {
+		const data = await getDocs(dadosCollectionRef);
+		// console.log(data);
 
-    getDados();
+		let newData = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
+
+		newData.sort((a, b) => a.ano - b.ano)
+		setDados(newData);
+	};
+
+  useEffect(() => {
+    (async () => {
+			await getDados()
+		})()
   }, [])
   return (
     <>
@@ -51,17 +59,17 @@ function App() {
         <input placeholder="Assessor..." onChange={(event) => {setNewAssessor(Number(event.target.value))}}></input>
         <button onClick={createDados}>Criar Usuario</button>
 
-        {dados.map((dado) => {
+        {dados.map((dado, index) => {
           return( 
           // eslint-disable-next-line react/jsx-key
-          <div id="data">
-             <h1>Proc: {dado.proc}</h1> 
-             <h1>Assunto: {dado.assunto}</h1>
-             <h1>Ano: {dado.ano}</h1>
-             <h1>Assessor: {dado.assessor}</h1>   
-             <button onClick={() => prevAssessor(dado.id, dado.assessor)}> Anterior Ass </button> <button onClick={() => nextAssessor(dado.id, dado.assessor)}> Proximo Ass </button><br />
-             <button onClick={() => deleteProc(dado.id)}>Deletar Processo</button>
-             <br /><br /><br /><br />
+          <div key={index} id="data" className="data">
+						<p>Proc: {dado.proc} | Assunto: {dado.assunto}</p>
+						<p>| Ano: {dado.ano} | Assessor: {dado.assessor}</p>
+						<div className="data_buttons">
+							<button onClick={() => prevAssessor(dado.id, dado.assessor)}><ArrowLeftIcon/></button>
+							<button onClick={() => nextAssessor(dado.id, dado.assessor)}><ArrowRightIcon/></button>
+							<button onClick={() => deleteProc(dado.id)}>Deletar Processo</button>
+						</div>
           </div>
           );
           })}
