@@ -41,16 +41,23 @@
   color: #888;
 }
 
-#data {
-  text-align: left;
-}
-
 button {
   border: none;
   /* height: 30px; */
   cursor: pointer;
 }
 
-.data {
-  display: flexbox;
+.datatable{
+  border: 1px solid black;
+  width: 1500px;
+}
+
+.items{
+  display: flex;
+}
+
+.col{
+  flex: 1;
+  border: 1px solid black;
+  width: 300px;
 }
