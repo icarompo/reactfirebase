@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import './App.css'
 import { db } from './firebase-config';
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from 'firebase/firestore';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 
 function App() {
   const [newProc, setNewProc] = useState(0);
@@ -66,8 +64,8 @@ function App() {
 						<p>Proc: {dado.proc} | Assunto: {dado.assunto}</p>
 						<p>| Ano: {dado.ano} | Assessor: {dado.assessor}</p>
 						<div className="data_buttons">
-							<button onClick={() => prevAssessor(dado.id, dado.assessor)}><ArrowLeftIcon/></button>
-							<button onClick={() => nextAssessor(dado.id, dado.assessor)}><ArrowRightIcon/></button>
+							<button onClick={() => prevAssessor(dado.id, dado.assessor)}>-</button>
+							<button onClick={() => nextAssessor(dado.id, dado.assessor)}>+</button>
 							<button onClick={() => deleteProc(dado.id)}>Deletar Processo</button>
 						</div>
           </div>
