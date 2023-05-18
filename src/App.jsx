@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import './App.css'
 import { db } from './firebase-config';
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from 'firebase/firestore';
@@ -13,33 +13,37 @@ function App() {
 
   const createDados = async () => {
     await addDoc(dadosCollectionRef, {proc: newProc, assunto: newAssunto, ano: newAno, assessor: Number(newAssessor)})
+    getDados();
   };
 
   const nextAssessor = async (id, assessor) => {
     const dadoDoc = doc(db, "dados", id);
     const newFields = {assessor: assessor + 1};
     await updateDoc(dadoDoc, newFields);
+    getDados();
   };
 
   const prevAssessor = async (id, assessor) => {
     const dadoDoc = doc(db, "dados", id);
     const newFields = {assessor: assessor - 1};
     await updateDoc(dadoDoc, newFields);
+    getDados();
   };
 
   const deleteProc = async (id) => {
     const dadoDoc = doc(db, "dados", id);
     await deleteDoc(dadoDoc);
+    getDados();
   };
 
 	const getDados = async () => {
 		const data = await getDocs(dadosCollectionRef);
 		// console.log(data);
 
-		let newData = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
+		let DataBase = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
 
-		newData.sort((a, b) => a.ano - b.ano)
-		setDados(newData);
+		DataBase.sort((a, b) => a.ano - b.ano)
+		setDados(DataBase);
 	};
 
   useEffect(() => {
@@ -57,21 +61,34 @@ function App() {
         <input placeholder="Assessor..." onChange={(event) => {setNewAssessor(Number(event.target.value))}}></input>
         <button onClick={createDados}>Criar Usuario</button>
 
-        {dados.map((dado, index) => {
-          return( 
-          // eslint-disable-next-line react/jsx-key
-          <div key={index} id="data" className="data">
-						<p>Proc: {dado.proc} | Assunto: {dado.assunto}</p>
-						<p>| Ano: {dado.ano} | Assessor: {dado.assessor}</p>
-						<div className="data_buttons">
-							<button onClick={() => prevAssessor(dado.id, dado.assessor)}>-</button>
-							<button onClick={() => nextAssessor(dado.id, dado.assessor)}>+</button>
-							<button onClick={() => deleteProc(dado.id)}>Deletar Processo</button>
-						</div>
+        <section className="datatable">
+          <div className="items">
+            <div className="col">Proc:</div>
+            <div className="col">Assunto:</div>
+            <div className="col">Ano:</div>
+            <div className="col">Assessor:</div>
+            <div className="col">Botoes: </div>
           </div>
-          );
-          })}
-      </div>
+          {dados.map((dado, index) => {
+            return( 
+            // eslint-disable-next-line react/jsx-key
+            <div key={index} className="items">
+              <div className="col">{dado.proc}</div>
+              <div className="col">{dado.assunto}</div>
+              <div className="col">{dado.ano}</div>
+              <div className="col">{dado.assessor}</div>
+
+              <div className="col">
+                <button onClick={() => prevAssessor(dado.id, dado.assessor)}>-</button>
+                <button onClick={() => nextAssessor(dado.id, dado.assessor)}>+</button>
+                <button onClick={() => deleteProc(dado.id)}>Deletar Processo</button>
+              </div>
+            </div>
+
+            );
+            })}
+        </section>
+      </div> {/*App*/}
     </>
   )
 }
