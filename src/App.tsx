@@ -1,11 +1,8 @@
-import { useState } from 'react'
-import './assets/Css/App.css'
-import Body from './assets/components/index.tsx'
+import "./assets/Css/App.css";
+import Body from "./assets/components/index.tsx";
 
 function App() {
-  return (
-    <Body />
-  );
+  return <Body />;
 }
 
-export default App
+export default App;
