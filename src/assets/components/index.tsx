@@ -1,19 +1,25 @@
 import { useState } from 'react';
+import '/src/assets/styles/css/App.css';
 
-function Body() {
-function Greeting({name} : {name: string}){
-    return <span>Hello, {name}</span>;
+interface HeaderProps {
+  title: string;
 }
 
-    return (
-        <>
-            <div>
-                <h1>
-                    <Greeting name="Icaro " />
-                </h1>
-            </div>
-        </>
-    );
+function Header({ title }: HeaderProps): JSX.Element {
+  return (
+    <div>
+      <h1>{title}</h1>
+    </div>
+  );
 }
 
-export default Body;
+function MainPage(){
+
+return (
+  <>
+    <Header title="Header"/>
+  </>
+  );
+}
+
+export default MainPage;
