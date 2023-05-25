@@ -38,10 +38,19 @@ function MyTable() {
               <Label title="Ano" />
             </TableCell>
             <TableCell>
+              <Label title="Assunto" />
+            </TableCell>
+            <TableCell>
               <Label title="Data" />
             </TableCell>
             <TableCell>
-              <Label title="Assunto" />
+              <Label title="Data de inserção" />
+            </TableCell>
+            <TableCell>
+              <Label title="Data de decisão" />
+            </TableCell>
+            <TableCell>
+              <Label title="Assessor" />
             </TableCell>
             <TableCell>
               <Label title="Entidade" />
@@ -53,16 +62,7 @@ function MyTable() {
               <Label title="Conselheiro" />
             </TableCell>
             <TableCell>
-              <Label title="Assessor" />
-            </TableCell>
-            <TableCell>
-              <Label title="Nome Assessor" />
-            </TableCell>
-            <TableCell>
               <Label title="Órgão Julgador" />
-            </TableCell>
-            <TableCell>
-              <Label title="Data de Decisão" />
             </TableCell>
             <TableCell>
               <Label title="Encaminhamento" />
@@ -71,13 +71,10 @@ function MyTable() {
               <Label title="Definição" />
             </TableCell>
             <TableCell>
-              <Label title="Dias" />
+              <Label title="Prioridade" />
             </TableCell>
             <TableCell>
               <Label title="Meta" />
-            </TableCell>
-            <TableCell>
-              <Label title="Prioridade" />
             </TableCell>
             <TableCell>
               <Label title="Aguardando" />
@@ -93,13 +90,19 @@ function MyTable() {
               <input type="text" id="ano" name="ano" />
             </TableCell>
             <TableCell>
-              <input type="text" id="data" name="data" />
-            </TableCell>
-            <TableCell>
-              <input type="date" id="assunto" name="assunto" />
-            </TableCell>
-            <TableCell>
               <input type="text" id="assunto" name="assunto" />
+            </TableCell>
+            <TableCell>
+              <input type="date" id="data" name="data" />
+            </TableCell>
+            <TableCell>
+              <input type="date" id="data-insercao" name="data-insercao" />
+            </TableCell>
+            <TableCell>
+              <input type="date" id="data-decisao" name="data-decisao" />
+            </TableCell>
+            <TableCell>
+              <input type="text" id="assessor" name="assessor" />
             </TableCell>
             <TableCell>
               <input type="text" id="entidade" name="entidade" />
@@ -111,16 +114,7 @@ function MyTable() {
               <input type="text" id="conselheiro" name="conselheiro" />
             </TableCell>
             <TableCell>
-              <input type="text" id="assessor" name="assessor" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="nome-assessor" name="nome-assessor" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="julgador" name="julgador" />
-            </TableCell>
-            <TableCell>
-              <input type="date" id="data-decisao" name="data-decisao" />
+              <input type="text" id="orgao-julgador" name="orgao-julgador" />
             </TableCell>
             <TableCell>
               <input type="text" id="encaminhamento" name="encaminhamento" />
@@ -129,13 +123,10 @@ function MyTable() {
               <input type="text" id="definicao" name="definicao" />
             </TableCell>
             <TableCell>
-              <input type="text" id="dias" name="dias" />
+              <input type="text" id="prioridade" name="prioridade" />
             </TableCell>
             <TableCell>
               <input type="text" id="meta" name="meta" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="prioridade" name="prioridade" />
             </TableCell>
             <TableCell>
               <input type="text" id="aguardando" name="aguardando" />
