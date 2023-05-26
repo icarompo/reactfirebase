@@ -11,7 +11,6 @@ import {
   TableRow,
 } from "@mui/material";
 
-
 interface HeaderProps {
   title: string;
 }
