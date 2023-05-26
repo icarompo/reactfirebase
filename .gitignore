@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 firebase-config.ts
+SignIn.tsx
+SignUp.tsx
+AuthDetails.tsx
 
 # Editor directories and files
 .vscode/*
