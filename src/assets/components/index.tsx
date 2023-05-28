@@ -1,5 +1,7 @@
-import { useState } from "react";
-import "/src/assets/styles/css/App.css";
+import { useState, useEffect } from "react";
+import { db } from "../lib/firebase-config";
+import { collection, getDocs } from "firebase/firestore";
+import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import {
   Table,
   TableBody,
@@ -9,6 +11,16 @@ import {
   TableRow,
 } from "@mui/material";
 
+const rows: GridRowsProp = [
+  { id: 1, col1: 'Hello', col2: 'World' },
+  { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
+  { id: 3, col1: 'MUI', col2: 'is Amazing' },
+];
+
+const columns: GridColDef[] = [
+  { field: 'col1', headerName: 'Column 1', width: 150 },
+  { field: 'col2', headerName: 'Column 2', width: 150 },
+];
 interface HeaderProps {
   title: string;
 }
@@ -21,120 +33,50 @@ function Header({ title }: HeaderProps): JSX.Element {
   );
 }
 
+function Label({ title }: { title: string }) {
+  return <label htmlFor={title}>{title}</label>;
+}
+
 function MyTable() {
-  function Label({ title }: { title: string }) {
-    return <label htmlFor={title}>{title}</label>;
-  }
+
+  const [dado, setDado] = useState<any[]>([]);
+  const usersCollectionRef = collection(db, 'dados');
+
+  useEffect(() => {
+    const getDados = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setDado(data.docs.map((doc) => ({ ...doc.data(),id: doc.id })));
+    }
+
+    getDados();
+  }, [])
 
   return (
-    <TableContainer>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Label title="Processo" />
-            </TableCell>
-            <TableCell>
-              <Label title="Ano" />
-            </TableCell>
-            <TableCell>
-              <Label title="Assunto" />
-            </TableCell>
-            <TableCell>
-              <Label title="Data" />
-            </TableCell>
-            <TableCell>
-              <Label title="Data de inserção" />
-            </TableCell>
-            <TableCell>
-              <Label title="Data de decisão" />
-            </TableCell>
-            <TableCell>
-              <Label title="Assessor" />
-            </TableCell>
-            <TableCell>
-              <Label title="Entidade" />
-            </TableCell>
-            <TableCell>
-              <Label title="Vinculado" />
-            </TableCell>
-            <TableCell>
-              <Label title="Conselheiro" />
-            </TableCell>
-            <TableCell>
-              <Label title="Órgão Julgador" />
-            </TableCell>
-            <TableCell>
-              <Label title="Encaminhamento" />
-            </TableCell>
-            <TableCell>
-              <Label title="Definição" />
-            </TableCell>
-            <TableCell>
-              <Label title="Prioridade" />
-            </TableCell>
-            <TableCell>
-              <Label title="Meta" />
-            </TableCell>
-            <TableCell>
-              <Label title="Aguardando" />
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell>
-              <input type="text" id="processo" name="processo" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="ano" name="ano" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="assunto" name="assunto" />
-            </TableCell>
-            <TableCell>
-              <input type="date" id="data" name="data" />
-            </TableCell>
-            <TableCell>
-              <input type="date" id="data-insercao" name="data-insercao" />
-            </TableCell>
-            <TableCell>
-              <input type="date" id="data-decisao" name="data-decisao" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="assessor" name="assessor" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="entidade" name="entidade" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="vinculado" name="vinculado" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="conselheiro" name="conselheiro" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="orgao-julgador" name="orgao-julgador" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="encaminhamento" name="encaminhamento" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="definicao" name="definicao" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="prioridade" name="prioridade" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="meta" name="meta" />
-            </TableCell>
-            <TableCell>
-              <input type="text" id="aguardando" name="aguardando" />
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+
+
+    <>
+    <div style={{ height: 700, width: '100%' }}>
+      <DataGrid rows={dado}  columns={
+      [
+        { field: 'proc', headerName: 'Processo', width: 150 },
+        { field: 'ano', headerName: 'Ano', width: 150 },
+        { field: 'assunto', headerName: 'Assunto', width: 150 },
+        { field: 'data', headerName: 'Data de inserção', width: 150 },
+        { field: 'datadecisao', headerName: 'Data de decisão', width: 150 },
+        { field: 'assessor', headerName: 'Assessor', width: 150 },
+        { field: 'entidade', headerName: 'Entidade', width: 150 },
+        { field: 'vinculado', headerName: 'Vinculado', width: 150 },
+        { field: 'conselheiro', headerName: 'Conselheiro', width: 150 },
+        { field: 'julgador', headerName: 'Órgão Julgador', width: 150 },
+        { field: 'encaminhamento', headerName: 'Encaminhamento', width: 150 },
+        { field: 'definicao', headerName: 'Definição', width: 150 },
+        { field: 'meta', headerName: 'Meta', width: 150 },
+      ]
+        
+      } />
+    </div>
+
+    </>
   );
 }
 
@@ -156,6 +98,3 @@ function MainPage() {
 }
 
 export default MainPage;
-/* 
-{dados.map((dado, index) => {
-            return(  */
