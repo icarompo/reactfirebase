@@ -11,16 +11,6 @@ import {
   TableRow,
 } from "@mui/material";
 
-const rows: GridRowsProp = [
-  { id: 1, col1: 'Hello', col2: 'World' },
-  { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
-  { id: 3, col1: 'MUI', col2: 'is Amazing' },
-];
-
-const columns: GridColDef[] = [
-  { field: 'col1', headerName: 'Column 1', width: 150 },
-  { field: 'col2', headerName: 'Column 2', width: 150 },
-];
 interface HeaderProps {
   title: string;
 }
@@ -33,8 +23,8 @@ function Header({ title }: HeaderProps): JSX.Element {
   );
 }
 
-function Label({ title }: { title: string }) {
-  return <label htmlFor={title}>{title}</label>;
+function Input({ title }: { title: string }) {
+  return <input type="text" id={title} />;
 }
 
 function MyTable() {
@@ -52,27 +42,30 @@ function MyTable() {
   }, [])
 
   return (
-
-
+    
     <>
     <div style={{ height: 700, width: '100%' }}>
-      <DataGrid rows={dado}  columns={
-      [
-        { field: 'proc', headerName: 'Processo', width: 150 },
-        { field: 'ano', headerName: 'Ano', width: 150 },
-        { field: 'assunto', headerName: 'Assunto', width: 150 },
-        { field: 'data', headerName: 'Data de inserção', width: 150 },
-        { field: 'datadecisao', headerName: 'Data de decisão', width: 150 },
-        { field: 'assessor', headerName: 'Assessor', width: 150 },
-        { field: 'entidade', headerName: 'Entidade', width: 150 },
-        { field: 'vinculado', headerName: 'Vinculado', width: 150 },
-        { field: 'conselheiro', headerName: 'Conselheiro', width: 150 },
-        { field: 'julgador', headerName: 'Órgão Julgador', width: 150 },
-        { field: 'encaminhamento', headerName: 'Encaminhamento', width: 150 },
-        { field: 'definicao', headerName: 'Definição', width: 150 },
-        { field: 'meta', headerName: 'Meta', width: 150 },
-      ]
-        
+      <DataGrid sx={
+        {
+          backgroundColor: '#fff',
+          color: '#000',
+        }
+      } rows={dado} columns={
+        [
+          { field: 'proc', headerName: 'Processo', width: 150 },
+          { field: 'ano', headerName: 'Ano', width: 150 },
+          { field: 'assunto', headerName: 'Assunto', width: 150 },
+          { field: 'data',  headerName: 'Data de inserção', width: 150 },
+          { field: 'datadecisao', headerName: 'Data de decisão', width: 150 },
+          { field: 'assessor', headerName: 'Assessor', width: 150 },
+          { field: 'entidade', headerName: 'Entidade', width: 150 },
+          { field: 'vinculado', headerName: 'Vinculado', width: 150 },
+          { field: 'conselheiro', headerName: 'Conselheiro', width: 150 },
+          { field: 'julgador', headerName: 'Órgão Julgador', width: 150 },
+          { field: 'encaminhamento', headerName: 'Encaminhamento', width: 150 },
+          { field: 'definicao', headerName: 'Definição', width: 150 },
+          { field: 'meta', headerName: 'Meta', width: 150 },
+        ]
       } />
     </div>
 
