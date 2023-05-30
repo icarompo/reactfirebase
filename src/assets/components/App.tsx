@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import { db } from "../lib/firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import SearchIcon from '@material-ui/icons/Search';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import TableFilter from "./filter";
+import '../styles/css/App.css';
 
 const ODD_OPACITY = 0.1;
 
@@ -55,85 +53,11 @@ function Header({ title }: HeaderProps): JSX.Element {
   );
 }
 
-function SearchProcessButton() {
-  return (
-    <Button
-      style={{
-        marginLeft: '10px',
-        backgroundColor: '#e0e0e0', 
-      }}
-      variant="contained"
-      startIcon={<SearchIcon />}
-      onMouseOver={(e) => {
-        e.currentTarget.style.backgroundColor = '#a0a0a0'; 
-      }}
-      onMouseOut={(e) => {
-        e.currentTarget.style.backgroundColor = '#e0e0e0'; 
-      }}
-    >
-      Pesquisar Processo
-    </Button>
-  );
-}
-function AddProcessButton() {
-  return (
-    <Button
-      style={{
-        marginLeft: '10px',
-        backgroundColor: '#00cc00',
-      }}
-      variant="contained"
-      
-      startIcon={<AddIcon />}
-      onMouseOver={(e) => {
-        e.currentTarget.style.backgroundColor = '#009900'; 
-      }}
-      onMouseOut={(e) => {
-        e.currentTarget.style.backgroundColor = '#00cc00'; 
-      }}
-    >
-      Adicionar Processo
-    </Button>
-  );
-}
-
-function DeleteProcessButton() {
-  return (
-    <Button
-      style={{
-        marginLeft: '10px',
-        backgroundColor: '#ff3333',
-      }}
-      variant="contained"
-      startIcon={<DeleteIcon />}
-      onMouseOver={(e) => {
-        e.currentTarget.style.backgroundColor = '#ff0000'; 
-      }}
-      onMouseOut={(e) => {
-        e.currentTarget.style.backgroundColor = '#ff3333';
-      }}
-    >
-     Excluir Processo 
-    </Button>
-  );
-}
-
-function TableFilter() {
-  return (
-    <div className="div" id="filter">
-      <SearchProcessButton />
-      <AddProcessButton />
-      <DeleteProcessButton />
-    </div>
-  );
-}
 
 function Table() {
 
   const [dado, setDado] = useState<any[]>([]);
   const usersCollectionRef = collection(db, 'dados');
-
-
 
   useEffect(() => {
     const getDados = async () => {
@@ -171,13 +95,14 @@ function Table() {
           { field: 'definicao', headerName: 'Definição', width: 100 },
           { field: 'meta', headerName: 'Meta', width: 75 },
         ]
-      } />
+      } 
+      checkboxSelection
+      disableRowSelectionOnClick
+      />
     </div>
     </>
   );
 }
-
-
 
 function MainPage() {
   return (
