@@ -1,0 +1,55 @@
+.div {
+    align-items: center;
+    background: #2d3e9e;
+    color: white;
+    margin-top: 10px;
+    padding: 0;
+    box-sizing: border-box;
+    height: 50px;
+    flex: auto;
+    }
+ 
+#filter {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#searchButton {
+    margin-left: 10px;
+    background-color: #e0e0e0;
+  }
+#searchButton:hover {
+    background-color: #858585;
+    color: white;
+}
+
+#addButton {
+    margin-left: 10px;
+    background-color: #00cc00;
+  }
+#addButton:hover {
+    background-color: #009900;
+    color: white;
+}
+
+#deleteButton {
+    margin-left: 10px;
+    background-color: #ff0000;
+  }
+#deleteButton:hover {
+    background-color: #b20000;
+    color: white;
+}
+
+#select {
+  margin-left: 10px;
+  background-color: #2d3e9e;
+  border-radius: 5px;
+  height: 37px;
+  width: 150px;
+  color: white;
+}
+
+#select:hover {
+  background-color: #232f74;
+}
