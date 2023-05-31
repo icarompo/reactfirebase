@@ -21,8 +21,10 @@ function AddProcessButton() {
     setModalOpen(false);
   };
 
-  return <Button id="addButton" variant="contained" startIcon={<AddIcon />}onClick={openModal}>Adicionar Processo</Button>
-{/* 
+  return (
+  <>
+  <Button id="addButton" variant="contained" startIcon={<AddIcon />}onClick={openModal}>Adicionar Processo</Button>
+
       {modalOpen && (
         <ReactModal
           className="modal"
@@ -135,9 +137,9 @@ function AddProcessButton() {
             </button>
           </form>
         </ReactModal>
-      )} */}
-  
-  
+      )} 
+  </>
+  );
 }
 
 function DeleteProcessButton() {
