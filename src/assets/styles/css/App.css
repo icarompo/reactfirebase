@@ -86,22 +86,6 @@ label {
   background-color: rgb(192, 4, 4);
 }
 
-
-.row { 
-  display: flex;
-  flex-direction: row; 
-}
-
-.column { 
-  display: flex;
-  flex-direction: column; 
-  margin-left: 10px;
-}
-
-.formRow {
-  margin-bottom: 2px;
-}
-
 #addButton {
   border: none;
   background-color: rgb(26, 179, 6);
