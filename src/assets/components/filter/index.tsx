@@ -1,6 +1,5 @@
 import ReactModal from "react-modal";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Select, MenuItem, Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useState } from "react";
