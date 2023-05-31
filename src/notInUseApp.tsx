@@ -1,5 +1,7 @@
+//NOT IN USE
+
 import './assets/styles/css/App.css';
-import MainPage from './assets/components/index.tsx';
+import MainPage from './assets/components/App.tsx';
 
 function App() {
   return <MainPage />;
