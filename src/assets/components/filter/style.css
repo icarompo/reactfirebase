@@ -46,6 +46,19 @@
   color: white;
 }
 
+#addProcessFormButton {
+  margin-top: 10px;
+  margin-left: 100px;
+  background-color: #00cc00;
+  border: none;
+}
+#addProcessFormButton:hover {
+  cursor: pointer;
+  background-color: #009900;
+  color: white;
+}
+
+
 #deleteButton {
   margin-left: 10px;
   width: 175px;
@@ -84,4 +97,36 @@
 
 .formRow {
   margin-bottom: 2px;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 500px;
+  background-color: white;
+  padding: 4rem;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  text-align: center;
+}
+
+.closeModalButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  font-size: bold;
+  width: 30px;
+  height: 32px;
+  padding: 0.6rem;
+  cursor: pointer;
+}
+
+.closeModalButton:hover{
+  background-color: rgb(192, 4, 4);
 }
