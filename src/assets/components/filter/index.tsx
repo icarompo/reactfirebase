@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import './style.css';
 
 function SearchProcessButton() {
-  return <Button id="searchButton" variant="contained" startIcon={<SearchIcon />}>Pesquisar Processo</Button>
+  return <button type="button" className="button" id="searchButton">{<SearchIcon className="icon"/>}<span>Pesquisar Processo</span></button>
 }
 
 function AddProcessButton() {
@@ -21,9 +21,9 @@ function AddProcessButton() {
     setModalOpen(false);
   };
 
-  return (
+  return ( 
   <>
-  <Button id="addButton" variant="contained" startIcon={<AddIcon />}onClick={openModal}>Adicionar Processo</Button>
+  <button type="button" className="button" id="addProcessButton" onClick={openModal}>{<AddIcon className="icon"/>}<span>Adicionar Processo</span></button>
 
       {modalOpen && (
         <ReactModal
@@ -132,7 +132,7 @@ function AddProcessButton() {
                 </button>
               </div>
             </div>
-            <button className="button" id="addButton" type="submit">
+            <button className="button" id="addprocessButton" type="submit">
               Adicionar
             </button>
           </form>
@@ -143,7 +143,7 @@ function AddProcessButton() {
 }
 
 function DeleteProcessButton() {
-  return <Button id="deleteButton" variant="contained" startIcon={<DeleteIcon />}>Excluir Processo</Button>
+  return <button type="button" className="button" id="deleteButton">{<DeleteIcon />}<span>Excluir Processo</span></button>
 }
 
 function SelectLocation() {
@@ -154,23 +154,21 @@ function SelectLocation() {
   };
 
   return (
-    <Select
-      id="select"
-      value={selectedOption}
-      onChange={handleChange}
-    >
-      <MenuItem value="">Todos</MenuItem>
-      <MenuItem value="sim">Finalizados</MenuItem>
-      <MenuItem value="tramit">Tramitando</MenuItem>
-      <MenuItem value="sobrest">Sobrestado</MenuItem>
-      <MenuItem value="relatoria">Relatoria</MenuItem>
-    </Select>
+  <div>
+    <select className="button" id="select" value={selectedOption} onChange={handleChange}>
+      <option value="">Todos</option>
+      <option value="sim">Finalizados</option>
+      <option value="tramit">Tramitando</option>
+      <option value="sobrest">Sobrestado</option>
+      <option value="relatoria">Relatoria</option>
+    </select>
+  </div>
   );
 }
 
 function TableFilter() {
   return (
-    <div className="div" id="filter">
+    <div className="filterContainer">
       <SearchProcessButton />
       <AddProcessButton />
       <DeleteProcessButton />
