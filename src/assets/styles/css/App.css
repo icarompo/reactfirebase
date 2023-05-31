@@ -54,38 +54,6 @@ label {
   display: none;
 }
 
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 500px;
-  background-color: white;
-  padding: 4rem;
-  border-radius: 5px;
-  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
-  z-index: 10;
-  text-align: center;
-}
-
-.closeModalButton {
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  background-color: red;
-  color: white;
-  border: none;
-  font-size: bold;
-  border-radius: 0 0 0 5px;
-  padding: 0.6rem;
-  cursor: pointer;
-}
-
-.closeModalButton:hover{
-  background-color: rgb(192, 4, 4);
-}
-
 #addButton {
   border: none;
   background-color: rgb(26, 179, 6);

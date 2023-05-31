@@ -3,31 +3,67 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useState } from "react";
-import './style.css';
+import "./style.css";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../lib/firebase-config";
 
 function SearchProcessButton() {
-  return <button type="button" className="button" id="searchButton">{<SearchIcon className="icon"/>}<span>Pesquisar Processo</span></button>
+  return (
+    <button type="button" className="button" id="searchButton">
+      {<SearchIcon className="icon" />}
+      <span>Pesquisar Processo</span>
+    </button>
+  );
 }
 
-function AddProcessButton() {
-  const [modalOpen, setModalOpen] = useState(false);
+function AddProcessModal({
+  isOpen,
+  closeModal,
+}: {
+  isOpen: boolean;
+  closeModal: () => void;
+}) {
+  const [newProcesso, setNewProcesso] = useState(0);
+  const [newAno, setNewAno] = useState(0);
+  const [newAssunto, setNewAssunto] = useState("");
+  const [newData, setNewData] = useState("");
+  const [newDataDecisao, setNewDataDecisao] = useState("");
+  const [newAssessor, setNewAssessor] = useState(0);
+  const [newEntidade, setNewEntidade] = useState("");
+  const [newVinculado, setNewVinculado] = useState("");
+  const [newConselheiro, setNewConselheiro] = useState("");
+  const [newOrgaoJulgador, setNewOrgaoJulgador] = useState("");
+  const [newEncaminhamento, setNewEncaminhamento] = useState("");
+  const [newDefinicao, setNewDefinicao] = useState("");
+  const [newMeta, setNewMeta] = useState("");
+  const dadosCollectionRef = collection(db, "dados");
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
+  //turn into async createProcesso
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  const createProcesso = async () => {
+    await addDoc(dadosCollectionRef, {
+      processo: newProcesso,
+      ano: newAno,
+      assunto: newAssunto,
+      data: newData,
+      dataDecisao: newDataDecisao,
+      assessor: newAssessor,
+      entidade: newEntidade,
+      vinculado: newVinculado,
+      conselheiro: newConselheiro,
+      orgaoJulgador: newOrgaoJulgador,
+      encaminhamento: newEncaminhamento,
+      definicao: newDefinicao,
+      meta: newMeta,
+    });
+  }
 
-  return ( 
-  <>
-  <button type="button" className="button" id="addProcessButton" onClick={openModal}>{<AddIcon className="icon"/>}<span>Adicionar Processo</span></button>
-
-      {modalOpen && (
+  return (
+    <>
+      {isOpen && (
         <ReactModal
           className="modal"
-          isOpen={modalOpen}
+          isOpen={isOpen}
           onRequestClose={closeModal}
         >
           <h2>Adicionar Processo</h2>
@@ -53,72 +89,97 @@ function AddProcessButton() {
               </div>
               <div className="column">
                 <input
+                  onChange={(event) => setNewProcesso(Number(event.target.value))}
                   className="formRow"
                   type="number"
                   id="proc"
                   name="proc"
                 />
-                <input className="formRow" type="number" id="ano" name="ano" />
+                <input 
+                  onChange={(event) => setNewAno(Number(event.target.value))}
+                  className="formRow" 
+                  type="number" 
+                  id="ano" 
+                  name="ano" />
                 <input
+                  onChange={(event) => setNewAssunto(event.target.value)}
                   className="formRow"
                   type="text"
                   id="assunto"
                   name="assunto"
                 />
-                <input className="formRow" type="date" id="data" name="data" />
+                <input 
+                  onChange={(event) => setNewData(event.target.value)}
+                  className="formRow" 
+                  type="date" 
+                  id="data" 
+                  name="data" />
                 <input
+                  onChange={(event) => setNewDataDecisao(event.target.value)}
                   className="formRow"
                   type="date"
                   id="datadecisao"
                   name="datadecisao"
                 />
                 <input
+                  onChange={(event) => setNewAssessor(Number(event.target.value))}
                   className="formRow"
                   type="number"
                   id="assessor"
                   name="assessor"
                 />
-                <input
+                <input 
+                  onChange={(event) => setNewEntidade(event.target.value)}
                   className="formRow"
                   type="text"
                   id="entidade"
                   name="entidade"
                 />
                 <input
+                  onChange={(event) => setNewVinculado(event.target.value)}
                   className="formRow"
                   type="text"
                   id="vinculado"
                   name="vinculado"
                 />
                 <input
+                  onChange={(event) => setNewConselheiro(event.target.value)}
                   className="formRow"
                   type="text"
                   id="conselheiro"
                   name="conselheiro"
                 />
                 <input
+                  onChange={(event) => setNewOrgaoJulgador(event.target.value)}
                   className="formRow"
                   type="text"
                   id="julgador"
                   name="julgador"
                 />
                 <input
+                  onChange={(event) => setNewEncaminhamento(event.target.value)}
                   className="formRow"
                   type="text"
                   id="encaminhamento"
                   name="encaminhamento"
                 />
                 <input
+                  onChange={(event) => setNewDefinicao(event.target.value)}
                   className="formRow"
                   type="text"
                   id="definicao"
                   name="definicao"
                 />
-                <input className="formRow" type="text" id="meta" name="meta" />
+                <input 
+                  onChange={(event) => setNewMeta(event.target.value)}
+                  className="formRow" 
+                  type="text" 
+                  id="meta" 
+                  name="meta" />
               </div>
               <div className="column">
                 <button className="button" type="button">
-                  Adicionar
+                  Próximo
                 </button>
                 <button className="button" type="button">
                   Localizar
@@ -131,18 +192,37 @@ function AddProcessButton() {
                 </button>
               </div>
             </div>
-            <button className="button" id="addprocessButton" type="submit">
+            <button className="button" id="addProcessFormButton" type="submit" onClick={createProcesso}>
               Adicionar
             </button>
           </form>
         </ReactModal>
-      )} 
-  </>
+      )}
+    </>
+  );
+}
+
+function AddProcessButton({ openModal }: { openModal: () => void }) {
+  return (
+    <button
+      type="button"
+      className="button"
+      id="addProcessButton"
+      onClick={openModal}
+    >
+      {<AddIcon className="icon" />}
+      <span>Adicionar Processo</span>
+    </button>
   );
 }
 
 function DeleteProcessButton() {
-  return <button type="button" className="button" id="deleteButton">{<DeleteIcon />}<span>Excluir Processo</span></button>
+  return (
+    <button type="button" className="button" id="deleteButton">
+      {<DeleteIcon />}
+      <span>Excluir Processo</span>
+    </button>
+  );
 }
 
 function SelectLocation() {
@@ -153,23 +233,39 @@ function SelectLocation() {
   };
 
   return (
-  <div>
-    <select className="button" id="select" value={selectedOption} onChange={handleChange}>
-      <option value="">Todos</option>
-      <option value="sim">Finalizados</option>
-      <option value="tramit">Tramitando</option>
-      <option value="sobrest">Sobrestado</option>
-      <option value="relatoria">Relatoria</option>
-    </select>
-  </div>
+    <div>
+      <select
+        className="button"
+        id="select"
+        value={selectedOption}
+        onChange={handleChange}
+      >
+        <option value="">Todos</option>
+        <option value="sim">Finalizados</option>
+        <option value="tramit">Tramitando</option>
+        <option value="sobrest">Sobrestado</option>
+        <option value="relatoria">Relatoria</option>
+      </select>
+    </div>
   );
 }
 
 function TableFilter() {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="filterContainer">
       <SearchProcessButton />
-      <AddProcessButton />
+      <AddProcessButton openModal={openModal} />
+      <AddProcessModal isOpen={modalOpen} closeModal={closeModal} />
       <DeleteProcessButton />
       <SelectLocation />
     </div>
