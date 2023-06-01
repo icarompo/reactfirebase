@@ -7,7 +7,6 @@
   flex: auto;
   display: flex;
   align-items: center;
-
 }
 
 .button {
@@ -48,7 +47,9 @@
 
 #addProcessFormButton {
   margin-top: 10px;
-  margin-left: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
   background-color: #00cc00;
   border: none;
 }

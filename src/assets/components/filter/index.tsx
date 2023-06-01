@@ -94,32 +94,39 @@ function AddProcessModal({
                   type="number"
                   id="proc"
                   name="proc"
+                  placeholder="Processo..."
                 />
                 <input 
                   onChange={(event) => setNewAno(Number(event.target.value))}
                   className="formRow" 
                   type="number" 
                   id="ano" 
-                  name="ano" />
+                  name="ano" 
+                  placeholder="Ano..."
+                />
                 <input
                   onChange={(event) => setNewAssunto(event.target.value)}
                   className="formRow"
                   type="text"
                   id="assunto"
                   name="assunto"
+                  placeholder="Assunto..."
                 />
                 <input 
                   onChange={(event) => setNewData(event.target.value)}
                   className="formRow" 
                   type="date" 
                   id="data" 
-                  name="data" />
+                  name="data"
+                  placeholder="Data de inserção..." 
+                />
                 <input
                   onChange={(event) => setNewDataDecisao(event.target.value)}
                   className="formRow"
                   type="date"
                   id="datadecisao"
                   name="datadecisao"
+                  placeholder="Data de decisão..."
                 />
                 <input
                   onChange={(event) => setNewAssessor(Number(event.target.value))}
@@ -127,6 +134,7 @@ function AddProcessModal({
                   type="number"
                   id="assessor"
                   name="assessor"
+                  placeholder="Assessor..."
                 />
                 <input 
                   onChange={(event) => setNewEntidade(event.target.value)}
@@ -134,6 +142,7 @@ function AddProcessModal({
                   type="text"
                   id="entidade"
                   name="entidade"
+                  placeholder="Entidade..."
                 />
                 <input
                   onChange={(event) => setNewVinculado(event.target.value)}
@@ -141,6 +150,7 @@ function AddProcessModal({
                   type="text"
                   id="vinculado"
                   name="vinculado"
+                  placeholder="Vinculado..."
                 />
                 <input
                   onChange={(event) => setNewConselheiro(event.target.value)}
@@ -148,6 +158,7 @@ function AddProcessModal({
                   type="text"
                   id="conselheiro"
                   name="conselheiro"
+                  placeholder="Conselheiro..."
                 />
                 <input
                   onChange={(event) => setNewOrgaoJulgador(event.target.value)}
@@ -155,6 +166,7 @@ function AddProcessModal({
                   type="text"
                   id="julgador"
                   name="julgador"
+                  placeholder="Órgão Julgador..."
                 />
                 <input
                   onChange={(event) => setNewEncaminhamento(event.target.value)}
@@ -162,6 +174,7 @@ function AddProcessModal({
                   type="text"
                   id="encaminhamento"
                   name="encaminhamento"
+                  placeholder="Encaminhamento..."
                 />
                 <input
                   onChange={(event) => setNewDefinicao(event.target.value)}
@@ -169,13 +182,16 @@ function AddProcessModal({
                   type="text"
                   id="definicao"
                   name="definicao"
+                  placeholder="Definição..."
                 />
                 <input 
                   onChange={(event) => setNewMeta(event.target.value)}
                   className="formRow" 
                   type="text" 
                   id="meta" 
-                  name="meta" />
+                  name="meta" 
+                  placeholder="Meta..."
+                />
               </div>
               <div className="column">
                 <button className="button" type="button">
