@@ -261,7 +261,7 @@ function SelectLocation(props: SelectLocationProps) {
         value={selectedOption}
         onChange={handleChange}
       >
-        <option value="Any">Todos</option>
+        <option value="*">Todos</option>
         <option value="sim">Finalizados</option>
         <option value="TRAMIT.">Tramitando</option>
         <option value="sobrest">Sobrestado</option>

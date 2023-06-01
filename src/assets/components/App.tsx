@@ -95,6 +95,15 @@ function Table({ filterValue }: TableProps) {
     fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
   }, []);
 
+  
+  const filteredValues = (filterValue: string): TipoDado[] => {
+    if (filterValue === "*") {
+      return dados;
+    } else {
+      return dados.filter((Processo) => Processo.definicao.toLowerCase() === filterValue.toLowerCase());
+    }
+  };
+  
   return (
     <>
     <div style={{ height: 700, width: '100%' }}>
@@ -103,7 +112,7 @@ function Table({ filterValue }: TableProps) {
           backgroundColor: '#fff',
           color: '#000',
         }
-      }rows={dados.filter((Processo) => Processo.definicao === filterValue)
+      }rows={filteredValues(filterValue)
       }getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
       }columns={
