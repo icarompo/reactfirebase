@@ -54,7 +54,11 @@ function Header({ title }: HeaderProps): JSX.Element {
   );
 }
 
-function Table() {
+interface TableProps {
+  filterValue: string;
+}
+
+function Table({ filterValue }: TableProps) {
 
   type TipoDado = {
     id: string,
@@ -74,7 +78,6 @@ function Table() {
   }
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
-  
 
   useEffect(() => {
     async function fetchData() {
@@ -100,7 +103,7 @@ function Table() {
           backgroundColor: '#fff',
           color: '#000',
         }
-      }rows={dados.filter((Processo) => Processo.definicao === 'relatoria')
+      }rows={dados.filter((Processo) => Processo.definicao === filterValue)
       }getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
       }columns={
@@ -129,11 +132,18 @@ function Table() {
 }
 
 function MainPage() {
+  const [filterValue, setFilterValue] = useState("relatoria");
+
+  const handleFilterChange = (value: string) => {
+    setFilterValue(value);
+    // Aqui você pode fazer o processamento desejado com o valor selecionado
+    console.log(value);
+  };
   return (
     <>
       <Header title="Controle E-Contas" />
-      <TableFilter />
-      <Table />
+      <TableFilter onFilterChange={handleFilterChange}/>
+      <Table filterValue={filterValue}/>
     </>
   );
 }

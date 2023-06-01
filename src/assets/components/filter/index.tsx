@@ -241,11 +241,16 @@ function DeleteProcessButton() {
   );
 }
 
-function SelectLocation() {
+type SelectLocationProps = {
+  onFilterChange: (value: string) => void;
+};
+
+function SelectLocation(props: SelectLocationProps) {
   const [selectedOption, setSelectedOption] = useState("relatoria");
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectedOption(event.target.value as string);
+    props.onFilterChange(event.target.value as string); // Chama a função de callback com o valor selecionado
   };
 
   return (
@@ -256,9 +261,9 @@ function SelectLocation() {
         value={selectedOption}
         onChange={handleChange}
       >
-        <option value="">Todos</option>
+        <option value="Any">Todos</option>
         <option value="sim">Finalizados</option>
-        <option value="tramit">Tramitando</option>
+        <option value="TRAMIT.">Tramitando</option>
         <option value="sobrest">Sobrestado</option>
         <option value="relatoria">Relatoria</option>
       </select>
@@ -266,7 +271,7 @@ function SelectLocation() {
   );
 }
 
-function TableFilter() {
+function TableFilter(props: { onFilterChange: (value: string) => void }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -277,13 +282,17 @@ function TableFilter() {
     setModalOpen(false);
   };
 
+  const handleFilterChange = (value: string) => {
+    props.onFilterChange(value);
+  };
+
   return (
     <div className="filterContainer">
       <SearchProcessButton />
       <AddProcessButton openModal={openModal} />
       <AddProcessModal isOpen={modalOpen} closeModal={closeModal} />
       <DeleteProcessButton />
-      <SelectLocation />
+      <SelectLocation onFilterChange={handleFilterChange} />
     </div>
   );
 }
