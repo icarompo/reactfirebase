@@ -54,7 +54,11 @@ function Header({ title }: HeaderProps): JSX.Element {
   );
 }
 
-function Table() {
+interface TableProps {
+  filterValue: string;
+}
+
+function Table({ filterValue }: TableProps) {
 
   type TipoDado = {
     id: string,
@@ -74,7 +78,6 @@ function Table() {
   }
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
-  
 
   useEffect(() => {
     async function fetchData() {
@@ -92,6 +95,15 @@ function Table() {
     fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
   }, []);
 
+  
+  const filteredValues = (filterValue: string): TipoDado[] => {
+    if (filterValue === "*") {
+      return dados;
+    } else {
+      return dados.filter((Processo) => Processo.definicao.toLowerCase() === filterValue.toLowerCase());
+    }
+  };
+  
   return (
     <>
     <div style={{ height: 700, width: '100%' }}>
@@ -100,7 +112,7 @@ function Table() {
           backgroundColor: '#fff',
           color: '#000',
         }
-      }rows={dados.filter((Processo) => Processo.definicao === 'relatoria')
+      }rows={filteredValues(filterValue)
       }getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
       }columns={
@@ -129,11 +141,18 @@ function Table() {
 }
 
 function MainPage() {
+  const [filterValue, setFilterValue] = useState("relatoria");
+
+  const handleFilterChange = (value: string) => {
+    setFilterValue(value);
+    // Aqui você pode fazer o processamento desejado com o valor selecionado
+    console.log(value);
+  };
   return (
     <>
       <Header title="Controle E-Contas" />
-      <TableFilter />
-      <Table />
+      <TableFilter onFilterChange={handleFilterChange}/>
+      <Table filterValue={filterValue}/>
     </>
   );
 }
