@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import TableFilter from "./filter";
 import '../styles/css/App.css';
+
 
 const ODD_OPACITY = 0.1;
 
@@ -53,20 +54,43 @@ function Header({ title }: HeaderProps): JSX.Element {
   );
 }
 
-
 function Table() {
 
-  const [dado, setDado] = useState<any[]>([]);
-  const usersCollectionRef = collection(db, 'dados');
+  type TipoDado = {
+    id: string,
+    proc: number,
+    ano: number,
+    assunto: string,
+    data: Date,
+    datadecisao: Date,
+    assessor: number,
+    entidade: string,
+    vinculado: string,
+    conselheiro: string,
+    orgaoJulgador: string,
+    encaminhamento: string,
+    definicao: string,
+    meta: string,
+  }
+
+  const [dados, setDados] = useState<Array<TipoDado>>([]);
+  
 
   useEffect(() => {
-    const getDados = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setDado(data.docs.map((doc) => ({ ...doc.data(),id: doc.id })));
+    async function fetchData() {
+      const usersCollectionRef = collection(db, 'dados'); // Referência para a coleção 'dados'
+      const dadosQuery = query(usersCollectionRef);
+      const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
+      const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
+      dadosSnapshot.forEach((doc) => { // Percorre os documentos retornados
+        const { id, ...rest } = doc.data() as TipoDado; // Extrai a propriedade 'id' e o restante das propriedades do documento
+        fetchedData.push({ id: doc.id, ...rest }); // Adiciona o documento ao array de dados buscados
+      });
+      setDados(fetchedData); // Atualiza o estado 'dado' com os dados buscados
     }
-
-    getDados();
-  }, [])
+  
+    fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
+  }, []);
 
   return (
     <>
@@ -76,7 +100,7 @@ function Table() {
           backgroundColor: '#fff',
           color: '#000',
         }
-      }rows={dado
+      }rows={dados.filter((Processo) => Processo.definicao === 'relatoria')
       }getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
       }columns={
@@ -99,7 +123,7 @@ function Table() {
       checkboxSelection
       disableRowSelectionOnClick
       />
-    </div>
+    </div> 
     </>
   );
 }
