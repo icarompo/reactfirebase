@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { db } from "../lib/firebase-config";
 import { collection, getDocs, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
-import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
 import TableFilter from "./filter";
 import '../styles/css/App.css';
 
@@ -78,6 +78,7 @@ function Table({ filterValue }: TableProps) {
   }
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
+  const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -133,6 +134,14 @@ function Table({ filterValue }: TableProps) {
         ]
       } 
       checkboxSelection
+      
+     
+      onRowSelectionModelChange={(ids) => {
+        setSelectedRows(ids);
+        console.log(ids);
+      }}
+
+
       disableRowSelectionOnClick
       />
     </div> 
@@ -143,15 +152,14 @@ function Table({ filterValue }: TableProps) {
 function MainPage() {
   const [filterValue, setFilterValue] = useState("relatoria");
 
-  const handleFilterChange = (value: string) => {
+  const handleSelectChange = (value: string) => {
     setFilterValue(value);
-    // Aqui você pode fazer o processamento desejado com o valor selecionado
-    console.log(value);
   };
+  
   return (
     <>
       <Header title="Controle E-Contas" />
-      <TableFilter onFilterChange={handleFilterChange}/>
+      <TableFilter onSelectChange={handleSelectChange}/>
       <Table filterValue={filterValue}/>
     </>
   );

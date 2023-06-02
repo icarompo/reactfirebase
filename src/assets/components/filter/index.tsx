@@ -242,7 +242,7 @@ function DeleteProcessButton() {
 }
 
 type SelectLocationProps = {
-  onFilterChange: (value: string) => void;
+  onSelectChange: (value: string) => void;
 };
 
 function SelectLocation(props: SelectLocationProps) {
@@ -250,7 +250,7 @@ function SelectLocation(props: SelectLocationProps) {
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectedOption(event.target.value as string);
-    props.onFilterChange(event.target.value as string); // Chama a função de callback com o valor selecionado
+    props.onSelectChange(event.target.value as string); // Chama a função de callback com o valor selecionado
   };
 
   return (
@@ -271,7 +271,7 @@ function SelectLocation(props: SelectLocationProps) {
   );
 }
 
-function TableFilter(props: { onFilterChange: (value: string) => void }) {
+function TableFilter(props: { onSelectChange: (value: string) => void }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -282,8 +282,8 @@ function TableFilter(props: { onFilterChange: (value: string) => void }) {
     setModalOpen(false);
   };
 
-  const handleFilterChange = (value: string) => {
-    props.onFilterChange(value);
+  const handleSelectChange = (value: string) => {
+    props.onSelectChange(value);
   };
 
   return (
@@ -292,7 +292,7 @@ function TableFilter(props: { onFilterChange: (value: string) => void }) {
       <AddProcessButton openModal={openModal} />
       <AddProcessModal isOpen={modalOpen} closeModal={closeModal} />
       <DeleteProcessButton />
-      <SelectLocation onFilterChange={handleFilterChange} />
+      <SelectLocation onSelectChange={handleSelectChange} />
     </div>
   );
 }
