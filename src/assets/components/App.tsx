@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebase-config";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
 import TableFilter from "./filter";
+import DeleteIcon from "@material-ui/icons/Delete";
 import '../styles/css/App.css';
 
 
@@ -53,13 +54,11 @@ function Header({ title }: HeaderProps): JSX.Element {
     </div>
   );
 }
-
 interface TableProps {
   filterValue: string;
 }
 
 function Table({ filterValue }: TableProps) {
-
   type TipoDado = {
     id: string,
     proc: number,
@@ -79,7 +78,7 @@ function Table({ filterValue }: TableProps) {
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
-
+  
   useEffect(() => {
     async function fetchData() {
       const usersCollectionRef = collection(db, 'dados'); // Referência para a coleção 'dados'
@@ -96,7 +95,6 @@ function Table({ filterValue }: TableProps) {
     fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
   }, []);
 
-  
   const filteredValues = (filterValue: string): TipoDado[] => {
     if (filterValue === "*") {
       return dados;
@@ -105,8 +103,23 @@ function Table({ filterValue }: TableProps) {
     }
   };
   
+  const handleDeleteClick = async () => {
+    const updatedData = dados.filter((row) => !selectedRows.includes(row.id));
+    const deletionPromises = selectedRows.map((row) =>
+      deleteDoc(doc(db, "dados", row.toString()))
+    );
+    await Promise.all(deletionPromises);
+    setDados(updatedData);
+    setSelectedRows([]);
+  };
+
   return (
     <>
+    <button type="button" className="button" id="deleteButton" onClick={handleDeleteClick}>
+      {<DeleteIcon />}
+      <span>Excluir Processo</span>
+    </button>
+
     <div style={{ height: 700, width: '100%' }}>
       <StripedDataGrid sx={
         {
@@ -134,13 +147,10 @@ function Table({ filterValue }: TableProps) {
         ]
       } 
       checkboxSelection
-      
      
       onRowSelectionModelChange={(ids) => {
         setSelectedRows(ids);
-        console.log(ids);
       }}
-
 
       disableRowSelectionOnClick
       />
