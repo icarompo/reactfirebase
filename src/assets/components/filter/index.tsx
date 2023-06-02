@@ -1,7 +1,7 @@
 import ReactModal from "react-modal";
-import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
+/* import DeleteIcon from "@material-ui/icons/Delete"; */
 import React, { useState } from "react";
 import "./style.css";
 import { collection, addDoc } from "firebase/firestore";
@@ -231,8 +231,9 @@ function AddProcessButton({ openModal }: { openModal: () => void }) {
     </button>
   );
 }
-
+/* 
 function DeleteProcessButton() {
+
   return (
     <button type="button" className="button" id="deleteButton">
       {<DeleteIcon />}
@@ -240,9 +241,9 @@ function DeleteProcessButton() {
     </button>
   );
 }
-
+ */
 type SelectLocationProps = {
-  onFilterChange: (value: string) => void;
+  onSelectChange: (value: string) => void;
 };
 
 function SelectLocation(props: SelectLocationProps) {
@@ -250,7 +251,7 @@ function SelectLocation(props: SelectLocationProps) {
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectedOption(event.target.value as string);
-    props.onFilterChange(event.target.value as string); // Chama a função de callback com o valor selecionado
+    props.onSelectChange(event.target.value as string); // Chama a função de callback com o valor selecionado
   };
 
   return (
@@ -271,7 +272,7 @@ function SelectLocation(props: SelectLocationProps) {
   );
 }
 
-function TableFilter(props: { onFilterChange: (value: string) => void }) {
+function TableFilter(props: { onSelectChange: (value: string) => void }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -282,8 +283,8 @@ function TableFilter(props: { onFilterChange: (value: string) => void }) {
     setModalOpen(false);
   };
 
-  const handleFilterChange = (value: string) => {
-    props.onFilterChange(value);
+  const handleSelectChange = (value: string) => {
+    props.onSelectChange(value);
   };
 
   return (
@@ -291,8 +292,8 @@ function TableFilter(props: { onFilterChange: (value: string) => void }) {
       <SearchProcessButton />
       <AddProcessButton openModal={openModal} />
       <AddProcessModal isOpen={modalOpen} closeModal={closeModal} />
-      <DeleteProcessButton />
-      <SelectLocation onFilterChange={handleFilterChange} />
+   {/*    <DeleteProcessButton /> */}
+      <SelectLocation onSelectChange={handleSelectChange} />
     </div>
   );
 }
