@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { db } from "../lib/firebase-config";
-import { collection, getDocs, doc, deleteDoc, query } from "firebase/firestore";
+import { collection, getDocs, doc, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
 import TableFilter from "./filter";
-import DeleteIcon from "@material-ui/icons/Delete";
 import '../styles/css/App.css';
 
 
@@ -56,6 +55,7 @@ function Header({ title }: HeaderProps): JSX.Element {
 }
 interface TableProps {
   filterValue: string;
+
 }
 
 function Table({ filterValue }: TableProps) {
@@ -102,23 +102,9 @@ function Table({ filterValue }: TableProps) {
       return dados.filter((Processo) => Processo.definicao.toLowerCase() === filterValue.toLowerCase());
     }
   };
-  
-  const handleDeleteClick = async () => {
-    const updatedData = dados.filter((row) => !selectedRows.includes(row.id));
-    const deletionPromises = selectedRows.map((row) =>
-      deleteDoc(doc(db, "dados", row.toString()))
-    );
-    await Promise.all(deletionPromises);
-    setDados(updatedData);
-    setSelectedRows([]);
-  };
 
   return (
     <>
-    <button type="button" className="button" id="deleteButton" onClick={handleDeleteClick}>
-      {<DeleteIcon />}
-      <span>Excluir Processo</span>
-    </button>
 
     <div style={{ height: 700, width: '100%' }}>
       <StripedDataGrid sx={
@@ -159,17 +145,18 @@ function Table({ filterValue }: TableProps) {
   );
 }
 
+
 function MainPage() {
   const [filterValue, setFilterValue] = useState("relatoria");
 
   const handleSelectChange = (value: string) => {
     setFilterValue(value);
   };
-  
+
   return (
     <>
       <Header title="Controle E-Contas" />
-      <TableFilter onSelectChange={handleSelectChange}/>
+      <TableFilter onSelectChange={handleSelectChange} />
       <Table filterValue={filterValue}/>
     </>
   );
