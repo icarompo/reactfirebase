@@ -4,7 +4,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import React, { useState } from "react";
 import "./style.css";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../assets/api/firebase-config";
+import { db } from "../../api/firebase-config";
 
 function SearchProcessButton() {
   return (

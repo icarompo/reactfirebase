@@ -3,7 +3,7 @@ import { db } from "../assets/api/firebase-config";
 import { collection, getDocs, doc, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
-import TableFilter from "./filter";
+import TableFilter from "../assets/components/filter";
 import '../assets/styles/css/App.css';
 
 
