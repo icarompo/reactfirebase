@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { db } from "../assets/api/firebase-config";
+import { db } from "../../assets/api/firebase-config.ts";
 import { collection, getDocs, doc, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
-import TableFilter from "../assets/components/filter";
-import '../assets/styles/css/App.css';
-
+import TableFilter from "../../assets/components/filter/index.tsx";
+import Header from "../../assets/components/header/Header.tsx";
+import '../../assets/styles/css/App.css';
 
 const ODD_OPACITY = 0.1;
 
@@ -42,17 +42,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-interface HeaderProps {
-  title: string;
-}
 
-function Header({ title }: HeaderProps): JSX.Element {
-  return (
-    <div className="div">
-      <h1>{title}</h1>
-    </div>
-  );
-}
 interface TableProps {
   filterValue: string;
 
@@ -155,7 +145,7 @@ function MainPage() {
 
   return (
     <>
-      <Header title="Controle E-Contas" />
+      <Header title="Controle E-Contas" subtitle="Dados de Processos"/>
       <TableFilter onSelectChange={handleSelectChange} />
       <Table filterValue={filterValue}/>
     </>
