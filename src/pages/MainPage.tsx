@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { db } from "../lib/firebase-config";
+import { db } from "../assets/api/firebase-config";
 import { collection, getDocs, doc, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
-import TableFilter from "./filter";
-import '../styles/css/App.css';
+import TableFilter from "../assets/components/filter";
+import '../assets/styles/css/App.css';
 
 
 const ODD_OPACITY = 0.1;
@@ -119,11 +119,11 @@ function Table({ filterValue }: TableProps) {
         [
           { field: 'proc', headerName: 'Processo', width: 75 },
           { field: 'ano', headerName: 'Ano', width:   75 },
-          { field: 'assunto', headerName: 'Assunto', width: 350 },
+          { field: 'assunto', headerName: 'Assunto', width: 300 },
           { field: 'data',  headerName: 'Data de inserção', width: 125 },
           { field: 'datadecisao', headerName: 'Data de decisão', width: 125 },
           { field: 'assessor', headerName: 'Assessor', width: 75 },
-          { field: 'entidade', headerName: 'Entidade', width: 350 },
+          { field: 'entidade', headerName: 'Entidade', width: 300 },
           { field: 'vinculado', headerName: 'Vinculado', width: 100 },
           { field: 'conselheiro', headerName: 'Conselheiro', width: 100 },
           { field: 'julgador', headerName: 'Órgão Julgador', width: 100 },
