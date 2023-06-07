@@ -96,7 +96,7 @@ function Table({ filterValue }: TableProps) {
   return (
     <>
 
-    <div style={{ height: 700, width: '100%' }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <StripedDataGrid sx={
         {
           backgroundColor: '#fff',
