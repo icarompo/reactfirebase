@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainPage from './pages/home/MainPage.tsx';
+import Home from './pages/home/index.tsx';
 import Personal from './pages/pessoal/index.tsx';
 import Painel from './pages/painel/index.tsx';
 import Processes from './pages/processos/index.tsx';
@@ -9,7 +9,7 @@ export const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<MainPage />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/pessoal" element={<Personal />} />
                 <Route path="/painel" element={<Painel />} />
                 <Route path="/processos" element={<Processes />} />

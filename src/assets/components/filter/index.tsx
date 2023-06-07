@@ -2,7 +2,7 @@ import ReactModal from "react-modal";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useState } from "react";
-import "./style.css";
+import "../component.styles.css";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
 

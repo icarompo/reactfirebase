@@ -1,3 +1,5 @@
+import './styles.css';
+
 interface HeaderProps {
     title: string;
     subtitle: string;
@@ -5,9 +7,12 @@ interface HeaderProps {
   
   function Header({title, subtitle}: HeaderProps): JSX.Element {
     return (
-      <div className="div">
-        <h1>{title}</h1>
-        <h2>{subtitle}</h2>
+      <div className="header">
+          <img src="https://irbcontas.org.br/wp-content/uploads/2020/03/associado-titular-logo-tce-to.png" alt="Logo do TCE-TO" className="logo"/>
+        <div className="text-container">
+          <h1>{title}</h1>
+          <h2>{subtitle}</h2>
+        </div>
       </div>
     );
   }
