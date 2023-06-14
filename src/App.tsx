@@ -19,8 +19,6 @@ export const App = () => {
     setIsAuthenticated(true);
   }
 
-  //setIsAuthenticated(true);
-
   return (
     <Router>
       <Routes>

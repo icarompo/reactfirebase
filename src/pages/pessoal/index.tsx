@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { db } from "../../assets/api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
 import Header from "../../assets/components/header/Header.tsx"; 
-import "../../assets/styles/css/global.styles.css";
 
   function Painel() {
 
@@ -30,6 +29,20 @@ import "../../assets/styles/css/global.styles.css";
       
         fetchData(); 
       }, []);
+
+      const handleClick = () => {
+        const pessoaldiv = document.querySelector('.personal-container') as HTMLDivElement;
+        pessoaldiv.innerHTML = `${(usuarios.map((usuario) => {
+          return (
+            `<div class="personal-card">
+              <h1>${usuario.nome}</h1>
+              <h1>${usuario.email}</h1>
+              <h1>${usuario.tipo}</h1>
+            </div>`
+          );
+        })).join('')}`
+        console.log(usuarios);
+      }
 
     type TipoDado = {
       id: string,
@@ -67,7 +80,10 @@ import "../../assets/styles/css/global.styles.css";
 
     return (
         <>
-            <div></div>
+            <div className="personal-container">
+      <button type="button" onClick={handleClick}></button>
+
+            </div>
         </>
     );
 }

@@ -5,7 +5,6 @@ import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
 import TableFilter from "../../assets/components/filter/index.tsx";
 import Header from "../../assets/components/header/Header.tsx";
-import "../../assets/styles/css/global.styles.css";
 
 const ODD_OPACITY = 0.1;
 

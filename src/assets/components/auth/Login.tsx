@@ -14,22 +14,21 @@ const Login = ({onSuccess}: LoginProps) => {
   const navigate = useNavigate();
 
   const login = (e: FormEvent<HTMLFormElement>) => {
-    //prevent the user to submit an form with empty fields
+    e.preventDefault();
     
     if (!(email.trim() === '' || password.trim() === '')) {
-      e.preventDefault();
-      signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
-        onSuccess();
-        navigate('/');
-      }).catch((error) => {
-        console.log(error);
-      }
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log(userCredential);
+          onSuccess();
+          navigate('/');
+        }).catch((error) => {
+          console.log(error);
+          alert('Email ou senha incorretos ');
+        }
       );
     } else {
-      e.preventDefault();
-      alert('Preencha todos os campos!');
+      alert('Preencha todos os campos ');
     }
   }
 
