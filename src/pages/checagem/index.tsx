@@ -1,4 +1,5 @@
 import Header from "../../assets/components/header/Header.tsx"; 
+import "../../assets/styles/css/global.styles.css";
 
 function Check() {
     return (
