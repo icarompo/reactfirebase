@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { db } from "../../assets/api/firebase-config.ts";
+import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
-import Header from "../../assets/components/header/Header.tsx"; 
+import Header from "../../components/header/Header.tsx"; 
 
   function Painel() {
 

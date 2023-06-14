@@ -10,7 +10,7 @@ import Personal from "./pages/pessoal/index.tsx";
 import Painel from "./pages/painel/index.tsx";
 import Processes from "./pages/processos/index.tsx";
 import Check from "./pages/checagem/index.tsx";
-import Login from "./assets/components/auth/Login.tsx"
+import Login from "./components/auth/Login.tsx"
 
 export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
