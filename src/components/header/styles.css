@@ -14,7 +14,7 @@
   .logo {
     width: 50px; /* Ajuste o tamanho da imagem conforme necessário */
     height: auto;
-    margin: 10px 10px 10px 10px; /* Espaçamento entre a imagem e o texto */
+    margin: 0px 10px 10px 10px; /* Espaçamento entre a imagem e o texto */
   }
   
   .text-container {
@@ -26,11 +26,11 @@
   h1 {
     font-family: 'IBM Plex Serif', serif;
     font-weight: 1000;
-    margin: 2px 10px 0px 10px;
+    margin: 10px 0px 0px 10px;
   }
 
   h2 {
     font-family: 'IBM Plex Serif', serif;
     font-weight: 200;
-    margin: 0px 0px 10px 10px;
+    margin: 0px 0px 0px 10px;
   }

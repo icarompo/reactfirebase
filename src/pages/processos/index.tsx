@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { db } from "../../assets/api/firebase-config.ts";
-import { collection, getDocs, doc, query } from "firebase/firestore";
+import { db } from "../../api/firebase-config.ts";
+import { collection, getDocs, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
-import TableFilter from "../../assets/components/filter/index.tsx";
-import Header from "../../assets/components/header/Header.tsx";
-import '../../assets/styles/css/global.styles.css';
+import TableFilter from "../../components/filter/index.tsx";
+import Header from "../../components/header/Header.tsx";
 
 const ODD_OPACITY = 0.1;
 
