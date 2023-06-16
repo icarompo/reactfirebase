@@ -46,17 +46,27 @@ function Painel() {
     }
     fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
   }, []);
-  /* 
-    console.log(user?.identificador)
-    console.log(dados);
+/* 
+  console.log(user?.identificador)
+  console.log(dados);
 */
+
+const meta = (dados.filter((Processo) => Processo.meta.toLowerCase() === "sim").length);
+const anoAtual = (dados.filter((Processo) => Processo.ano === 2023).length);
+
+
   return (
     <>
       <div className="personal-container">
-        <div className="container-header"></div>
-        <Card name="Processos" value={3} text="Quantidade de processos pessoais"/>
-        <Card name="Meta" value={0} text="Quantidade de processos pessoais em meta"/>
-        <Card name="Prioridade" value={2} text="Quantidade de processos pessoais em prioridade"/>
+        <div className="container-header">
+    
+        </div>
+          <div className="container-body">
+            <Card name="Processos" value={dados.length} text="Quantidade de processos pessoais"/>
+            <Card name="Meta" value={meta} text="Quantidade de processos pessoais em meta"/>
+            <Card name="Prioridade" value={0} text="Quantidade de processos pessoais em prioridade"/>
+            <Card name="2023" value={anoAtual} text="Quantidade de processos pessoais do ano atual"/>
+          </div>
       </div>
     </>
   );
