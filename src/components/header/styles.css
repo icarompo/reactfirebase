@@ -1,55 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@200&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@200&display=swap");
 
 .header {
-    --blue: #2d3e9e;
-    display: flex;
-    align-items: center;
-    background: var(--blue);
-    color: white;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 3px;
-  }
+  --blue: #2d3e9e;
+  display: flex;
+  align-items: center;
+  background: var(--blue);
+  color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
 
+.logo {
+  width: 50px; /* Ajuste o tamanho da imagem conforme necessário */
+  height: auto;
+  margin: 0px 10px 10px 10px; /* Espaçamento entre a imagem e o texto */
+}
 
-  
-  .logo {
-    width: 50px; /* Ajuste o tamanho da imagem conforme necessário */
-    height: auto;
-    margin: 0px 10px 10px 10px; /* Espaçamento entre a imagem e o texto */
-  }
-  
-  .text-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-  h1 {
-    font-family: 'IBM Plex Serif', serif;
-    font-weight: 1000;
-    margin: 10px 0px 0px 10px;
-  }
+h1 {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 1000;
+  margin: 10px 0px 0px 10px;
+}
 
-  h2 {
-    font-family: 'IBM Plex Serif', serif;
-    font-weight: 200;
-    margin: 0px 0px 0px 10px;
-  }
+h2 {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 200;
+  margin: 0px 0px 0px 10px;
+}
 
-  .header-buttons {
-    margin-left: auto;
-    margin-right: 50px;
-    display: flex;
-    flex-direction: column;
-  }
+.header-buttons {
+  margin-left: auto;
+  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+}
 
-  .login-button {
-    border-radius: 3px;
-    
-  }
+.login-button {
+  border-radius: 3px;
+}
 
-  .user {
-    display: flex;
-    flex-direction: column;
-  }
+.user {
+  display: flex;
+  flex-direction: column;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #4256c9;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+
+.link {
+  color: white;
+  margin-left: 30px;
+  margin-right: 30px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.icon {
+  color: white;
+  margin-top: 3px;
+  margin-right: 5px;
+}

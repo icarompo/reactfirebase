@@ -1,8 +1,8 @@
 import './styles.css';
 import { Link } from 'react-router-dom';
-import Navigation from "../navigation/Navigation.tsx";
+import Navigation from "./Navigation.tsx";
 import UserContext from "../../context/userContext";
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 
 interface HeaderProps {
     title: string;

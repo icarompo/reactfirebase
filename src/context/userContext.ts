@@ -1,9 +1,9 @@
-import { createContext, Dispatch, SetStateAction } from "react";
+import { createContext, Dispatch, SetStateAction, useEffect } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../api/firebase-config";
 
 type User = {
-  id: string;
+  identificador: string;
   nome: string;
   email: string;
   tipo: string;
@@ -28,7 +28,7 @@ export const fetchUserData = async (email: string, setUser: (user: User | null) 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       const userData = {
-        id: doc.id,
+        identificador: doc.data().identificador,
         nome: doc.data().nome,
         email: doc.data().email,
         tipo: doc.data().tipo,
@@ -39,3 +39,4 @@ export const fetchUserData = async (email: string, setUser: (user: User | null) 
     console.log(error);
   }
 };
+
