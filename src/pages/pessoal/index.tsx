@@ -24,6 +24,7 @@ function Painel() {
     encaminhamento: string;
     definicao: string;
     meta: string;
+    prioridade: string;
   };
 
   const { user } = useContext(UserContext);
@@ -53,6 +54,7 @@ function Painel() {
 
 const meta = (dados.filter((Processo) => Processo.meta.toLowerCase() === "sim").length);
 const anoAtual = (dados.filter((Processo) => Processo.ano === 2023).length);
+const prioridade = (dados.filter((Processo) => Processo.prioridade.toLowerCase() === "alta").length);
 
 
   return (
@@ -64,7 +66,7 @@ const anoAtual = (dados.filter((Processo) => Processo.ano === 2023).length);
           <div className="container-body">
             <Card name="Processos" value={dados.length} text="Quantidade de processos pessoais"/>
             <Card name="Meta" value={meta} text="Quantidade de processos pessoais em meta"/>
-            <Card name="Prioridade" value={0} text="Quantidade de processos pessoais em prioridade"/>
+            <Card name="Prioridade" value={prioridade} text="Quantidade de processos pessoais em prioridade"/>
             <Card name="2023" value={anoAtual} text="Quantidade de processos pessoais do ano atual"/>
           </div>
       </div>

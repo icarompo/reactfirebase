@@ -3,7 +3,7 @@ import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
-import TableFilter from "../../components/filter/index.tsx";
+import TableFilter from "../../components/filter/filter.tsx";
 import Header from "../../components/header/Header.tsx";
 
 const ODD_OPACITY = 0.1;
@@ -63,6 +63,7 @@ function Table({ filterValue }: TableProps) {
     encaminhamento: string,
     definicao: string,
     meta: string,
+    prioridade: string,
   }
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
@@ -88,9 +89,10 @@ function Table({ filterValue }: TableProps) {
     if (filterValue === "*") {
       return dados;
     } else {
-      return dados.filter((Processo) => Processo.definicao.toLowerCase() === filterValue.toLowerCase());
+      return dados.filter((Processo) => Processo.definicao && Processo.definicao.toLowerCase() === filterValue.toLowerCase());
     }
   };
+  
 
   return (
     <>
@@ -114,11 +116,12 @@ function Table({ filterValue }: TableProps) {
           { field: 'assessor', headerName: 'Assessor', width: 75 },
           { field: 'entidade', headerName: 'Entidade', width: 300 },
           { field: 'vinculado', headerName: 'Vinculado', width: 100 },
-          { field: 'conselheiro', headerName: 'Conselheiro', width: 100 },
+          { field: 'conselheiro', headerName: 'Conselheiro', width: 75 },
           { field: 'julgador', headerName: 'Órgão Julgador', width: 100 },
           { field: 'encaminhamento', headerName: 'Encaminhamento', width: 100 },
           { field: 'definicao', headerName: 'Definição', width: 100 },
           { field: 'meta', headerName: 'Meta', width: 75 },
+          { field: 'prioridade', headerName: 'Prioridade', width: 75 },
         ]
       } 
       checkboxSelection

@@ -1,27 +1,11 @@
 import ReactModal from "react-modal";
 import AddIcon from "@material-ui/icons/Add";
-import SearchIcon from "@material-ui/icons/Search";
-import React, { useState } from "react";
-import "./styles.css";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
+import { useState } from "react";
 
-function SearchProcessButton() {
-  return (
-    <button type="button" className="button" id="searchButton">
-      {<SearchIcon className="icon" />}
-      <span>Pesquisar Processo</span>
-    </button>
-  );
-}
-
-function AddProcessModal({
-  isOpen,
-  closeModal,
-}: {
-  isOpen: boolean;
-  closeModal: () => void;
-}) {
+function AddProcessModal({isOpen, closeModal,}: {isOpen: boolean; closeModal: () => void; }) {
+    
   const [newProcesso, setNewProcesso] = useState(0);
   const [newAno, setNewAno] = useState(0);
   const [newAssunto, setNewAssunto] = useState("");
@@ -35,9 +19,8 @@ function AddProcessModal({
   const [newEncaminhamento, setNewEncaminhamento] = useState("");
   const [newDefinicao, setNewDefinicao] = useState("");
   const [newMeta, setNewMeta] = useState("");
+  const [newPrioridade, setNewPrioridade] = useState("");
   const dadosCollectionRef = collection(db, "dados");
-
-  //turn into async createProcesso
 
   const createProcesso = async () => {
     await addDoc(dadosCollectionRef, {
@@ -54,21 +37,16 @@ function AddProcessModal({
       encaminhamento: newEncaminhamento,
       definicao: newDefinicao,
       meta: newMeta,
+      prioridade: newPrioridade,
     });
-  }
+  };
 
   return (
     <>
       {isOpen && (
-        <ReactModal
-          className="modal"
-          isOpen={isOpen}
-          onRequestClose={closeModal}
-        >
+        <ReactModal className="modal" isOpen={isOpen} onRequestClose={closeModal}>
           <h2>Adicionar Processo</h2>
-          <button className="closeModalButton" onClick={closeModal}>
-            X
-          </button>
+          <button className="closeModalButton" onClick={closeModal}>X</button>
           <form name="Adicionar processo">
             <div className="row">
               <div className="column">
@@ -85,6 +63,7 @@ function AddProcessModal({
                 <label htmlFor="encaminhamento">Encaminhamento:</label>
                 <label htmlFor="definicao">Definição:</label>
                 <label htmlFor="meta">Meta:</label>
+                <label htmlFor="prioridade">Prioridade:</label>
               </div>
               <div className="column">
                 <input
@@ -95,12 +74,12 @@ function AddProcessModal({
                   name="proc"
                   placeholder="Processo..."
                 />
-                <input 
+                <input
                   onChange={(event) => setNewAno(Number(event.target.value))}
-                  className="formRow" 
-                  type="number" 
-                  id="ano" 
-                  name="ano" 
+                  className="formRow"
+                  type="number"
+                  id="ano"
+                  name="ano"
                   placeholder="Ano..."
                 />
                 <input
@@ -111,13 +90,13 @@ function AddProcessModal({
                   name="assunto"
                   placeholder="Assunto..."
                 />
-                <input 
+                <input
                   onChange={(event) => setNewData(event.target.value)}
-                  className="formRow" 
-                  type="date" 
-                  id="data" 
+                  className="formRow"
+                  type="date"
+                  id="data"
                   name="data"
-                  placeholder="Data de inserção..." 
+                  placeholder="Data de inserção..."
                 />
                 <input
                   onChange={(event) => setNewDataDecisao(event.target.value)}
@@ -128,14 +107,16 @@ function AddProcessModal({
                   placeholder="Data de decisão..."
                 />
                 <input
-                  onChange={(event) => setNewAssessor(Number(event.target.value))}
+                  onChange={(event) =>
+                    setNewAssessor(Number(event.target.value))
+                  }
                   className="formRow"
                   type="number"
                   id="assessor"
                   name="assessor"
                   placeholder="Assessor..."
                 />
-                <input 
+                <input
                   onChange={(event) => setNewEntidade(event.target.value)}
                   className="formRow"
                   type="text"
@@ -183,31 +164,36 @@ function AddProcessModal({
                   name="definicao"
                   placeholder="Definição..."
                 />
-                <input 
+                <input
                   onChange={(event) => setNewMeta(event.target.value)}
-                  className="formRow" 
-                  type="text" 
-                  id="meta" 
-                  name="meta" 
+                  className="formRow"
+                  type="text"
+                  id="meta"
+                  name="meta"
                   placeholder="Meta..."
+                />
+                <input
+                  onChange={(event) => setNewPrioridade(event.target.value)}
+                  className="formRow"
+                  type="text"
+                  id="prioridade"
+                  name="prioridade"
+                  placeholder="Prioridade..."
                 />
               </div>
               <div className="column">
-                <button className="button" type="button">
-                  Próximo
-                </button>
-                <button className="button" type="button">
-                  Localizar
-                </button>
-                <button className="button" type="button">
-                  Verificar
-                </button>
-                <button className="button" type="button">
-                  Fechar
-                </button>
+                <button className="button" type="button">Próximo</button>
+                <button className="button" type="button">Localizar</button>
+                <button className="button" type="button">Verificar</button>
+                <button className="button" type="button">Fechar</button>
               </div>
             </div>
-            <button className="button" id="addProcessFormButton" type="submit" onClick={createProcesso}>
+            <button
+              className="button"
+              id="addProcessFormButton"
+              type="submit"
+              onClick={createProcesso}
+            >
               Adicionar
             </button>
           </form>
@@ -218,76 +204,21 @@ function AddProcessModal({
 }
 
 function AddProcessButton({ openModal }: { openModal: () => void }) {
-  return (
-    <button
-      type="button"
-      className="button"
-      id="addProcessButton"
-      onClick={openModal}
-    >
-      {<AddIcon className="icon" />}
-      <span>Adicionar Processo</span>
-    </button>
-  );
-}
-
-type SelectLocationProps = {
-  onSelectChange: (value: string) => void;
-};
-
-function SelectLocation(props: SelectLocationProps) {
-  const [selectedOption, setSelectedOption] = useState("relatoria");
-
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelectedOption(event.target.value as string);
-    props.onSelectChange(event.target.value as string); // Chama a função de callback com o valor selecionado
-  };
-
-  return (
-    <div>
-      <select
-        className="button"
-        id="select"
-        value={selectedOption}
-        onChange={handleChange}
-      >
-        <option value="*">Todos</option>
-        <option value="sim">Finalizados</option>
-        <option value="TRAMIT.">Tramitando</option>
-        <option value="sobrest">Sobrestado</option>
-        <option value="relatoria">Relatoria</option>
-      </select>
-    </div>
-  );
-}
-
-interface TableFilterProps {
-  onSelectChange: (value: string) => void;
-}
-
-function TableFilter(props: TableFilterProps ) {
   const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
 
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const handleSelectChange = (value: string) => {
-    props.onSelectChange(value);
-  };
-
   return (
-    <div className="filterContainer">
-      <SearchProcessButton />
-      <AddProcessButton openModal={openModal} />
+    <>
+      <button type="button" className="button" id="addProcessButton" onClick={() => {openModal(); setModalOpen(true);}}>
+        {<AddIcon className="icon" />}
+        <span>Adicionar Processo</span>
+      </button>
       <AddProcessModal isOpen={modalOpen} closeModal={closeModal} />
-      <SelectLocation onSelectChange={handleSelectChange} />
-    </div>
+    </>
   );
 }
 
-export default TableFilter;
+export default AddProcessButton;
