@@ -3,7 +3,7 @@ import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
-import TableFilter from "../../components/filter/filter.tsx";
+import TableFilter from "../../components/filter/Filter.tsx";
 import Header from "../../components/header/Header.tsx";
 
 const ODD_OPACITY = 0.1;

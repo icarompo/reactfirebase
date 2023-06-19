@@ -77,19 +77,38 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--ADD PROCESS MODAL--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+.form {
+  display: flex;
+  width: auto;
+  color: black;
+  background-color: white;
+}
+
 .row {
   display: flex;
-  flex-direction: row;
+  width: 100%;
+  align-items: center;
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+.label {
+  margin-right: 10px;
+  width: 120px;
+  text-align: right;
 }
 
 .formRow {
-  margin-bottom: 2px;
+  flex: 1;
+  margin-right: 10px;
+}
+
+#addProcessFormButton {
+  margin-left: 3px;
 }
 
 .modal {
