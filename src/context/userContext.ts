@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction, useEffect } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../api/firebase-config";
 

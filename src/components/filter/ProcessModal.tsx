@@ -1,8 +1,8 @@
 import ReactModal from "react-modal";
 import AddIcon from "@material-ui/icons/Add";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles.css";
 
 function AddProcessModal({
@@ -12,7 +12,7 @@ function AddProcessModal({
   isOpen: boolean;
   closeModal: () => void;
 }) {
-  const [status, setStatus] = useState("Adicionar");
+  const [buttonText, setButtonText] = useState("Adicionar");
   const [buttonType, setButtonType] = useState("addProcessFormButton");
   const [newProcesso, setNewProcesso] = useState(0);
   const [newAno, setNewAno] = useState(0);
@@ -80,15 +80,95 @@ function AddProcessModal({
     }
   };
 
-const handleLocateClick = () => {
-  if (newProcesso === 0) {
-    alert("Digite um número de processo válido!");
-  } else { 
-  setStatus("Editar");
-  setButtonType("editProcessFormButton");
-  }
-};
+  type TipoProcesso = {
+    proc: number;
+    ano: number;
+    assunto: string;
+    data: string;
+    dataDecisao: string;
+    dias: number;
+    assessor: number;
+    entidade: string;
+    vinculado: string;
+    conselheiro: string;
+    orgaoJulgador: string;
+    encaminhamento: string;
+    definicao: string;
+    meta: string;
+    prioridade: string;
+    relatoria: number;
+  };
 
+  const [process, setProcess] = useState<TipoProcesso>({
+    proc: 0,
+    ano: 0,
+    assunto: "",
+    data: "",
+    dataDecisao: "",
+    dias: 0,
+    assessor: 0,
+    entidade: "",
+    vinculado: "",
+    conselheiro: "",
+    orgaoJulgador: "",
+    encaminhamento: "",
+    definicao: "",
+    meta: "",
+    prioridade: "",
+    relatoria: 0,
+  });
+
+  const getProcess = async () => {
+    const processRef = collection(db, "dados");
+    const q = query(processRef, where("proc", "==", newProcesso));
+    const querySnapshot = await getDocs(q);
+  
+    if (querySnapshot.empty) {
+      setProcess({
+        proc: 0,
+        ano: 0,
+        assunto: "",
+        data: "",
+        dataDecisao: "",
+        dias: 0,
+        assessor: 0,
+        entidade: "",
+        vinculado: "",
+        conselheiro: "",
+        orgaoJulgador: "",
+        encaminhamento: "",
+        definicao: "",
+        meta: "",
+        prioridade: "",
+        relatoria: 0,
+      });
+    } else {
+      querySnapshot.forEach((doc) => {
+        setProcess( doc.data() as TipoProcesso );
+      });
+    }
+  };
+  
+  const handleLocateClick = () => {
+    if (newProcesso === 0) {
+      alert("Digite um número de processo válido!");
+    } else {
+      getProcess();
+    }
+  };
+  
+  useEffect(() => {
+    if (process.proc === newProcesso) {
+      setButtonText("Editar");
+      setButtonType("editProcessFormButton");
+      //set the input text equal to the values of the process
+
+    } else {
+      setButtonText("Adicionar");
+      setButtonType("addProcessFormButton");
+    }
+  }, [process, newProcesso]);  
+  
   return (
     <>
       {isOpen && (
@@ -107,6 +187,7 @@ const handleLocateClick = () => {
             className="form"
           >
             <div className="column">
+
               <div className="row">{/*PROCESSO*/}
                 <label className="label" htmlFor="proc">
                   Processo:
@@ -366,7 +447,7 @@ const handleLocateClick = () => {
                 id={buttonType}
                 type="submit"
               >
-                {status}
+                {buttonText}
               </button>
             </div>
           </form>
