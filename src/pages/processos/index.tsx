@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
+import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
 import TableFilter from "../../components/filter/Filter.tsx";
 import Header from "../../components/header/Header.tsx";
+import './styles.css'
 
 const ODD_OPACITY = 0.1;
 
@@ -92,7 +94,10 @@ function Table({ filterValue }: TableProps) {
       return dados.filter((Processo) => Processo.definicao && Processo.definicao.toLowerCase() === filterValue.toLowerCase());
     }
   };
-  
+
+  const handleAction = (row: any) => {
+    console.log(row.id);
+  };
 
   return (
     <>
@@ -122,6 +127,16 @@ function Table({ filterValue }: TableProps) {
           { field: 'definicao', headerName: 'Definição', width: 100 },
           { field: 'meta', headerName: 'Meta', width: 75 },
           { field: 'prioridade', headerName: 'Prioridade', width: 75 },
+          {
+            field: "actions",
+            headerName: "Ações",
+            width: 55,
+            renderCell: (params) => (
+              <button type="button" className="editButton" onClick={() => handleAction(params.row)}>
+                {<EditIcon/>}
+              </button>
+            ),
+          },
         ]
       } 
       checkboxSelection

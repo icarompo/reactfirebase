@@ -17,6 +17,13 @@
   font-size: large;
   height: 25px;
   border-radius: 5px;
+  background-color: white;
+  color: #000;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #b8b5b5;
 }
 
 .icon {
@@ -27,6 +34,7 @@
   margin-left: 10px;
   width: 205px;
   background-color: #9e9e9e;
+  color: white;
   border: none;
 }
 #searchButton:hover {
@@ -39,25 +47,12 @@
   margin-left: 10px;
   width: 205px;
   background-color: #35bb35;
+  color: white;
   border: none;
 }
 #addProcessButton:hover {
   cursor: pointer;
   background-color: #238323;
-  color: white;
-}
-
-#addProcessFormButton {
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  background-color: #00cc00;
-  border: none;
-}
-#addProcessFormButton:hover {
-  cursor: pointer;
-  background-color: #009900;
   color: white;
 }
 
@@ -76,6 +71,38 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--ADD PROCESS MODAL--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
+
+#addProcessFormButton {
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  background-color: #00cc00;
+  border: none;
+  color: white;
+}
+#addProcessFormButton:hover {
+  cursor: pointer;
+  background-color: #009900;
+  color: white;
+}
+
+#editProcessFormButton {  
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  background-color: #2067eb;
+  border: none;
+  color: white;
+}
+#editProcessFormButton:hover {
+  cursor: pointer;
+  background-color: #1a51b6;
+  color: white;
+}
+
+
 
 .form {
   display: flex;
@@ -105,10 +132,6 @@
 .formRow {
   flex: 1;
   margin-right: 10px;
-}
-
-#addProcessFormButton {
-  margin-left: 3px;
 }
 
 .modal {

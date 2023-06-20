@@ -12,6 +12,8 @@ function AddProcessModal({
   isOpen: boolean;
   closeModal: () => void;
 }) {
+  const [status, setStatus] = useState("Adicionar");
+  const [buttonType, setButtonType] = useState("addProcessFormButton");
   const [newProcesso, setNewProcesso] = useState(0);
   const [newAno, setNewAno] = useState(0);
   const [newAssunto, setNewAssunto] = useState("");
@@ -78,6 +80,15 @@ function AddProcessModal({
     }
   };
 
+const handleLocateClick = () => {
+  if (newProcesso === 0) {
+    alert("Digite um número de processo válido!");
+  } else { 
+  setStatus("Editar");
+  setButtonType("editProcessFormButton");
+  }
+};
+
   return (
     <>
       {isOpen && (
@@ -96,7 +107,7 @@ function AddProcessModal({
             className="form"
           >
             <div className="column">
-              <div className="row">
+              <div className="row">{/*PROCESSO*/}
                 <label className="label" htmlFor="proc">
                   Processo:
                 </label>
@@ -111,7 +122,7 @@ function AddProcessModal({
                   placeholder="Processo..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*ANO*/}
                 <label className="label" htmlFor="ano">
                   Ano:
                 </label>
@@ -126,7 +137,7 @@ function AddProcessModal({
                   placeholder="Ano..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*ASSUNTO*/}
                 <label className="label" htmlFor="assunto">
                   Assunto:
                 </label>
@@ -141,7 +152,7 @@ function AddProcessModal({
                   placeholder="Assunto..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*DATA INSERÇÃO*/}
                 <label className="label" htmlFor="data">
                   Data de inserção:
                 </label>
@@ -156,7 +167,7 @@ function AddProcessModal({
                   placeholder="Data de inserção..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*DATA DECISÃO*/}
                 <label className="label" htmlFor="datadecisao">
                   Data de decisão:
                 </label>
@@ -171,7 +182,7 @@ function AddProcessModal({
                   placeholder="Data de decisão..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*DIAS*/}
                 <label className="label" htmlFor="dias">
                   Dias:
                 </label>
@@ -186,7 +197,7 @@ function AddProcessModal({
                   placeholder="Dias..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*ASSESSOR*/}
                 <label className="label" htmlFor="assessor">
                   Assessor:
                 </label>
@@ -201,7 +212,7 @@ function AddProcessModal({
                   placeholder="Assessor..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*ENTIDADE*/}
                 <label className="label" htmlFor="entidade">
                   Entidade:
                 </label>
@@ -216,7 +227,7 @@ function AddProcessModal({
                   placeholder="Entidade..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*VINCULADO*/}
                 <label className="label" htmlFor="vinculado">
                   Vinculado:
                 </label>
@@ -231,7 +242,7 @@ function AddProcessModal({
                   placeholder="Vinculado..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*CONSELHEIRO*/}
                 <label className="label" htmlFor="conselheiro">
                   Conselheiro:
                 </label>
@@ -246,7 +257,7 @@ function AddProcessModal({
                   placeholder="Conselheiro..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*ÓRGAO JULGADOR*/}
                 <label className="label" htmlFor="julgador">
                   Órgão Julgador:
                 </label>
@@ -261,7 +272,7 @@ function AddProcessModal({
                   placeholder="Órgão Julgador..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*ENCAMINHAMENTO*/}
                 <label className="label" htmlFor="encaminhamento">
                   Encaminhamento:
                 </label>
@@ -276,7 +287,7 @@ function AddProcessModal({
                   placeholder="Encaminhamento..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*DEFINIÇÃO*/}
                 <label className="label" htmlFor="definicao">
                   Definição:
                 </label>
@@ -291,7 +302,7 @@ function AddProcessModal({
                   placeholder="Definição..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*META*/}
                 <label className="label" htmlFor="meta">
                   Meta:
                 </label>
@@ -306,7 +317,7 @@ function AddProcessModal({
                   placeholder="Meta..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*PRIORIDADE*/}
                 <label className="label" htmlFor="prioridade">
                   Prioridade:
                 </label>
@@ -321,7 +332,7 @@ function AddProcessModal({
                   placeholder="Prioridade..."
                 />
               </div>
-              <div className="row">
+              <div className="row">{/*RELATORIA*/}
                 <label className="label" htmlFor="dias">
                   Relatoria:
                 </label>
@@ -341,7 +352,7 @@ function AddProcessModal({
               <button className="button" type="button">
                 Próximo
               </button>
-              <button className="button" type="button">
+              <button className="button" type="button" onClick={handleLocateClick}>
                 Localizar
               </button>
               <button className="button" type="button">
@@ -352,10 +363,10 @@ function AddProcessModal({
               </button>
               <button
                 className="button"
-                id="addProcessFormButton"
+                id={buttonType}
                 type="submit"
               >
-                Adicionar
+                {status}
               </button>
             </div>
           </form>
