@@ -1,10 +1,14 @@
 import Header from "../../components/header/Header.tsx"; 
 
-function Home() {
+interface HomeProps {
+    onLogOut: () => void;
+  }
+
+function Home({ onLogOut } : HomeProps): JSX.Element {
     return (
       
         <>
-            <Header title="Controle E-Contas" subtitle="Página Principal"/>
+            <Header title="Controle E-Contas" subtitle="Página Principal" onLogOut={onLogOut}/>
         </>
 
     );

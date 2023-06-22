@@ -74,10 +74,14 @@ const prioridade = (dados.filter((Processo) => Processo.prioridade.toLowerCase()
   );
 }
 
-function Personal() {
+interface PersonalProps {
+  onLogOut: () => void;
+}
+
+function Personal({ onLogOut }: PersonalProps) {
   return (
     <>
-      <Header title="Controle E-Contas" subtitle="Página Pessoal" />
+      <Header title="Controle E-Contas" subtitle="Página Pessoal" onLogOut={onLogOut}/>
       <Painel />
     </>
   );

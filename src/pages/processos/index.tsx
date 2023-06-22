@@ -31,7 +31,6 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
             theme.palette.action.selectedOpacity +
             theme.palette.action.hoverOpacity,
         ),
-        // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: alpha(
             theme.palette.primary.main,
@@ -43,10 +42,8 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-
 interface TableProps {
   filterValue: string;
-
 }
 
 function Table({ filterValue }: TableProps) {
@@ -101,7 +98,6 @@ function Table({ filterValue }: TableProps) {
 
   return (
     <>
-
     <div style={{ height: '100%', width: '100%' }}>
       <StripedDataGrid sx={
         {
@@ -140,11 +136,9 @@ function Table({ filterValue }: TableProps) {
         ]
       } 
       checkboxSelection
-     
       onRowSelectionModelChange={(ids) => {
         setSelectedRows(ids);
       }}
-
       disableRowSelectionOnClick
       />
     </div> 
@@ -152,8 +146,11 @@ function Table({ filterValue }: TableProps) {
   );
 }
 
+interface ProcessesProps {
+  onLogOut: () => void;
+}
 
-function Processes() {
+function Processes({ onLogOut }: ProcessesProps) {
   const [filterValue, setFilterValue] = useState("relatoria");
 
   const handleSelectChange = (value: string) => {
@@ -162,7 +159,7 @@ function Processes() {
 
   return (
     <>
-      <Header title="Controle E-Contas" subtitle="Dados de Processos"/>
+      <Header title="Controle E-Contas" subtitle="Dados de Processos" onLogOut={onLogOut}/>
       <TableFilter onSelectChange={handleSelectChange} />
       <Table filterValue={filterValue}/>
     </>

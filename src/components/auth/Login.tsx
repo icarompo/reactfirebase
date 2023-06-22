@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import UserContext, { fetchUserData } from '../../context/userContext.ts';
 import './styles.css';
 interface LoginProps {
-  onSuccess: () => void;
+  onLogIn: () => void;
 }
 
-const Login = ({onSuccess}: LoginProps) => {
+const Login = ({ onLogIn }: LoginProps) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,7 +21,7 @@ const Login = ({onSuccess}: LoginProps) => {
       signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
-        onSuccess();
+        onLogIn();
         navigate('/');
         fetchUserData(email, setUser);
       }).catch((error) => {
@@ -33,7 +33,6 @@ const Login = ({onSuccess}: LoginProps) => {
       alert('Preencha todos os campos');
     }
   };
-
 
     return (
         <div className='login-container'>
@@ -47,5 +46,7 @@ const Login = ({onSuccess}: LoginProps) => {
         </div>
     );
 }
+
+
 
 export default Login;

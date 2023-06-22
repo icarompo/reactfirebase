@@ -21,16 +21,20 @@ export const App = () => {
     setIsAuthenticated(true);
   }
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  }
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, setIsAuthenticated }}>
       <Router>
         <Routes>
-          <Route path="/login" element={<Login onSuccess={handleLoginSucess} />} />
-          <Route path="/" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
-          <Route path="/pessoal" element={isAuthenticated ? <Personal /> : <Navigate to="/login" />} />
-          <Route path="/painel" element={isAuthenticated ? <Painel /> : <Navigate to="/login" />} />
-          <Route path="/processos" element={isAuthenticated ? <Processes /> : <Navigate to="/login" />} />
-          <Route path="/checagem" element={isAuthenticated ? <Check /> : <Navigate to="/login" />} />
+          <Route path="/login" element={<Login onLogIn={handleLoginSucess} />} />
+          <Route path="/" element={isAuthenticated ? <Home onLogOut={handleLogout}/> : <Navigate to="/login" />} />
+          <Route path="/pessoal" element={isAuthenticated ? <Personal onLogOut={handleLogout}/> : <Navigate to="/login" />} />
+          <Route path="/painel" element={isAuthenticated ? <Painel onLogOut={handleLogout}/> : <Navigate to="/login" />} />
+          <Route path="/processos" element={isAuthenticated ? <Processes onLogOut={handleLogout}/> : <Navigate to="/login" />} />
+          <Route path="/checagem" element={isAuthenticated ? <Check onLogOut={handleLogout}/> : <Navigate to="/login" />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

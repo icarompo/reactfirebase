@@ -3,15 +3,29 @@ import { Link } from 'react-router-dom';
 import Navigation from "./Navigation.tsx";
 import UserContext from "../../context/userContext";
 import { useContext } from 'react';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../api/firebase-config';
+import { useNavigate } from 'react-router-dom'; 
 
 interface HeaderProps {
     title: string;
     subtitle: string;
-
+    onLogOut: () => void;
   }
   
-  function Header({title, subtitle }: HeaderProps): JSX.Element {
-    const { user } = useContext(UserContext);
+  function Header({ title, subtitle, onLogOut }: HeaderProps): JSX.Element {
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const logOut = () => {
+      signOut(auth).then(() => {
+        onLogOut();
+        console.log('Deslogado');
+        navigate('/login');
+      }).catch((error) => {
+        console.log(error);
+      });
+    };
   
     return (
       <>
@@ -25,9 +39,7 @@ interface HeaderProps {
           </div>
           <div className="header-buttons">
             <span className="user">Bem vindo {user?.nome}</span>
-            <Link to="/login">
-              <button className="login-button">Sair</button>
-            </Link>
+              <button className="logOutButton" onClick={onLogOut}>Sair</button>
             </div>
         </div>
         <Navigation />
