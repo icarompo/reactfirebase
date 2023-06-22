@@ -122,7 +122,7 @@ function Table({ filterValue }: TableProps) {
           { field: 'entidade', headerName: 'Entidade', width: 300 },
           { field: 'vinculado', headerName: 'Vinculado', width: 100 },
           { field: 'conselheiro', headerName: 'Conselheiro', width: 75 },
-          { field: 'julgador', headerName: 'Órgão Julgador', width: 100 },
+          { field: 'orgaojulgador', headerName: 'Órgão Julgador', width: 100 },
           { field: 'encaminhamento', headerName: 'Encaminhamento', width: 100 },
           { field: 'definicao', headerName: 'Definição', width: 100 },
           { field: 'meta', headerName: 'Meta', width: 75 },

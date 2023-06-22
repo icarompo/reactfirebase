@@ -1,8 +1,9 @@
 import ReactModal from "react-modal";
 import AddIcon from "@material-ui/icons/Add";
-import { collection, addDoc, query, where, getDocs, Timestamp } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { format } from "date-fns";
 import "./styles.css";
 
 function AddProcessModal({
@@ -15,13 +16,13 @@ function AddProcessModal({
   const [buttonText, setButtonText] = useState("Adicionar");
   const [buttonType, setButtonType] = useState("addProcessFormButton");
 
-  const [newProcesso, setNewProcesso] = useState(0);
-  const [newAno, setNewAno] = useState(0);
+  const [newProcesso, setNewProcesso] = useState("");
+  const [newAno, setNewAno] = useState("");
   const [newAssunto, setNewAssunto] = useState("");
   const [newData, setNewData] = useState("");
   const [newDataDecisao, setNewDataDecisao] = useState("");
-  const [newDias, setNewDias] = useState(0);
-  const [newAssessor, setNewAssessor] = useState(0);
+  const [newDias, setNewDias] = useState("");
+  const [newAssessor, setNewAssessor] = useState("");
   const [newEntidade, setNewEntidade] = useState("");
   const [newVinculado, setNewVinculado] = useState("");
   const [newConselheiro, setNewConselheiro] = useState("");
@@ -30,53 +31,37 @@ function AddProcessModal({
   const [newDefinicao, setNewDefinicao] = useState("");
   const [newMeta, setNewMeta] = useState("");
   const [newPrioridade, setNewPrioridade] = useState("");
-  const [newRelatoria, setNewRelatoria] = useState(0);
 
+    //ADD PROCESS
   const createProcesso = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const dadosCollectionRef = collection(db, "dados");
 
-    const dataTimestamp = Timestamp.fromDate(new Date(newData));
-    const dataDecisaoTimestamp = Timestamp.fromDate(new Date(newDataDecisao));
+    const formatData = (dateString: string): string => {
+      const date = new Date(dateString);
+      return format(date, 'dd/MM/yyyy');
+    };
 
     try {
       await addDoc(dadosCollectionRef, {
-        processo: newProcesso,
-        ano: newAno,
+        proc: Number(newProcesso),
+        ano: Number(newAno),
         assunto: newAssunto,
-        data: dataTimestamp,
-        dataDecisao: dataDecisaoTimestamp,
-        dias: newDias,
-        assessor: newAssessor,
+        data: formatData(newData),
+        datadecisao: formatData(newDataDecisao),
+        dias: Number(newDias),
+        assessor: Number(newAssessor),
         entidade: newEntidade,
         vinculado: newVinculado,
         conselheiro: newConselheiro,
-        orgaoJulgador: newOrgaoJulgador,
+        orgaojulgador: newOrgaoJulgador,
         encaminhamento: newEncaminhamento,
         definicao: newDefinicao,
         meta: newMeta,
         prioridade: newPrioridade,
-        relatoria: newRelatoria,
       });
-
-      setNewProcesso(0);
-      setNewAno(0);
-      setNewAssunto("");
-      setNewData("");
-      setNewDataDecisao("");
-      setNewDias(0);
-      setNewAssessor(0);
-      setNewEntidade("");
-      setNewVinculado("");
-      setNewConselheiro("");
-      setNewOrgaoJulgador("");
-      setNewEncaminhamento("");
-      setNewDefinicao("");
-      setNewMeta("");
-      setNewPrioridade("");
-      setNewRelatoria(0);
-
+      handleClearClick();
       closeModal();
       console.log("Documento adicionado com sucesso!");
       alert("Documento adicionado com sucesso!");
@@ -86,14 +71,15 @@ function AddProcessModal({
     }
   };
 
+    //EDIT PROCESS
   type TipoProcesso = {
     proc: number;
-    ano: number;
+    ano: string;
     assunto: string;
     data: string;
     dataDecisao: string;
-    dias: number;
-    assessor: number;
+    dias: string;
+    assessor: string;
     entidade: string;
     vinculado: string;
     conselheiro: string;
@@ -102,17 +88,16 @@ function AddProcessModal({
     definicao: string;
     meta: string;
     prioridade: string;
-    relatoria: number;
   };
 
   const [process, setProcess] = useState<TipoProcesso>({
     proc: 0,
-    ano: 0,
+    ano: "",
     assunto: "",
     data: "",
     dataDecisao: "",
-    dias: 0,
-    assessor: 0,
+    dias: "",
+    assessor: "",
     entidade: "",
     vinculado: "",
     conselheiro: "",
@@ -121,24 +106,23 @@ function AddProcessModal({
     definicao: "",
     meta: "",
     prioridade: "",
-    relatoria: 0,
-  });
 
+  });
 
   const getProcess = async () => {
     const processRef = collection(db, "dados");
-    const q = query(processRef, where("proc", "==", newProcesso));
+    const q = query(processRef, where("proc", "==", Number(newProcesso)));
     const querySnapshot = await getDocs(q);
   
     if (querySnapshot.empty) {
       setProcess({
         proc: 0,
-        ano: 0,
+        ano: "",
         assunto: "",
         data: "",
         dataDecisao: "",
-        dias: 0,
-        assessor: 0,
+        dias: "",
+        assessor: "",
         entidade: "",
         vinculado: "",
         conselheiro: "",
@@ -147,7 +131,7 @@ function AddProcessModal({
         definicao: "",
         meta: "",
         prioridade: "",
-        relatoria: 0,
+
       });
     } else {
       querySnapshot.forEach((doc) => {
@@ -158,7 +142,7 @@ function AddProcessModal({
   };
 
   useEffect(() => {
-    if (process.proc === newProcesso) {
+    if (Number(process.proc) === Number(newProcesso)) {
       setButtonText("Editar");
       setButtonType("editProcessFormButton");
       setNewAno(process.ano);
@@ -175,22 +159,37 @@ function AddProcessModal({
       setNewDefinicao(process.definicao);
       setNewMeta(process.meta);
       setNewPrioridade(process.prioridade);
-      setNewRelatoria(process.relatoria);
-
     } else {
       setButtonText("Adicionar");
       setButtonType("addProcessFormButton");
-
-
     }
   }, [process, newProcesso]);
   
   const handleLocateClick = () => {
-    if (newProcesso === 0) {
+    if (Number(newProcesso) == 0) {
       alert("Digite um número de processo válido!");
     } else {
       getProcess();
     }
+  };
+
+  //CLEAR INPUTS
+  const handleClearClick = () => {
+    setNewProcesso("");
+    setNewAno("");
+    setNewAssunto("");
+    setNewData("");
+    setNewDataDecisao("");
+    setNewDias("");
+    setNewAssessor("");
+    setNewEntidade("");
+    setNewVinculado("");
+    setNewConselheiro("");
+    setNewOrgaoJulgador("");
+    setNewEncaminhamento("");
+    setNewDefinicao("");
+    setNewMeta("");
+    setNewPrioridade("");
   };
   
   return (
@@ -211,14 +210,14 @@ function AddProcessModal({
                 <label className="label" htmlFor="proc">
                   Processo:
                 </label>
-                <input onChange={(event) => {setNewProcesso(Number(event.target.value));}}
+                <input onChange={(event) => {setNewProcesso(event.target.value);}}
                 className="formRow" type="number" id="proc" name="proc" placeholder="Processo..." />
               </div>
               <div className="row">{/*ANO*/}
                 <label className="label" htmlFor="ano">
                   Ano:
                 </label>
-                <input onChange={(event) => {setNewAno(Number(event.target.value));}} 
+                <input onChange={(event) => {setNewAno(event.target.value);}} 
                 className="formRow" type="number" id="ano" name="ano" placeholder="Ano..." value={newAno}/>
               </div>
               <div className="row">{/*ASSUNTO*/}
@@ -246,14 +245,14 @@ function AddProcessModal({
                 <label className="label" htmlFor="dias">
                   Dias:
                 </label>
-                <input onChange={(event) => {setNewDias(Number(event.target.value));}}
+                <input onChange={(event) => {setNewDias(event.target.value);}}
                 className="formRow" type="number" id="dias" name="dias" placeholder="Dias..." value={newDias}/>
               </div>
               <div className="row">{/*ASSESSOR*/}
                 <label className="label" htmlFor="assessor">
                   Assessor:
                 </label>
-                <input onChange={(event) => {setNewAssessor(Number(event.target.value));}}
+                <input onChange={(event) => {setNewAssessor(event.target.value);}}
                 className="formRow" type="number" id="assessor" name="assessor" placeholder="Assessor..." value={newAssessor}/>
               </div>
               <div className="row">{/*ENTIDADE*/}
@@ -312,13 +311,6 @@ function AddProcessModal({
                 <input onChange={(event) => {setNewPrioridade(event.target.value);}} 
                 className="formRow" type="text" id="prioridade" name="prioridade" placeholder="Prioridade..." value={newPrioridade}/>
               </div>
-              <div className="row">{/*RELATORIA*/}
-                <label className="label" htmlFor="dias">
-                  Relatoria:
-                </label>
-                <input onChange={(event) => {setNewRelatoria(Number(event.target.value));}} 
-                className="formRow" type="number" id="relatoria" name="relatoria" placeholder="Relatoria..." value={newRelatoria}/>
-              </div>
             </div>
             <div className="column">
               <button className="button" type="button">
@@ -330,8 +322,8 @@ function AddProcessModal({
               <button className="button" type="button">
                 Verificar
               </button>
-              <button className="button" type="button">
-                Fechar
+              <button className="button" type="button" onClick={handleClearClick}>
+                Limpar
               </button>
               <button
                 className="button"
