@@ -2,9 +2,13 @@
 
 #root {
   --blue: #2d3e9e;
-  max-width: auto;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+    padding: 0;
+    margin: 0;
 }
 
 form {

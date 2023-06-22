@@ -1,8 +1,8 @@
 import ReactModal from "react-modal";
 import AddIcon from "@material-ui/icons/Add";
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs, Timestamp } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./styles.css";
 
 function AddProcessModal({
@@ -14,6 +14,7 @@ function AddProcessModal({
 }) {
   const [buttonText, setButtonText] = useState("Adicionar");
   const [buttonType, setButtonType] = useState("addProcessFormButton");
+
   const [newProcesso, setNewProcesso] = useState(0);
   const [newAno, setNewAno] = useState(0);
   const [newAssunto, setNewAssunto] = useState("");
@@ -36,13 +37,16 @@ function AddProcessModal({
 
     const dadosCollectionRef = collection(db, "dados");
 
+    const dataTimestamp = Timestamp.fromDate(new Date(newData));
+    const dataDecisaoTimestamp = Timestamp.fromDate(new Date(newDataDecisao));
+
     try {
       await addDoc(dadosCollectionRef, {
         processo: newProcesso,
         ano: newAno,
         assunto: newAssunto,
-        data: newData,
-        dataDecisao: newDataDecisao,
+        data: dataTimestamp,
+        dataDecisao: dataDecisaoTimestamp,
         dias: newDias,
         assessor: newAssessor,
         entidade: newEntidade,
@@ -75,8 +79,10 @@ function AddProcessModal({
 
       closeModal();
       console.log("Documento adicionado com sucesso!");
+      alert("Documento adicionado com sucesso!");
     } catch (error) {
       console.log("Erro ao adicionar o documento: ", error);
+      alert("Erro ao adicionar o documento: ");
     }
   };
 
@@ -118,6 +124,7 @@ function AddProcessModal({
     relatoria: 0,
   });
 
+
   const getProcess = async () => {
     const processRef = collection(db, "dados");
     const q = query(processRef, where("proc", "==", newProcesso));
@@ -145,9 +152,38 @@ function AddProcessModal({
     } else {
       querySnapshot.forEach((doc) => {
         setProcess( doc.data() as TipoProcesso );
+        
       });
     }
   };
+
+  useEffect(() => {
+    if (process.proc === newProcesso) {
+      setButtonText("Editar");
+      setButtonType("editProcessFormButton");
+      setNewAno(process.ano);
+      setNewAssunto(process.assunto);
+      setNewData(process.data);
+      setNewDataDecisao(process.dataDecisao);
+      setNewDias(process.dias);
+      setNewAssessor(process.assessor);
+      setNewEntidade(process.entidade);
+      setNewVinculado(process.vinculado);
+      setNewConselheiro(process.conselheiro);
+      setNewOrgaoJulgador(process.orgaoJulgador);
+      setNewEncaminhamento(process.encaminhamento);
+      setNewDefinicao(process.definicao);
+      setNewMeta(process.meta);
+      setNewPrioridade(process.prioridade);
+      setNewRelatoria(process.relatoria);
+
+    } else {
+      setButtonText("Adicionar");
+      setButtonType("addProcessFormButton");
+
+
+    }
+  }, [process, newProcesso]);
   
   const handleLocateClick = () => {
     if (newProcesso === 0) {
@@ -156,18 +192,6 @@ function AddProcessModal({
       getProcess();
     }
   };
-  
-  useEffect(() => {
-    if (process.proc === newProcesso) {
-      setButtonText("Editar");
-      setButtonType("editProcessFormButton");
-      //set the input text equal to the values of the process
-
-    } else {
-      setButtonText("Adicionar");
-      setButtonType("addProcessFormButton");
-    }
-  }, [process, newProcesso]);  
   
   return (
     <>
@@ -181,252 +205,119 @@ function AddProcessModal({
           <button className="closeModalButton" onClick={closeModal}>
             X
           </button>
-          <form
-            onSubmit={createProcesso}
-            name="Adicionar processo"
-            className="form"
-          >
+          <form onSubmit={createProcesso} name="Adicionar processo" className="form">
             <div className="column">
-
               <div className="row">{/*PROCESSO*/}
                 <label className="label" htmlFor="proc">
                   Processo:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewProcesso(Number(event.target.value));
-                  }}
-                  className="formRow"
-                  type="number"
-                  id="proc"
-                  name="proc"
-                  placeholder="Processo..."
-                />
+                <input onChange={(event) => {setNewProcesso(Number(event.target.value));}}
+                className="formRow" type="number" id="proc" name="proc" placeholder="Processo..." />
               </div>
               <div className="row">{/*ANO*/}
                 <label className="label" htmlFor="ano">
                   Ano:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewAno(Number(event.target.value));
-                  }}
-                  className="formRow"
-                  type="number"
-                  id="ano"
-                  name="ano"
-                  placeholder="Ano..."
-                />
+                <input onChange={(event) => {setNewAno(Number(event.target.value));}} 
+                className="formRow" type="number" id="ano" name="ano" placeholder="Ano..." value={newAno}/>
               </div>
               <div className="row">{/*ASSUNTO*/}
                 <label className="label" htmlFor="assunto">
                   Assunto:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewAssunto(event.target.value);
-                  }}
-                  className="formRow"
-                  type="text"
-                  id="assunto"
-                  name="assunto"
-                  placeholder="Assunto..."
-                />
+                <input onChange={(event) => {setNewAssunto(event.target.value);}}
+                className="formRow" type="text" id="assunto" name="assunto" placeholder="Assunto..." value={newAssunto}/>
               </div>
               <div className="row">{/*DATA INSERÇÃO*/}
                 <label className="label" htmlFor="data">
                   Data de inserção:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewData(event.target.value);
-                  }}
-                  className="formRow"
-                  type="date"
-                  id="data"
-                  name="data"
-                  placeholder="Data de inserção..."
-                />
+                <input onChange={(event) => {setNewData(event.target.value);}}
+                className="formRow" type="date" id="data" name="data" placeholder="Data de inserção..." value={newData}/>
               </div>
               <div className="row">{/*DATA DECISÃO*/}
                 <label className="label" htmlFor="datadecisao">
                   Data de decisão:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewDataDecisao(event.target.value);
-                  }}
-                  className="formRow"
-                  type="date"
-                  id="datadecisao"
-                  name="datadecisao"
-                  placeholder="Data de decisão..."
-                />
+                <input onChange={(event) => {setNewDataDecisao(event.target.value);}}
+                className="formRow" type="date" id="datadecisao" name="datadecisao" placeholder="Data de decisão..." value={newDataDecisao}/>
               </div>
               <div className="row">{/*DIAS*/}
                 <label className="label" htmlFor="dias">
                   Dias:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewDias(Number(event.target.value));
-                  }}
-                  className="formRow"
-                  type="number"
-                  id="dias"
-                  name="dias"
-                  placeholder="Dias..."
-                />
+                <input onChange={(event) => {setNewDias(Number(event.target.value));}}
+                className="formRow" type="number" id="dias" name="dias" placeholder="Dias..." value={newDias}/>
               </div>
               <div className="row">{/*ASSESSOR*/}
                 <label className="label" htmlFor="assessor">
                   Assessor:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewAssessor(Number(event.target.value));
-                  }}
-                  className="formRow"
-                  type="number"
-                  id="assessor"
-                  name="assessor"
-                  placeholder="Assessor..."
-                />
+                <input onChange={(event) => {setNewAssessor(Number(event.target.value));}}
+                className="formRow" type="number" id="assessor" name="assessor" placeholder="Assessor..." value={newAssessor}/>
               </div>
               <div className="row">{/*ENTIDADE*/}
                 <label className="label" htmlFor="entidade">
                   Entidade:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewEntidade(event.target.value);
-                  }}
-                  className="formRow"
-                  type="text"
-                  id="entidade"
-                  name="entidade"
-                  placeholder="Entidade..."
-                />
+                <input onChange={(event) => {setNewEntidade(event.target.value);}} 
+                className="formRow" type="text" id="entidade" name="entidade" placeholder="Entidade..." value={newEntidade}/>
               </div>
               <div className="row">{/*VINCULADO*/}
                 <label className="label" htmlFor="vinculado">
                   Vinculado:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewVinculado(event.target.value);
-                  }}
-                  className="formRow"
-                  type="text"
-                  id="vinculado"
-                  name="vinculado"
-                  placeholder="Vinculado..."
-                />
+                <input onChange={(event) => {setNewVinculado(event.target.value);}} 
+                className="formRow" type="text" id="vinculado" name="vinculado" placeholder="Vinculado..." value={newVinculado}/>
               </div>
               <div className="row">{/*CONSELHEIRO*/}
                 <label className="label" htmlFor="conselheiro">
                   Conselheiro:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewConselheiro(event.target.value);
-                  }}
-                  className="formRow"
-                  type="text"
-                  id="conselheiro"
-                  name="conselheiro"
-                  placeholder="Conselheiro..."
-                />
+                <input onChange={(event) => {setNewConselheiro(event.target.value);}} 
+                className="formRow" type="text" id="conselheiro" name="conselheiro" placeholder="Conselheiro.." value={newConselheiro}/>
               </div>
               <div className="row">{/*ÓRGAO JULGADOR*/}
                 <label className="label" htmlFor="julgador">
                   Órgão Julgador:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewOrgaoJulgador(event.target.value);
-                  }}
-                  className="formRow"
-                  type="text"
-                  id="julgador"
-                  name="julgador"
-                  placeholder="Órgão Julgador..."
-                />
+                <input onChange={(event) => {setNewOrgaoJulgador(event.target.value);}}
+                className="formRow" type="text" id="julgador" name="julgador" placeholder="Órgão Julgador..." value={newOrgaoJulgador}/>
               </div>
               <div className="row">{/*ENCAMINHAMENTO*/}
                 <label className="label" htmlFor="encaminhamento">
                   Encaminhamento:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewEncaminhamento(event.target.value);
-                  }}
-                  className="formRow"
-                  type="text"
-                  id="encaminhamento"
-                  name="encaminhamento"
-                  placeholder="Encaminhamento..."
-                />
+                <input onChange={(event) => {setNewEncaminhamento(event.target.value);}} 
+                className="formRow" type="text" id="encaminhamento" name="encaminhamento" placeholder="Encaminhamento..." value={newEncaminhamento}/>
               </div>
               <div className="row">{/*DEFINIÇÃO*/}
                 <label className="label" htmlFor="definicao">
                   Definição:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewDefinicao(event.target.value);
-                  }}
-                  className="formRow"
-                  type="text"
-                  id="definicao"
-                  name="definicao"
-                  placeholder="Definição..."
-                />
+                <input onChange={(event) => {setNewDefinicao(event.target.value);}} 
+                className="formRow" type="text" id="definicao" name="definicao" placeholder="Definição..." value={newDefinicao}/>
               </div>
               <div className="row">{/*META*/}
                 <label className="label" htmlFor="meta">
                   Meta:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewMeta(event.target.value);
-                  }}
-                  className="formRow"
-                  type="text"
-                  id="meta"
-                  name="meta"
-                  placeholder="Meta..."
-                />
+                <input onChange={(event) => {setNewMeta(event.target.value);}} 
+                className="formRow" type="text" id="meta" name="meta" placeholder="Meta..." value={newMeta}/>
               </div>
               <div className="row">{/*PRIORIDADE*/}
                 <label className="label" htmlFor="prioridade">
                   Prioridade:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewPrioridade(event.target.value);
-                  }}
-                  className="formRow"
-                  type="text"
-                  id="prioridade"
-                  name="prioridade"
-                  placeholder="Prioridade..."
-                />
+                <input onChange={(event) => {setNewPrioridade(event.target.value);}} 
+                className="formRow" type="text" id="prioridade" name="prioridade" placeholder="Prioridade..." value={newPrioridade}/>
               </div>
               <div className="row">{/*RELATORIA*/}
                 <label className="label" htmlFor="dias">
                   Relatoria:
                 </label>
-                <input
-                  onChange={(event) => {
-                    setNewRelatoria(Number(event.target.value));
-                  }}
-                  className="formRow"
-                  type="number"
-                  id="relatoria"
-                  name="relatoria"
-                  placeholder="Relatoria..."
-                />
+                <input onChange={(event) => {setNewRelatoria(Number(event.target.value));}} 
+                className="formRow" type="number" id="relatoria" name="relatoria" placeholder="Relatoria..." value={newRelatoria}/>
               </div>
             </div>
             <div className="column">
