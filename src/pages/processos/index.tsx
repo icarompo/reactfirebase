@@ -128,7 +128,7 @@ function Table({ filterValue }: TableProps) {
             headerName: "Ações",
             width: 55,
             renderCell: (params) => (
-              <button type="button" className="editButton" onClick={() => handleAction(params.row)}>
+              <button type="button" className="edit-button" onClick={() => handleAction(params.row)}>
                 {<EditIcon/>}
               </button>
             ),

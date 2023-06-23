@@ -36,12 +36,12 @@ const Login = ({ onLogIn }: LoginProps) => {
 
     return (
         <div className='login-container'>
-            <form onSubmit={login}>
+            <form className='login-form' onSubmit={login}>
             <h1>Login</h1>
             <h2>Controle E-Contas</h2>
-            <input type='email' placeholder='Insira o email' value={email} onChange={(e) => setEmail(e.target.value)}/>
-            <input type='password' placeholder='Insira a Senha' value={password} onChange={(e) => setPassword(e.target.value)}/> 
-            <button type='submit' >Login</button>
+            <input className='login-input' type='email' placeholder='Insira o email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+            <input className='login-input' type='password' placeholder='Insira a Senha' value={password} onChange={(e) => setPassword(e.target.value)}/> 
+            <button className='login-button' type='submit' >Login</button>
             </form>
         </div>
     );

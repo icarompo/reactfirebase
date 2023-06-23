@@ -1,7 +1,13 @@
-.editButton {
+.edit-button {
     border: none;
     width: 30px;
     height: 30px;
     padding: 3px;
     border-radius: 5px;
+    background-color: #4256c9; ;
+    color: white;
+}
+
+.edit-button:hover {
+    cursor: pointer;
 }

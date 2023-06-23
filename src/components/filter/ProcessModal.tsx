@@ -358,7 +358,7 @@ function AddProcessButton({ openModal }: { openModal: () => void }) {
           setModalOpen(true);
         }}
       >
-        {<AddIcon className="icon" />}
+        {<AddIcon className="filter-icon" />}
         <span>Adicionar Processo</span>
       </button>
       <AddProcessModal isOpen={modalOpen} closeModal={closeModal} />

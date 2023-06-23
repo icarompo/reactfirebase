@@ -1,11 +1,9 @@
 
 .filterContainer {
-  background: var(--blue);
+  background: #4256c9;
   color: white;
-  margin-top: 10px;
   box-sizing: border-box;
-  border-radius: 3px;
-  height: 50px;
+  height: 35px;
   flex: auto;
   display: flex;
   align-items: center;
@@ -26,8 +24,10 @@
   background-color: #b8b5b5;
 }
 
-.icon {
+.filter-icon {
   margin-right: 5px;
+  color: white;
+  top: 10%;
 }
 
 #searchButton {
@@ -59,7 +59,7 @@
 #select {
   margin-left: 10px;
   width: 150px;
-  background-color: #4256c9;
+  background-color: #2d3e9e;
   color: white;
   border: 10px var(--blue);
 }
