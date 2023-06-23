@@ -12,11 +12,14 @@ type User = {
 type UserContextType = {
   user: User | null;
   setUser: Dispatch<SetStateAction<User | null>>;
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 };
+
 
 const UserContext = createContext<UserContextType>({
   user: null,
   setUser: () => {},
+  setIsAuthenticated: () => {},
 });
 
 export default UserContext;

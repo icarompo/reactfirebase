@@ -26,7 +26,7 @@ interface HeaderProps {
         console.log(error);
       });
     };
-  
+
     return (
       <>
         <div className="header">
@@ -39,7 +39,7 @@ interface HeaderProps {
           </div>
           <div className="header-buttons">
             <span className="user">Bem vindo {user?.nome}</span>
-              <button className="logOutButton" onClick={onLogOut}>Sair</button>
+              <button className="logOutButton" onClick={logOut}>Sair</button>
             </div>
         </div>
         <Navigation />
@@ -48,3 +48,4 @@ interface HeaderProps {
   }
 
 export default Header;
+
