@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
 import { alpha, styled } from '@mui/material/styles';
+import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid, GridRowId, gridClasses } from '@mui/x-data-grid';
-import TableFilter from "../../components/filter/index.tsx";
+import TableFilter from "../../components/filter/Filter.tsx";
 import Header from "../../components/header/Header.tsx";
+import './styles.css'
 
 const ODD_OPACITY = 0.1;
 
@@ -29,7 +31,6 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
             theme.palette.action.selectedOpacity +
             theme.palette.action.hoverOpacity,
         ),
-        // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: alpha(
             theme.palette.primary.main,
@@ -41,10 +42,8 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-
 interface TableProps {
   filterValue: string;
-
 }
 
 function Table({ filterValue }: TableProps) {
@@ -63,6 +62,7 @@ function Table({ filterValue }: TableProps) {
     encaminhamento: string,
     definicao: string,
     meta: string,
+    prioridade: string,
   }
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
@@ -88,13 +88,16 @@ function Table({ filterValue }: TableProps) {
     if (filterValue === "*") {
       return dados;
     } else {
-      return dados.filter((Processo) => Processo.definicao.toLowerCase() === filterValue.toLowerCase());
+      return dados.filter((Processo) => Processo.definicao && Processo.definicao.toLowerCase() === filterValue.toLowerCase());
     }
+  };
+
+  const handleAction = (row: any) => {
+    console.log(row.id);
   };
 
   return (
     <>
-
     <div style={{ height: '100%', width: '100%' }}>
       <StripedDataGrid sx={
         {
@@ -114,19 +117,28 @@ function Table({ filterValue }: TableProps) {
           { field: 'assessor', headerName: 'Assessor', width: 75 },
           { field: 'entidade', headerName: 'Entidade', width: 300 },
           { field: 'vinculado', headerName: 'Vinculado', width: 100 },
-          { field: 'conselheiro', headerName: 'Conselheiro', width: 100 },
-          { field: 'julgador', headerName: 'Órgão Julgador', width: 100 },
+          { field: 'conselheiro', headerName: 'Conselheiro', width: 75 },
+          { field: 'orgaojulgador', headerName: 'Órgão Julgador', width: 100 },
           { field: 'encaminhamento', headerName: 'Encaminhamento', width: 100 },
           { field: 'definicao', headerName: 'Definição', width: 100 },
           { field: 'meta', headerName: 'Meta', width: 75 },
+          { field: 'prioridade', headerName: 'Prioridade', width: 75 },
+          {
+            field: "actions",
+            headerName: "Ações",
+            width: 55,
+            renderCell: (params) => (
+              <button type="button" className="edit-button" onClick={() => handleAction(params.row)}>
+                {<EditIcon/>}
+              </button>
+            ),
+          },
         ]
       } 
       checkboxSelection
-     
       onRowSelectionModelChange={(ids) => {
         setSelectedRows(ids);
       }}
-
       disableRowSelectionOnClick
       />
     </div> 
@@ -134,8 +146,11 @@ function Table({ filterValue }: TableProps) {
   );
 }
 
+interface ProcessesProps {
+  onLogOut: () => void;
+}
 
-function Processes() {
+function Processes({ onLogOut }: ProcessesProps) {
   const [filterValue, setFilterValue] = useState("relatoria");
 
   const handleSelectChange = (value: string) => {
@@ -144,7 +159,7 @@ function Processes() {
 
   return (
     <>
-      <Header title="Controle E-Contas" subtitle="Dados de Processos"/>
+      <Header title="Controle E-Contas" subtitle="Dados de Processos" onLogOut={onLogOut}/>
       <TableFilter onSelectChange={handleSelectChange} />
       <Table filterValue={filterValue}/>
     </>
