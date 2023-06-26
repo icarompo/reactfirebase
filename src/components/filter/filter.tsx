@@ -1,4 +1,4 @@
-import AddProcessButton from "./ProcessModal.tsx";
+import AddProcessButton from "../processModal/ProcessModal.tsx";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useState } from "react";
 import "./styles.css";
