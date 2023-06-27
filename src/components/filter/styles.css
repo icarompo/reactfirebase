@@ -59,15 +59,43 @@
   color: white;
 }
 
-#select {
+.select {
   margin-left: 10px;
   width: 150px;
-  background-color: #2d3e9e;
+  display: flex;
+  align-items: center;
+  font-size: large;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
   padding: 1px;
-  color: white;
-
 }
-#select:hover {
+.select:hover {
   cursor: pointer;
   background-color: #232f74;
+}
+
+#selectTodos {
+  background-color: #2d3e9e;
+  color: white;
+}
+
+#selectRelatoria {
+  background-color: #04b4f4;
+  color: black;
+}
+
+#selectFinalizado {
+  background-color: #9c3404;
+  color: #ffc000;
+}
+
+#selectSobrestado {
+  background-color: #cc99ff;
+  color: black;
+}
+
+#selectTramitando {
+  background-color: #fc9c34;
+  color: black;
 }

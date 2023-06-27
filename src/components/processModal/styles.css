@@ -48,15 +48,21 @@
 
 .label {
   margin-right: 10px;
-  width: 120px;
+  width: 125px;
   text-align: right;
   color: white;
+  height: 25px;
+  margin-top: 1px;
+  font-size: large;
 }
 
 .formRow {
   flex: 1;
   margin-right: 10px;
   text-align: center;
+  height: 25px;
+  margin-top: 1px;
+  font-size: large;
 }
 
 .modal {
@@ -64,7 +70,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 500px;
+  max-width: 1000px;
   background-color: #2d3e9e;
   color: white;
   padding: 4rem;

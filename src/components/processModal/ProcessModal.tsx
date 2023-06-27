@@ -30,7 +30,7 @@ function AddProcessModal({
   const [newMeta, setNewMeta] = useState("");
   const [newPrioridade, setNewPrioridade] = useState("");
 
-  const convertDate = (dateString: String | undefined) => {
+  const convertDateIn = (dateString: String | undefined) => {
 
     if (dateString === undefined) {
       return "";
@@ -42,12 +42,24 @@ function AddProcessModal({
     return `${day}/${month}/${year}`;
   };
 
-  const fullFilledProcess = {
+  const convertDateOut = (dateString: String | undefined) => {
+
+    if (dateString === undefined) {
+      return "";
+    }
+    const dateParts = dateString.split('/');
+    const year = dateParts[2];
+    const month = dateParts[1];
+    const day = dateParts[0];
+    return `${year}-${month}-${day}`;
+  };
+
+  const fullFilledProcessToDb = {
     proc: Number(newProcesso),
     ano: Number(newAno),
     assunto: newAssunto,
-    data: convertDate(newData),
-    datadecisao: convertDate(newDataDecisao),
+    data: convertDateIn(newData),
+    datadecisao: convertDateIn(newDataDecisao),
     dias: Number(newDias),
     assessor: Number(newAssessor),
     entidade: newEntidade,
@@ -65,7 +77,7 @@ function AddProcessModal({
     event.preventDefault();
     const dadosCollectionRef = collection(db, "dados");
     try {
-      await addDoc(dadosCollectionRef, fullFilledProcess);
+      await addDoc(dadosCollectionRef, fullFilledProcessToDb);
       handleClearClick();
       closeModal();
       console.log("Documento adicionado com sucesso!");
@@ -82,7 +94,7 @@ function AddProcessModal({
     ano: string;
     assunto: string;
     data: string;
-    dataDecisao: string;
+    datadecisao: string;
     dias: string;
     assessor: string;
     entidade: string;
@@ -95,12 +107,12 @@ function AddProcessModal({
     prioridade: string;
   };
 
-  const [process, setProcess] = useState<TipoProcesso>({
+  const emptyProcessToLocal = {
     proc: 0,
     ano: "",
     assunto: "",
     data: "",
-    dataDecisao: "",
+    datadecisao: "",
     dias: "",
     assessor: "",
     entidade: "",
@@ -111,7 +123,9 @@ function AddProcessModal({
     definicao: "",
     meta: "",
     prioridade: "",
-  });
+  };
+
+  const [process, setProcess] = useState<TipoProcesso>(emptyProcessToLocal);
 
   type TipoEditaProcesso = {
     event: React.FormEvent<HTMLFormElement>;
@@ -121,7 +135,7 @@ function AddProcessModal({
   const editProcess = async ({event, id }: TipoEditaProcesso) => {
     event.preventDefault();
     const processDoc = doc(db, "dados", String(id));
-    await updateDoc(processDoc, fullFilledProcess);
+    await updateDoc(processDoc, fullFilledProcessToDb);
   };
 
   const getProcess = async () => {
@@ -130,23 +144,7 @@ function AddProcessModal({
     const querySnapshot = await getDocs(q);
   
     if (querySnapshot.empty) {
-      setProcess({
-        proc: 0,
-        ano: "",
-        assunto: "",
-        data: "",
-        dataDecisao: "",
-        dias: "",
-        assessor: "",
-        entidade: "",
-        vinculado: "",
-        conselheiro: "",
-        orgaojulgador: "",
-        encaminhamento: "",
-        definicao: "",
-        meta: "",
-        prioridade: "",
-      });
+      setProcess(emptyProcessToLocal);
     } else {
       querySnapshot.forEach((doc) => {
         setProcess( doc.data() as TipoProcesso );
@@ -160,8 +158,10 @@ function AddProcessModal({
       setButtonType("editProcessFormButton");
       setNewAno(process.ano);
       setNewAssunto(process.assunto);
-      setNewData(process.data);
-      setNewDataDecisao(process.dataDecisao);
+      setNewData(convertDateOut(process.data));
+      console.log(process.datadecisao);
+      console.log(convertDateOut(process.datadecisao));
+      setNewDataDecisao(convertDateOut(process.datadecisao));
       setNewDias(process.dias);
       setNewAssessor(process.assessor);
       setNewEntidade(process.entidade);
@@ -183,11 +183,11 @@ function AddProcessModal({
       alert("Digite um número de processo válido!");
     } else {
       getProcess();
-/*       if (getProcess.toString() == "adicionar") {
+      if (getProcess.toString() == "adicionar") {
         {};
       } else {
         {};
-      } */
+      }
     }
   };
 
