@@ -1,6 +1,14 @@
 import ReactModal from "react-modal";
 import AddIcon from "@material-ui/icons/Add";
-import { collection, addDoc, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../api/firebase-config";
 import { useState, useEffect } from "react";
 import "./styles.css";
@@ -29,13 +37,15 @@ function AddProcessModal({
   const [newDefinicao, setNewDefinicao] = useState("");
   const [newMeta, setNewMeta] = useState("");
   const [newPrioridade, setNewPrioridade] = useState("");
+  const appElement = document.getElementById("root");
 
   const convertDateIn = (dateString: String | undefined) => {
+    //Converte a data para o formato do banco de dados
 
     if (dateString === undefined) {
       return "";
     }
-    const dateParts = dateString.split('-');
+    const dateParts = dateString.split("-");
     const year = dateParts[0];
     const month = dateParts[1];
     const day = dateParts[2];
@@ -43,11 +53,12 @@ function AddProcessModal({
   };
 
   const convertDateOut = (dateString: String | undefined) => {
+    //Converte a data para o formato do input do tipo date
 
     if (dateString === undefined) {
       return "";
     }
-    const dateParts = dateString.split('/');
+    const dateParts = dateString.split("/");
     const year = dateParts[2];
     const month = dateParts[1];
     const day = dateParts[0];
@@ -55,6 +66,7 @@ function AddProcessModal({
   };
 
   const fullFilledProcessToDb = {
+    //Preenche os campos do processo para serem enviados ao banco de dados
     proc: Number(newProcesso),
     ano: Number(newAno),
     assunto: newAssunto,
@@ -70,26 +82,49 @@ function AddProcessModal({
     definicao: newDefinicao,
     meta: newMeta,
     prioridade: newPrioridade,
-  }
-
-    //ADD PROCESS
-  const createProcess = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const dadosCollectionRef = collection(db, "dados");
-    try {
-      await addDoc(dadosCollectionRef, fullFilledProcessToDb);
-      handleClearClick();
-      closeModal();
-      console.log("Documento adicionado com sucesso!");
-      alert("Documento adicionado com sucesso!");
-    } catch (error) {
-      console.log("Erro ao adicionar o documento: ", error);
-      alert("Erro ao adicionar o documento: ");
-    }
   };
 
-    //EDIT PROCESS
+  const handleClearClick = () => {
+    //Limpa os campos do formulário
+    setNewProcesso("");
+    setNewAno("");
+    setNewAssunto("");
+    setNewData("");
+    setNewDataDecisao("");
+    setNewDias("");
+    setNewAssessor("");
+    setNewEntidade("");
+    setNewVinculado("");
+    setNewConselheiro("");
+    setNewOrgaoJulgador("");
+    setNewEncaminhamento("");
+    setNewDefinicao("");
+    setNewMeta("");
+    setNewPrioridade("");
+  };
+
+  const emptyProcessToLocal = {
+    //Limpas os campos para o banco de dados localmente
+    proc: 0,
+    ano: "",
+    assunto: "",
+    data: "",
+    datadecisao: "",
+    dias: "",
+    assessor: "",
+    entidade: "",
+    vinculado: "",
+    conselheiro: "",
+    orgaojulgador: "",
+    encaminhamento: "",
+    definicao: "",
+    meta: "",
+    prioridade: "",
+  };
+  const [process, setProcess] = useState<TipoProcesso>(emptyProcessToLocal);
+
   type TipoProcesso = {
+    //Tipagem
     proc: number;
     ano: string;
     assunto: string;
@@ -107,33 +142,32 @@ function AddProcessModal({
     prioridade: string;
   };
 
-  const emptyProcessToLocal = {
-    proc: 0,
-    ano: "",
-    assunto: "",
-    data: "",
-    datadecisao: "",
-    dias: "",
-    assessor: "",
-    entidade: "",
-    vinculado: "",
-    conselheiro: "",
-    orgaojulgador: "",
-    encaminhamento: "",
-    definicao: "",
-    meta: "",
-    prioridade: "",
+  const handleLocateClick = () => {
+    if (Number(newProcesso) == 0) {
+      alert("Digite um número de processo válido!");
+    } else {
+      getProcess();
+    }
   };
 
-  const [process, setProcess] = useState<TipoProcesso>(emptyProcessToLocal);
+  const createProcess = async () => {
+    const dadosCollectionRef = collection(db, "dados");
+    try {
+      await addDoc(dadosCollectionRef, fullFilledProcessToDb);
+      handleClearClick();
+      closeModal();
+      console.log("Documento adicionado com sucesso!");
+      alert("Documento adicionado com sucesso!");
+    } catch (error) {
+      console.log("Erro ao adicionar o documento: ", error);
+      alert("Erro ao adicionar o documento: ");
+    }
+  };
 
   type TipoEditaProcesso = {
-    event: React.FormEvent<HTMLFormElement>;
     id: string;
   };
-
-  const editProcess = async ({event, id }: TipoEditaProcesso) => {
-    event.preventDefault();
+  const editProcess = async ({ id }: TipoEditaProcesso) => {
     const processDoc = doc(db, "dados", String(id));
     await updateDoc(processDoc, fullFilledProcessToDb);
   };
@@ -142,12 +176,13 @@ function AddProcessModal({
     const processRef = collection(db, "dados");
     const q = query(processRef, where("proc", "==", Number(newProcesso)));
     const querySnapshot = await getDocs(q);
-  
+
     if (querySnapshot.empty) {
       setProcess(emptyProcessToLocal);
+      alert("Processo não encontrado/Número de processo disponível");
     } else {
       querySnapshot.forEach((doc) => {
-        setProcess( doc.data() as TipoProcesso );
+        setProcess(doc.data() as TipoProcesso);
       });
     }
   };
@@ -159,8 +194,6 @@ function AddProcessModal({
       setNewAno(process.ano);
       setNewAssunto(process.assunto);
       setNewData(convertDateOut(process.data));
-      console.log(process.datadecisao);
-      console.log(convertDateOut(process.datadecisao));
       setNewDataDecisao(convertDateOut(process.datadecisao));
       setNewDias(process.dias);
       setNewAssessor(process.assessor);
@@ -177,52 +210,44 @@ function AddProcessModal({
       setButtonType("addProcessFormButton");
     }
   }, [process, newProcesso]);
-  
-  const handleLocateClick = () => {
-    if (Number(newProcesso) == 0) {
-      alert("Digite um número de processo válido!");
-    } else {
-      getProcess();
-      if (getProcess.toString() == "adicionar") {
-        {};
+
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleLocateClick();
+
+    if (buttonText == "Adicionar") {
+      if (confirm("Deseja adicionar esses valores ao banco de dados?")) {
+        createProcess();
       } else {
-        {};
+        alert("Cancelado!");
+        console.log("Cancelado!");
+      }
+    } else {
+      if (confirm("Deseja editar esses valores no banco de dados?")) {
+        editProcess({ id: String(process.proc) });
+      } else {
+        alert("Cancelado!");
+        console.log("Cancelado!");
       }
     }
   };
 
-  //CLEAR INPUTS
-  const handleClearClick = () => {
-    setNewProcesso("");
-    setNewAno("");
-    setNewAssunto("");
-    setNewData("");
-    setNewDataDecisao("");
-    setNewDias("");
-    setNewAssessor("");
-    setNewEntidade("");
-    setNewVinculado("");
-    setNewConselheiro("");
-    setNewOrgaoJulgador("");
-    setNewEncaminhamento("");
-    setNewDefinicao("");
-    setNewMeta("");
-    setNewPrioridade("");
-  };
+
   
   return (
     <>
       {isOpen && (
         <ReactModal
-          className="modal"
-          isOpen={isOpen}
-          onRequestClose={closeModal}
+        className="modal"
+        isOpen={isOpen}
+        onRequestClose={closeModal}
+        appElement={appElement as HTMLElement}
         >
           <h2>{buttonText} Processo</h2>
           <button className="closeModalButton" onClick={closeModal}>
             X
           </button>
-          <form onSubmit={createProcess} name="Adicionar processo" className="form">
+          <form onSubmit={handleFormSubmit} name="Adicionar processo" className="form">
             <div className="column">
               <div className="row">{/*PROCESSO*/}
                 <label className="label" htmlFor="proc">
@@ -364,6 +389,8 @@ function AddProcessButton({ openModal }: { openModal: () => void }) {
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  
 
   return (
     <>
