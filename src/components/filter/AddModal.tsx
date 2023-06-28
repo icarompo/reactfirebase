@@ -1,6 +1,6 @@
 import ReactModal from "react-modal";
 import AddIcon from "@material-ui/icons/Add";
-import ProcessForm from '../form/Form.tsx';
+import ProcessForm from './form/Form.tsx';
 import {
   collection,
   addDoc,
@@ -8,9 +8,10 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { db } from "../../api/firebase-config";
+import { db } from "../../api/firebase-config.ts";
+import { convertDateIn, convertDateOut } from "../../utils/dateTypeConverter.ts";
 import { useState, useEffect } from "react";
-import "./modal.styles.css";
+import "./form/modal.styles.css";
 
 function AddProcessModal({
   isOpen,
@@ -35,30 +36,6 @@ function AddProcessModal({
   const [newMeta, setNewMeta] = useState("");
   const [newPrioridade, setNewPrioridade] = useState("");
   const appElement = document.getElementById("root");
-
-  const convertDateIn = (dateString: String | undefined) => {//Converte a data para o formato do banco de dados
-
-    if (dateString === undefined) {
-      return "";
-    }
-    const dateParts = dateString.split("-");
-    const year = dateParts[0];
-    const month = dateParts[1];
-    const day = dateParts[2];
-    return `${day}/${month}/${year}`;
-  };
-
-  const convertDateOut = (dateString: String | undefined) => {//Converte a data para o formato do input do tipo date
-
-    if (dateString === undefined) {
-      return "";
-    }
-    const dateParts = dateString.split("/");
-    const year = dateParts[2];
-    const month = dateParts[1];
-    const day = dateParts[0];
-    return `${year}-${month}-${day}`;
-  };
 
   const fullFilledProcessToDb = {//Preenche os campos do processo para serem enviados ao banco de dados
     proc: Number(newProcesso),
@@ -199,8 +176,6 @@ function AddProcessModal({
         console.log("Cancelado!");
       }
   };
-
-  
 
   return (
     <>

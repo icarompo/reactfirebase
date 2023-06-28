@@ -1,3 +1,4 @@
+import "./modal.styles.css"
 
 type ProcessFormProps = {
   handleLocateClick: () => void;
@@ -122,13 +123,26 @@ function ProcessForm(props: ProcessFormProps) {
       <input onChange={(event) => {props.setNewEncaminhamento(event.target.value);}} 
       className="formRow" type="text" placeholder="Encaminhamento..." value={props.newEncaminhamento}/>
     </div>
+
+
     <div className="row">{/*DEFINIÇÃO*/}
       <label className="label" htmlFor="definicao">
         Definição:
       </label>
-      <input onChange={(event) => {props.setNewDefinicao(event.target.value);}} 
-      className="formRow" type="text" placeholder="Definição..." value={props.newDefinicao}/>
+
+      <select
+          className="select"
+          onChange={(event) => {props.setNewDefinicao(event.target.value);}}
+       >          
+          <option value="sim">Finalizados</option>
+          <option value="TRAMIT.">Tramitando</option>
+          <option value="sobrest">Sobrestado</option>
+          <option value="relatoria">Relatoria</option>
+        </select>
+
     </div>
+
+
     <div className="row">{/*META*/}
       <label className="label" htmlFor="meta">
         Meta:

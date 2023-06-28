@@ -120,3 +120,15 @@
   cursor: pointer;
   background-color: #dddddd;
 }
+
+.select {
+  border: none;
+  border-radius: 0px;
+  margin-left: 0px;
+  flex: 1;
+  margin-right: 10px;
+  text-align: center;
+  height: 25px;
+  margin-top: 1px;
+  font-size: large;
+}

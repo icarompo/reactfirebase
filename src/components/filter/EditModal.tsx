@@ -1,16 +1,16 @@
 import ReactModal from "react-modal";
 import EditIcon from "@mui/icons-material/Edit";
-import ProcessForm from "../form/Form.tsx";
+import ProcessForm from "./form/Form.tsx";
 import {
   collection,
-  addDoc,
   query,
   where,
   getDocs,
 } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
 import { useState, useEffect } from "react";
-import "./modal.styles.css";
+import { convertDateIn, convertDateOut } from "../../utils/dateTypeConverter.ts";
+import "./form/modal.styles.css";
 
 function EditProcessModal({
   isOpen,
@@ -36,47 +36,7 @@ function EditProcessModal({
   const [newPrioridade, setNewPrioridade] = useState("");
   const appElement = document.getElementById("root");
 
-  const convertDateIn = (dateString: String | undefined) => {//Converte a data para o formato do banco de dados
 
-    if (dateString === undefined) {
-      return "";
-    }
-    const dateParts = dateString.split("-");
-    const year = dateParts[0];
-    const month = dateParts[1];
-    const day = dateParts[2];
-    return `${day}/${month}/${year}`;
-  };
-
-  const convertDateOut = (dateString: String | undefined) => {//Converte a data para o formato do input do tipo date
-
-    if (dateString === undefined) {
-      return "";
-    }
-    const dateParts = dateString.split("/");
-    const year = dateParts[2];
-    const month = dateParts[1];
-    const day = dateParts[0];
-    return `${year}-${month}-${day}`;
-  };
-
-  const fullFilledProcessToDb = {//Preenche os campos do processo para serem enviados ao banco de dados
-    proc: Number(newProcesso),
-    ano: Number(newAno),
-    assunto: newAssunto,
-    data: convertDateIn(newData),
-    datadecisao: convertDateIn(newDataDecisao),
-    dias: Number(newDias),
-    assessor: Number(newAssessor),
-    entidade: newEntidade,
-    vinculado: newVinculado,
-    conselheiro: newConselheiro,
-    orgaojulgador: newOrgaoJulgador,
-    encaminhamento: newEncaminhamento,
-    definicao: newDefinicao,
-    meta: newMeta,
-    prioridade: newPrioridade,
-  };
 
   const handleClearClick = () => {//Limpa os campos do formulário
     setNewProcesso("");
@@ -141,18 +101,8 @@ function EditProcessModal({
     }
   };
 
-  const createProcess = async () => {
-    const dadosCollectionRef = collection(db, "dados");
-    try {
-      await addDoc(dadosCollectionRef, fullFilledProcessToDb);
-      handleClearClick();
-      closeModal();
-      console.log("Documento adicionado com sucesso!");
-      alert("Documento adicionado com sucesso!");
-    } catch (error) {
-      console.log("Erro ao adicionar o documento: ", error);
-      alert("Erro ao adicionar o documento: ");
-    }
+  const editProcess = async () => {
+
   };
 
   const getProcess = async () => {
@@ -193,7 +143,7 @@ function EditProcessModal({
     event.preventDefault();
     handleLocateClick();
       if (confirm("Deseja adicionar esses valores ao banco de dados?")) {
-        createProcess();
+        editProcess();
       } else {
         alert("Cancelado!");
         console.log("Cancelado!");
