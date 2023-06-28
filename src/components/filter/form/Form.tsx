@@ -154,8 +154,16 @@ function ProcessForm(props: ProcessFormProps) {
       <label className="label" htmlFor="prioridade">
         Prioridade:
       </label>
-      <input onChange={(event) => {props.setNewPrioridade(event.target.value);}} 
-      className="formRow" type="text" placeholder="Prioridade..." value={props.newPrioridade}/>
+      <select
+          className="select"
+          onChange={(event) => {props.setNewPrioridade(event.target.value);}}
+        >
+          <option value={props.newPrioridade}>Alta</option>
+          <option value={props.newPrioridade}>Média</option>
+          <option value={props.newPrioridade}>Baixa</option>
+        </select>
+
+
     </div>
   </div>
     );
