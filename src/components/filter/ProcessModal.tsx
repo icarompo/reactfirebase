@@ -1,6 +1,6 @@
 import ReactModal from "react-modal";
 import AddIcon from "@material-ui/icons/Add";
-import ProcessForm from "./form.tsx";
+import ProcessForm from '../form/Form.tsx';
 import {
   collection,
   addDoc,
@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
 import { useState, useEffect } from "react";
-import "./styles.css";
+import "./modal.styles.css";
 
 function AddProcessModal({
   isOpen,

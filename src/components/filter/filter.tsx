@@ -1,4 +1,4 @@
-import AddProcessButton from "../processModal/ProcessModal.tsx";
+import AddProcessButton from "./ProcessModal.tsx";
 import EditProcessButton from "./EditModal.tsx";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 

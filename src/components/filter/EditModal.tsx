@@ -1,6 +1,6 @@
 import ReactModal from "react-modal";
 import EditIcon from "@mui/icons-material/Edit";
-import ProcessForm from "../processModal/form.tsx";
+import ProcessForm from "../form/Form.tsx";
 import {
   collection,
   addDoc,
@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
 import { useState, useEffect } from "react";
-import "./styles.css";
+import "./modal.styles.css";
 
 function EditProcessModal({
   isOpen,
