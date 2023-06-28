@@ -1,16 +1,10 @@
 import AddProcessButton from "../processModal/ProcessModal.tsx";
-import SearchIcon from "@material-ui/icons/Search";
-import React, { useState } from "react";
-import "./styles.css";
+import EditIcon from "@mui/icons-material/Edit";
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
-function SearchProcessButton() {
-  return (
-    <button type="button" className="button" id="searchButton">
-      {<SearchIcon className="icon" />}
-      <span>Pesquisar Processo</span>
-    </button>
-  );
-}
+import React, { useState } from "react";
+
+import "./styles.css";
 
 type SelectLocationProps = {
   onSelectChange: (value: string) => void;
@@ -48,6 +42,22 @@ function SelectLocation(props: SelectLocationProps) {
   );
 }
 
+function EditProcessButton() {
+  return (
+    <button type="button" className="filter-button">
+      {<EditIcon />}
+    </button>
+  );
+}
+
+function FilterProcessButton() {
+  return (
+    <button type="button" className="filter-button">
+      {<FilterAltIcon />}
+    </button>
+  );
+}
+
 interface TableFilterProps {
   onSelectChange: (value: string) => void;
 }
@@ -69,9 +79,10 @@ function TableFilter(props: TableFilterProps ) {
 
   return (
     <div className="filterContainer">
-      <SearchProcessButton />
       <AddProcessButton openModal={openModal} />
       <SelectLocation onSelectChange={handleSelectChange} />
+      <EditProcessButton/>
+      <FilterProcessButton />
     </div>
   );
 }

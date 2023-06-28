@@ -7,7 +7,6 @@ import {
   createTheme,
   ThemeProvider,
 } from "@mui/material/styles";
-import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid, GridRowId, gridClasses, ptBR } from "@mui/x-data-grid";
 import TableFilter from "../../components/filter/Filter.tsx";
 import Header from "../../components/header/Header.tsx";
@@ -111,9 +110,9 @@ function Table({ filterValue }: TableProps) {
     }
   };
 
-  const handleAction = (row: any) => {
-    console.log(row.id);
-  };
+  useEffect(() => {
+    console.log(selectedRows);
+  }, [selectedRows]);
 
   return (
     <>
@@ -155,20 +154,6 @@ function Table({ filterValue }: TableProps) {
               { field: "definicao", headerName: "Definição", width: 100 },
               { field: "meta", headerName: "Meta", width: 75 },
               { field: "prioridade", headerName: "Prioridade", width: 75 },
-              {
-                field: "actions",
-                headerName: "Ações",
-                width: 55,
-                renderCell: (params) => (
-                  <button
-                    type="button"
-                    className="edit-button"
-                    onClick={() => handleAction(params.row)}
-                  >
-                    {<EditIcon />}
-                  </button>
-                ),
-              },
             ]}
             checkboxSelection
             onRowSelectionModelChange={(ids) => {

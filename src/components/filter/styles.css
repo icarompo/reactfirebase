@@ -33,17 +33,16 @@
   top: 10%;
 }
 
-#searchButton {
-  margin-left: 10px;
-  width: 205px;
-  background-color: white;
-  color: black;
+.filter-button {
   border: none;
+  margin-left: 10px;
+  background: none;
+  color: white;
 }
-#searchButton:hover {
-  cursor: pointer;
-  background-color: #ececec;
 
+.filter-button:hover {
+  cursor: pointer;
+  color: #d8d8d8;
 }
 
 #addProcessButton {
@@ -72,30 +71,50 @@
 }
 .select:hover {
   cursor: pointer;
-  background-color: #232f74;
 }
 
 #selectTodos {
   background-color: #2d3e9e;
   color: white;
 }
+#selectTodos:hover {
+  cursor: pointer;
+  background-color: #1f2d6e;
+}
+
 
 #selectRelatoria {
   background-color: #04b4f4;
-  color: black;
+  color: white;
+}
+#selectRelatoria:hover {
+  cursor: pointer;
+  background-color: #0390c9;
 }
 
 #selectFinalizado {
   background-color: #9c3404;
   color: #ffc000;
 }
+#selectFinalizado:hover {
+  cursor: pointer;
+  background-color: #7f2c03;
+}
 
 #selectSobrestado {
   background-color: #cc99ff;
-  color: black;
+  color: white;
+}
+#selectSobrestado:hover {
+  cursor: pointer;
+  background-color: #b380e0;
 }
 
 #selectTramitando {
   background-color: #fc9c34;
-  color: black;
+  color: white;
+}
+#selectTramitando:hover {
+  cursor: pointer;
+  background-color: #e68a00;
 }

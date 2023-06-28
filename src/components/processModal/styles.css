@@ -1,3 +1,22 @@
+.addProcessButton {
+  width: auto;
+  background-color: #00cc00;
+  display: flex;
+  align-items: center;
+  font-size: large;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding-right: 10px;
+  margin-left: 10px;
+}
+
+.addProcessButton:hover {
+  cursor: pointer;
+  background-color: #009900;
+}
+
 #addProcessFormButton {
   margin-top: 10px;
   margin-right: auto;

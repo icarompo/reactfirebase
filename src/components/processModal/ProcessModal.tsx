@@ -39,8 +39,7 @@ function AddProcessModal({
   const [newPrioridade, setNewPrioridade] = useState("");
   const appElement = document.getElementById("root");
 
-  const convertDateIn = (dateString: String | undefined) => {
-    //Converte a data para o formato do banco de dados
+  const convertDateIn = (dateString: String | undefined) => {//Converte a data para o formato do banco de dados
 
     if (dateString === undefined) {
       return "";
@@ -52,8 +51,7 @@ function AddProcessModal({
     return `${day}/${month}/${year}`;
   };
 
-  const convertDateOut = (dateString: String | undefined) => {
-    //Converte a data para o formato do input do tipo date
+  const convertDateOut = (dateString: String | undefined) => {//Converte a data para o formato do input do tipo date
 
     if (dateString === undefined) {
       return "";
@@ -65,8 +63,7 @@ function AddProcessModal({
     return `${year}-${month}-${day}`;
   };
 
-  const fullFilledProcessToDb = {
-    //Preenche os campos do processo para serem enviados ao banco de dados
+  const fullFilledProcessToDb = {//Preenche os campos do processo para serem enviados ao banco de dados
     proc: Number(newProcesso),
     ano: Number(newAno),
     assunto: newAssunto,
@@ -84,8 +81,7 @@ function AddProcessModal({
     prioridade: newPrioridade,
   };
 
-  const handleClearClick = () => {
-    //Limpa os campos do formulário
+  const handleClearClick = () => {//Limpa os campos do formulário
     setNewProcesso("");
     setNewAno("");
     setNewAssunto("");
@@ -103,8 +99,7 @@ function AddProcessModal({
     setNewPrioridade("");
   };
 
-  const emptyProcessToLocal = {
-    //Limpas os campos para o banco de dados localmente
+  const emptyProcessToLocal = {//Limpas os campos para o banco de dados localmente
     proc: 0,
     ano: "",
     assunto: "",
@@ -123,8 +118,7 @@ function AddProcessModal({
   };
   const [process, setProcess] = useState<TipoProcesso>(emptyProcessToLocal);
 
-  type TipoProcesso = {
-    //Tipagem
+  type TipoProcesso = {//Tipagem
     proc: number;
     ano: string;
     assunto: string;
@@ -396,15 +390,14 @@ function AddProcessButton({ openModal }: { openModal: () => void }) {
     <>
       <button
         type="button"
-        className="button"
-        id="addProcessButton"
+        className="addProcessButton"
         onClick={() => {
           openModal();
           setModalOpen(true);
         }}
       >
         {<AddIcon className="filter-icon" />}
-        <span>Adicionar Processo</span>
+        <span>Adicionar</span>
       </button>
       <AddProcessModal isOpen={modalOpen} closeModal={closeModal} />
     </>
