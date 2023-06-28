@@ -1,5 +1,5 @@
 import AddProcessButton from "../processModal/ProcessModal.tsx";
-import EditIcon from "@mui/icons-material/Edit";
+import EditProcessButton from "./EditModal.tsx";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 import React, { useState } from "react";
@@ -42,14 +42,6 @@ function SelectLocation(props: SelectLocationProps) {
   );
 }
 
-function EditProcessButton() {
-  return (
-    <button type="button" className="filter-button">
-      {<EditIcon />}
-    </button>
-  );
-}
-
 function FilterProcessButton() {
   return (
     <button type="button" className="filter-button">
@@ -63,15 +55,6 @@ interface TableFilterProps {
 }
 
 function TableFilter(props: TableFilterProps ) {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   const handleSelectChange = (value: string) => {
     props.onSelectChange(value);
@@ -79,7 +62,7 @@ function TableFilter(props: TableFilterProps ) {
 
   return (
     <div className="filterContainer">
-      <AddProcessButton openModal={openModal} />
+      <AddProcessButton/>
       <SelectLocation onSelectChange={handleSelectChange} />
       <EditProcessButton/>
       <FilterProcessButton />

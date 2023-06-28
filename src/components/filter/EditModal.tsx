@@ -1,6 +1,6 @@
 import ReactModal from "react-modal";
-import AddIcon from "@material-ui/icons/Add";
-import ProcessForm from "./form.tsx";
+import EditIcon from "@mui/icons-material/Edit";
+import ProcessForm from "../processModal/form.tsx";
 import {
   collection,
   addDoc,
@@ -12,7 +12,7 @@ import { db } from "../../api/firebase-config";
 import { useState, useEffect } from "react";
 import "./styles.css";
 
-function AddProcessModal({
+function EditProcessModal({
   isOpen,
   closeModal,
 }: {
@@ -200,8 +200,6 @@ function AddProcessModal({
       }
   };
 
-  
-
   return (
     <>
       {isOpen && (
@@ -211,13 +209,13 @@ function AddProcessModal({
         onRequestClose={closeModal}
         appElement={appElement as HTMLElement}
         >
-          <h2>Adicionar Processo</h2>
+          <h2>Editar Processo</h2>
           <button className="closeModalButton" onClick={closeModal}>
             X
           </button>
           <form onSubmit={handleFormSubmit} name="Adicionar processo" className="form">
-
-            <ProcessForm handleLocateClick={handleLocateClick}handleClearClick={handleClearClick}handleFormSubmit={handleFormSubmit}setNewProcesso={setNewProcesso}
+            
+          <ProcessForm handleLocateClick={handleLocateClick}handleClearClick={handleClearClick}handleFormSubmit={handleFormSubmit}setNewProcesso={setNewProcesso}
             setNewAno={setNewAno} setNewAssunto={setNewAssunto} setNewData={setNewData} setNewDataDecisao={setNewDataDecisao} setNewDias={setNewDias}
             setNewAssessor={setNewAssessor}setNewEntidade={setNewEntidade}setNewVinculado={setNewVinculado}setNewConselheiro={setNewConselheiro}
             setNewOrgaoJulgador={setNewOrgaoJulgador}setNewEncaminhamento={setNewEncaminhamento}setNewDefinicao={setNewDefinicao}setNewMeta={setNewMeta}
@@ -226,18 +224,15 @@ function AddProcessModal({
             newEncaminhamento={newEncaminhamento}newDefinicao={newDefinicao}newMeta={newMeta}newPrioridade={newPrioridade}/>
 
             <div className="column">
-              <button className="button" type="button" onClick={handleLocateClick}>
-                Localizar
-              </button>
               <button className="button" type="button" onClick={handleClearClick}>
                 Limpar
               </button>
               <button
                 className="button"
-                id="addProcessFormButton"
+                id="editProcessFormButton"
                 type="submit"
               >
-                Adicionar
+                Editar
               </button>
             </div>
           </form>
@@ -247,30 +242,28 @@ function AddProcessModal({
   );
 }
 
-function AddProcessButton() {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
+function EditProcessButton() {
+    const [modalOpen, setModalOpen] = useState(false);
   
-
-  return (
-    <>
-      <button
-        type="button"
-        className="addProcessButton"
-        onClick={() => {
-          setModalOpen(true);
-        }}
-      >
-        {<AddIcon className="filter-icon" />}
-        <span>Adicionar</span>
-      </button>
-      <AddProcessModal isOpen={modalOpen} closeModal={closeModal} />
-    </>
-  );
-}
-
-export default AddProcessButton;
+    const closeModal = () => {
+      setModalOpen(false);
+    };
+  
+    return (
+      <>
+        <button
+          type="button"
+          className="filter-button"
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        >
+          {<EditIcon />}
+        </button>
+        <EditProcessModal isOpen={modalOpen} closeModal={closeModal} />
+      </>
+    );
+  }
+  
+  export default EditProcessButton;
+  
