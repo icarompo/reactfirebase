@@ -4,7 +4,6 @@ type ProcessFormProps = {
   handleLocateClick: () => void;
   handleClearClick: () => void;
   handleFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  setNewProcesso: (value: string) => void;
   setNewAno: (value: string) => void;
   setNewAssunto: (value: string) => void;
   setNewData: (value: string) => void;
@@ -19,7 +18,6 @@ type ProcessFormProps = {
   setNewDefinicao: (value: string) => void;
   setNewMeta: (value: string) => void;
   setNewPrioridade: (value: string) => void;
-  newProcesso: string;
   newAno: string;
   newAssunto: string;
   newData: string;
@@ -38,90 +36,103 @@ type ProcessFormProps = {
 
 function ProcessForm(props: ProcessFormProps) {
   return (
-    <div className="column">
-    <div className="row">{/*PROCESSO*/}
-      <label className="label" htmlFor="proc">
-        Processo:
-      </label>
-      <input onChange={(event) => {props.setNewProcesso(event.target.value);}}
-      className="formRow" type="number" placeholder="Processo..." />
-    </div>
+    <>
     <div className="row">{/*ANO*/}
       <label className="label" htmlFor="ano">
         Ano:
       </label>
-      <input onChange={(event) => {props.setNewAno(event.target.value);}} 
-      className="formRow" type="number" placeholder="Ano..." value={props.newAno}/>
+
+    <select className="select-form" onChange={(event) => {props.setNewAno(event.target.value);}}>
+      {Array.from({ length: 31 }, (_, index) => 2000 + index).map((ano) => (
+        <option key={ano} value={ano}>
+          {ano}
+        </option>
+      ))}
+    </select>
+
     </div>
     <div className="row">{/*ASSUNTO*/}
       <label className="label" htmlFor="assunto">
         Assunto:
       </label>
       <input onChange={(event) => {props.setNewAssunto(event.target.value);}}
-      className="formRow" type="text"  placeholder="Assunto..." value={props.newAssunto}/>
+      className="input-form" type="text"  placeholder="Assunto..." value={props.newAssunto}/>
     </div>
     <div className="row">{/*DATA INSERÇÃO*/}
       <label className="label" htmlFor="data">
         Data de inserção:
       </label>
       <input onChange={(event) => {props.setNewData(event.target.value);}}
-      className="formRow" type="date" placeholder="Data de inserção..." value={props.newData}/>
+      className="input-form" type="date" placeholder="Data de inserção..." value={props.newData}/>
     </div>
     <div className="row">{/*DATA DECISÃO*/}
       <label className="label" htmlFor="datadecisao">
         Data de decisão:
       </label>
       <input onChange={(event) => {props.setNewDataDecisao(event.target.value);}}
-      className="formRow" type="date" placeholder="Data de decisão..." value={props.newDataDecisao}/>
+      className="input-form" type="date" placeholder="Data de decisão..." value={props.newDataDecisao}/>
     </div>
     <div className="row">{/*DIAS*/}
       <label className="label" htmlFor="dias">
         Dias:
       </label>
       <input onChange={(event) => {props.setNewDias(event.target.value);}}
-      className="formRow" type="number" placeholder="Dias..." value={props.newDias}/>
+      className="input-form" type="number" placeholder="Dias..." value={props.newDias}/>
     </div>
     <div className="row">{/*ASSESSOR*/}
       <label className="label" htmlFor="assessor">
         Assessor:
       </label>
-      <input onChange={(event) => {props.setNewAssessor(event.target.value);}}
-      className="formRow" type="number" placeholder="Assessor..." value={props.newAssessor}/>
+
+      <select className="select-form" onChange={(event) => {props.setNewAssessor(event.target.value);}}>
+        <option value="1">1 - Sandro</option>
+        <option value="2">2 - Sônia</option>
+        <option value="3">3 - Leidivon</option>
+        <option value="4">4 - Hermes</option>
+        <option value="5">5 - Mário</option>
+        <option value="6">6 - Abel</option>
+        <option value="7">7 - Luane</option>
+        <option value="8">8 - Jaqueline</option>
+        <option value="9">9 - Leda</option>
+        <option value="10">10 - Marcelo</option>
+      </select>
+
+
     </div>
     <div className="row">{/*ENTIDADE*/}
       <label className="label" htmlFor="entidade">
         Entidade:
       </label>
       <input onChange={(event) => {props.setNewEntidade(event.target.value);}} 
-      className="formRow" type="text" placeholder="Entidade..." value={props.newEntidade}/>
+      className="input-form" type="text" placeholder="Entidade..." value={props.newEntidade}/>
     </div>
     <div className="row">{/*VINCULADO*/}
       <label className="label" htmlFor="vinculado">
         Vinculado:
       </label>
       <input onChange={(event) => {props.setNewVinculado(event.target.value);}} 
-      className="formRow" type="text" placeholder="Vinculado..." value={props.newVinculado}/>
+      className="input-form" type="text" placeholder="Vinculado..." value={props.newVinculado}/>
     </div>
     <div className="row">{/*CONSELHEIRO*/}
       <label className="label" htmlFor="conselheiro">
         Conselheiro:
       </label>
       <input onChange={(event) => {props.setNewConselheiro(event.target.value);}} 
-      className="formRow" type="text" placeholder="Conselheiro.." value={props.newConselheiro}/>
+      className="input-form" type="text" placeholder="Conselheiro.." value={props.newConselheiro}/>
     </div>
     <div className="row">{/*ÓRGAO JULGADOR*/}
       <label className="label" htmlFor="julgador">
         Órgão Julgador:
       </label>
       <input onChange={(event) => {props.setNewOrgaoJulgador(event.target.value);}}
-      className="formRow" type="text" placeholder="Órgão Julgador..." value={props.newOrgaoJulgador}/>
+      className="input-form" type="text" placeholder="Órgão Julgador..." value={props.newOrgaoJulgador}/>
     </div>
     <div className="row">{/*ENCAMINHAMENTO*/}
       <label className="label" htmlFor="encaminhamento">
         Encaminhamento:
       </label>
       <input onChange={(event) => {props.setNewEncaminhamento(event.target.value);}} 
-      className="formRow" type="text" placeholder="Encaminhamento..." value={props.newEncaminhamento}/>
+      className="input-form" type="text" placeholder="Encaminhamento..." value={props.newEncaminhamento}/>
     </div>
 
 
@@ -131,7 +142,7 @@ function ProcessForm(props: ProcessFormProps) {
       </label>
 
       <select
-          className="select"
+          className="select-form"
           onChange={(event) => {props.setNewDefinicao(event.target.value);}}
        >          
           <option value="sim">Finalizados</option>
@@ -147,15 +158,19 @@ function ProcessForm(props: ProcessFormProps) {
       <label className="label" htmlFor="meta">
         Meta:
       </label>
-      <input onChange={(event) => {props.setNewMeta(event.target.value);}} 
-      className="formRow" type="text" placeholder="Meta..." value={props.newMeta}/>
+
+      <select className="select-form" onChange={(event) => {props.setNewMeta(event.target.value);}}>
+          <option value="sim">Sim</option>
+          <option value="nao">Não</option>
+        </select>
+
     </div>
     <div className="row">{/*PRIORIDADE*/}
       <label className="label" htmlFor="prioridade">
         Prioridade:
       </label>
       <select
-          className="select"
+          className="select-form"
           onChange={(event) => {props.setNewPrioridade(event.target.value);}}
         >
           <option value={props.newPrioridade}>Alta</option>
@@ -165,7 +180,8 @@ function ProcessForm(props: ProcessFormProps) {
 
 
     </div>
-  </div>
+  
+  </>
     );
 }
 

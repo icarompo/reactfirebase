@@ -1,15 +1,12 @@
 import ReactModal from "react-modal";
 import AddIcon from "@material-ui/icons/Add";
-import ProcessForm from './form/Form.tsx';
-import {
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import ProcessForm from "./form/Form.tsx";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../api/firebase-config.ts";
-import { convertDateIn, convertDateOut } from "../../utils/dateTypeConverter.ts";
+import {
+  convertDateIn,
+  convertDateOut,
+} from "../../utils/dateTypeConverter.ts";
 import { useState, useEffect } from "react";
 import "./form/modal.styles.css";
 
@@ -37,7 +34,8 @@ function AddProcessModal({
   const [newPrioridade, setNewPrioridade] = useState("");
   const appElement = document.getElementById("root");
 
-  const fullFilledProcessToDb = {//Preenche os campos do processo para serem enviados ao banco de dados
+  const fullFilledProcessToDb = {
+    //Preenche os campos do processo para serem enviados ao banco de dados
     proc: Number(newProcesso),
     ano: Number(newAno),
     assunto: newAssunto,
@@ -55,7 +53,8 @@ function AddProcessModal({
     prioridade: newPrioridade,
   };
 
-  const handleClearClick = () => {//Limpa os campos do formulário
+  const handleClearClick = () => {
+    //Limpa os campos do formulário
     setNewProcesso("");
     setNewAno("");
     setNewAssunto("");
@@ -73,7 +72,8 @@ function AddProcessModal({
     setNewPrioridade("");
   };
 
-  const emptyProcessToLocal = {//Limpas os campos para o banco de dados localmente
+  const emptyProcessToLocal = {
+    //Limpas os campos para o banco de dados localmente
     proc: 0,
     ano: "",
     assunto: "",
@@ -92,7 +92,8 @@ function AddProcessModal({
   };
   const [process, setProcess] = useState<TipoProcesso>(emptyProcessToLocal);
 
-  type TipoProcesso = {//Tipagem
+  type TipoProcesso = {
+    //Tipagem
     proc: number;
     ano: string;
     assunto: string;
@@ -163,48 +164,76 @@ function AddProcessModal({
       setNewDefinicao(process.definicao);
       setNewMeta(process.meta);
       setNewPrioridade(process.prioridade);
-    } 
+    }
   }, [process, newProcesso]);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleLocateClick();
-      if (confirm("Deseja adicionar esses valores ao banco de dados?")) {
-        createProcess();
-      } else {
-        alert("Cancelado!");
-        console.log("Cancelado!");
-      }
+    if (confirm("Deseja adicionar esses valores ao banco de dados?")) {
+      createProcess();
+    } else {
+      alert("Cancelado!");
+      console.log("Cancelado!");
+    }
   };
 
   return (
     <>
       {isOpen && (
         <ReactModal
-        className="modal"
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        appElement={appElement as HTMLElement}
+          className="modal"
+          isOpen={isOpen}
+          onRequestClose={closeModal}
+          appElement={appElement as HTMLElement}
         >
           <h2>Adicionar Processo</h2>
           <button className="closeModalButton" onClick={closeModal}>
             X
           </button>
-          <form onSubmit={handleFormSubmit} name="Adicionar processo" className="form">
+          <form
+            onSubmit={handleFormSubmit}
+            name="Adicionar processo"
+            className="form"
+          >
+            <div className="column">
+              <div className="row">
+                {/*PROCESSO*/}
+                <label className="label" htmlFor="proc">
+                  Processo:
+                </label>
+                <input
+                  onChange={(event) => {
+                    setNewProcesso(event.target.value);
+                  }}
+                  className="formRowProc"
+                  type="number"
+                  placeholder="Processo..."
+                />
+              </div>
 
-            <ProcessForm handleLocateClick={handleLocateClick}handleClearClick={handleClearClick}handleFormSubmit={handleFormSubmit}setNewProcesso={setNewProcesso}
+              <ProcessForm handleLocateClick={handleLocateClick}handleClearClick={handleClearClick}handleFormSubmit={handleFormSubmit}
             setNewAno={setNewAno} setNewAssunto={setNewAssunto} setNewData={setNewData} setNewDataDecisao={setNewDataDecisao} setNewDias={setNewDias}
             setNewAssessor={setNewAssessor}setNewEntidade={setNewEntidade}setNewVinculado={setNewVinculado}setNewConselheiro={setNewConselheiro}
             setNewOrgaoJulgador={setNewOrgaoJulgador}setNewEncaminhamento={setNewEncaminhamento}setNewDefinicao={setNewDefinicao}setNewMeta={setNewMeta}
-            setNewPrioridade={setNewPrioridade}newProcesso={newProcesso}newAno={newAno}newAssunto={newAssunto}newData={newData}newDataDecisao={newDataDecisao}
+            setNewPrioridade={setNewPrioridade}newAno={newAno}newAssunto={newAssunto}newData={newData}newDataDecisao={newDataDecisao}
             newDias={newDias}newAssessor={newAssessor}newEntidade={newEntidade}newVinculado={newVinculado}newConselheiro={newConselheiro}newOrgaoJulgador={newOrgaoJulgador}
             newEncaminhamento={newEncaminhamento}newDefinicao={newDefinicao}newMeta={newMeta}newPrioridade={newPrioridade}/>
+            </div>
 
             <div className="column">
-              <button className="button" type="button" onClick={handleLocateClick}>
+              <button
+                className="button"
+                type="button"
+                onClick={handleLocateClick}
+              >
                 Localizar
               </button>
-              <button className="button" type="button" onClick={handleClearClick}>
+              <button
+                className="button"
+                type="button"
+                onClick={handleClearClick}
+              >
                 Limpar
               </button>
               <button
@@ -228,8 +257,6 @@ function AddProcessButton() {
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  
 
   return (
     <>
