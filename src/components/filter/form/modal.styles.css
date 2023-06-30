@@ -36,7 +36,7 @@
   width: auto;
   color: black;
   background-color: #5d6abf;
-  padding-top: 20px;
+  padding-top: 4px;
 }
 
 .row {
@@ -154,4 +154,53 @@
 .select-form option {
   text-align: left; /* Alinha o texto à direita */
   width: 50px; /* Largura fixa para os itens do select */
+}
+
+#proc-list {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
+  max-width: 293px;
+  margin: auto;
+  margin-top: 10px;
+}
+
+.proc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  background-color: #0ba044;
+  font-size: large;
+  width: 71px; /* Largura fixa de 71px */
+  height: 17px;
+  margin: 1px;
+  padding-left: 5px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.remove-button {
+  border: none;
+  color: white;
+  background-color: #b91010;
+  width: 16px;
+  margin-left: 5px;
+}
+
+.remove-button:hover {
+  cursor: pointer;
+}
+
+#remove-all-button {
+  border: none;
+  color: white;
+  background-color: #b91010;
+  width: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#remove-all-button:hover {
+  cursor: pointer;
 }

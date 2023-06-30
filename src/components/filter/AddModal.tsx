@@ -212,7 +212,7 @@ function AddProcessModal({
                 />
               </div>
 
-              <ProcessForm handleLocateClick={handleLocateClick}handleClearClick={handleClearClick}handleFormSubmit={handleFormSubmit}
+              <ProcessForm 
             setNewAno={setNewAno} setNewAssunto={setNewAssunto} setNewData={setNewData} setNewDataDecisao={setNewDataDecisao} setNewDias={setNewDias}
             setNewAssessor={setNewAssessor}setNewEntidade={setNewEntidade}setNewVinculado={setNewVinculado}setNewConselheiro={setNewConselheiro}
             setNewOrgaoJulgador={setNewOrgaoJulgador}setNewEncaminhamento={setNewEncaminhamento}setNewDefinicao={setNewDefinicao}setNewMeta={setNewMeta}

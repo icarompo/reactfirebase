@@ -33,6 +33,9 @@ function EditProcessModal({
   const [newMeta, setNewMeta] = useState("");
   const [newPrioridade, setNewPrioridade] = useState("");
   const appElement = document.getElementById("root");
+  const processRef = collection(db, "dados");
+
+  //correctly pick the div element on html modal by the class ".proc-list" to be able to change the content of the div
 
   const handleClearClick = () => {
     //Limpa os campos do formulário
@@ -42,7 +45,7 @@ function EditProcessModal({
     setNewData("");
     setNewDataDecisao("");
     setNewDias("");
-    setNewAssessor("");
+    setNewAssessor("0");
     setNewEntidade("");
     setNewVinculado("");
     setNewConselheiro("");
@@ -53,99 +56,86 @@ function EditProcessModal({
     setNewPrioridade("");
   };
 
-  const emptyProcessToLocal = {
-    //Limpas os campos para o banco de dados localmente
-    proc: 0,
-    ano: "",
-    assunto: "",
-    data: "",
-    datadecisao: "",
-    dias: "",
-    assessor: "",
-    entidade: "",
-    vinculado: "",
-    conselheiro: "",
-    orgaojulgador: "",
-    encaminhamento: "",
-    definicao: "",
-    meta: "",
-    prioridade: "",
-  };
-  const [process, setProcess] = useState<TipoProcesso>(emptyProcessToLocal);
+ 
 
-  type TipoProcesso = {
-    //Tipagem
-    proc: number;
-    ano: string;
-    assunto: string;
-    data: string;
-    datadecisao: string;
-    dias: string;
-    assessor: string;
-    entidade: string;
-    vinculado: string;
-    conselheiro: string;
-    orgaojulgador: string;
-    encaminhamento: string;
-    definicao: string;
-    meta: string;
-    prioridade: string;
-  };
-
-  const handleLocateClick = () => {
-    if (Number(newProcesso) == 0) {
-      alert("Digite um número de processo válido!");
-    } else {
-      getProcess();
-    }
-  };
-
-  const editProcess = async () => {};
+  const [procList, setProcList] = useState<Array<{ id: string, proc: number }>>([]);
 
   const getProcess = async () => {
-    const processRef = collection(db, "dados");
+    
     const q = query(processRef, where("proc", "==", Number(newProcesso)));
     const querySnapshot = await getDocs(q);
-
+  
     if (querySnapshot.empty) {
-      setProcess(emptyProcessToLocal);
-      alert("Processo não encontrado/Número de processo disponível");
+      alert("Processo não encontrado");
     } else {
+      const newProcList = []as Array<{ id: string, proc: number }>;
       querySnapshot.forEach((doc) => {
-        setProcess(doc.data() as TipoProcesso);
+        newProcList.push({ id: doc.id, proc: doc.data().proc });
       });
+      setProcList([...procList, ...newProcList]);
     }
   };
+  
+  const editProcess = async () => {
+    
 
+};
+
+  const procDiv: HTMLElement | null = document.getElementById("proc-list");
+  
   useEffect(() => {
-    if (Number(process.proc) === Number(newProcesso)) {
-      setNewAno(process.ano);
-      setNewAssunto(process.assunto);
-      setNewData(convertDateOut(process.data));
-      setNewDataDecisao(convertDateOut(process.datadecisao));
-      setNewDias(process.dias);
-      setNewAssessor(process.assessor);
-      setNewEntidade(process.entidade);
-      setNewVinculado(process.vinculado);
-      setNewConselheiro(process.conselheiro);
-      setNewOrgaoJulgador(process.orgaojulgador);
-      setNewEncaminhamento(process.encaminhamento);
-      setNewDefinicao(process.definicao);
-      setNewMeta(process.meta);
-      setNewPrioridade(process.prioridade);
+    console.log(procList);
+    if (procDiv) {
+      procDiv.innerHTML = "";
+      procList.forEach((item) => {
+        const div = document.createElement("div");
+        div.className = "proc-item";
+        div.innerHTML = item.proc.toString();
+  
+        const button = document.createElement("button");
+        button.innerHTML = "X";
+        button.className = "remove-button";
+        button.addEventListener("click", () => removeProcess(item.id));
+        div.appendChild(button);
+  
+        procDiv.appendChild(div);
+      });
     }
-  }, [process, newProcesso]);
-
+  }, [procList]);
+  
+  const removeProcess = (id: String) => {
+    setProcList(procList.filter((item) => item.id !== id));
+  };
+  
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleLocateClick();
-    if (confirm("Deseja adicionar esses valores ao banco de dados?")) {
+    if (procList.length === 0) {
+      alert("Adicione um processo!");
+    } else {
+    if (confirm("Deseja alterar esses valores no banco de dados?")) {
       editProcess();
     } else {
       alert("Cancelado!");
       console.log("Cancelado!");
     }
+  }
   };
+
+  const handleAddClick = () => {
+    if (Number(newProcesso) == 0) {
+      alert("Digite um número de processo válido!");
+    } else {
+      if (procList.find((item) => item.proc == Number(newProcesso))) {
+        alert("Processo já adicionado!");
+      } else {
+      getProcess();
+      }
+    }
+  };
+  
+  const handleRemoveAllClick = () => {
+    setProcList([]);
+  }
 
   return (
     <>
@@ -160,6 +150,8 @@ function EditProcessModal({
           <button className="closeModalButton" onClick={closeModal}>
             X
           </button>
+          <div id="proc-list"></div>
+          <button type="button" id="remove-all-button" onClick={handleRemoveAllClick}>Remover todos</button>
           <form
             onSubmit={handleFormSubmit}
             name="Adicionar processo"
@@ -179,15 +171,14 @@ function EditProcessModal({
                   className="formRowProc"
                   placeholder="Processo..."
                 />
-                <button className="addbutton" type="button" name="addNumber">+</button>
+                <button className="addbutton" type="button" name="addNumber" onClick={handleAddClick}>+</button>
               </div>
 
-              <ProcessForm handleLocateClick={handleLocateClick}handleClearClick={handleClearClick}handleFormSubmit={handleFormSubmit}
-            setNewAno={setNewAno} setNewAssunto={setNewAssunto} setNewData={setNewData} setNewDataDecisao={setNewDataDecisao} setNewDias={setNewDias}
+              <ProcessForm setNewAno={setNewAno} setNewAssunto={setNewAssunto} setNewData={setNewData} setNewDataDecisao={setNewDataDecisao} setNewDias={setNewDias}
             setNewAssessor={setNewAssessor}setNewEntidade={setNewEntidade}setNewVinculado={setNewVinculado}setNewConselheiro={setNewConselheiro}
             setNewOrgaoJulgador={setNewOrgaoJulgador}setNewEncaminhamento={setNewEncaminhamento}setNewDefinicao={setNewDefinicao}setNewMeta={setNewMeta}
-            setNewPrioridade={setNewPrioridade}newAno={newAno}newAssunto={newAssunto}newData={newData}newDataDecisao={newDataDecisao}
-            newDias={newDias}newAssessor={newAssessor}newEntidade={newEntidade}newVinculado={newVinculado}newConselheiro={newConselheiro}newOrgaoJulgador={newOrgaoJulgador}
+            setNewPrioridade={setNewPrioridade}newAno={newAno}newAssunto={newAssunto}newData={newData}newDataDecisao={newDataDecisao}newDias={newDias}
+            newAssessor={newAssessor}newEntidade={newEntidade}newVinculado={newVinculado}newConselheiro={newConselheiro}newOrgaoJulgador={newOrgaoJulgador}
             newEncaminhamento={newEncaminhamento}newDefinicao={newDefinicao}newMeta={newMeta}newPrioridade={newPrioridade}/>
             
             </div>

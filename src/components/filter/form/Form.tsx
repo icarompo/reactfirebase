@@ -1,9 +1,6 @@
-import "./modal.styles.css"
+import "./modal.styles.css";
 
 type ProcessFormProps = {
-  handleLocateClick: () => void;
-  handleClearClick: () => void;
-  handleFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   setNewAno: (value: string) => void;
   setNewAssunto: (value: string) => void;
   setNewData: (value: string) => void;
@@ -37,20 +34,26 @@ type ProcessFormProps = {
 function ProcessForm(props: ProcessFormProps) {
   return (
     <>
-    <div className="row">{/*ANO*/}
-      <label className="label" htmlFor="ano">
-        Ano:
-      </label>
+      <div className="row">
+        {/*ANO*/}
+        <label className="label" htmlFor="ano">
+          Ano:
+        </label>
 
-    <select className="select-form" onChange={(event) => {props.setNewAno(event.target.value);}}>
-      {Array.from({ length: 31 }, (_, index) => 2000 + index).map((ano) => (
-        <option key={ano} value={ano}>
-          {ano}
-        </option>
-      ))}
-    </select>
-
-    </div>
+        <select
+          className="select-form"
+          onChange={(event) => {
+            props.setNewAno(event.target.value);
+          }}
+        >
+          <option value=""></option>
+          {Array.from({ length: 41 }, (_, index) => 1990 + index).map((ano) => (
+            <option key={ano} value={ano}>
+              {ano}
+            </option>
+          ))}
+        </select>
+        </div>
     <div className="row">{/*ASSUNTO*/}
       <label className="label" htmlFor="assunto">
         Assunto:
@@ -85,6 +88,7 @@ function ProcessForm(props: ProcessFormProps) {
       </label>
 
       <select className="select-form" onChange={(event) => {props.setNewAssessor(event.target.value);}}>
+        <option value=""></option>
         <option value="1">1 - Sandro</option>
         <option value="2">2 - Sônia</option>
         <option value="3">3 - Leidivon</option>
@@ -145,6 +149,7 @@ function ProcessForm(props: ProcessFormProps) {
           className="select-form"
           onChange={(event) => {props.setNewDefinicao(event.target.value);}}
        >          
+          <option value=""></option>
           <option value="sim">Finalizados</option>
           <option value="TRAMIT.">Tramitando</option>
           <option value="sobrest">Sobrestado</option>
@@ -160,6 +165,7 @@ function ProcessForm(props: ProcessFormProps) {
       </label>
 
       <select className="select-form" onChange={(event) => {props.setNewMeta(event.target.value);}}>
+          <option value=""></option>
           <option value="sim">Sim</option>
           <option value="nao">Não</option>
         </select>
@@ -173,6 +179,7 @@ function ProcessForm(props: ProcessFormProps) {
           className="select-form"
           onChange={(event) => {props.setNewPrioridade(event.target.value);}}
         >
+          <option value=""></option>
           <option value={props.newPrioridade}>Alta</option>
           <option value={props.newPrioridade}>Média</option>
           <option value={props.newPrioridade}>Baixa</option>
