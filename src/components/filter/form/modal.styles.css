@@ -1,0 +1,206 @@
+.addProcessButton {
+  width: auto;
+  background-color: #00cc00;
+  display: flex;
+  align-items: center;
+  font-size: large;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding-right: 10px;
+  margin-left: 10px;
+}
+
+.addProcessButton:hover {
+  cursor: pointer;
+  background-color: #009900;
+}
+
+#addProcessFormButton {
+  margin-top: 10px;
+  margin-right: auto;
+  display: flex;
+  background-color: #00cc00;
+  border: none;
+  color: white;
+}
+#addProcessFormButton:hover {
+  cursor: pointer;
+  background-color: #009900;
+  color: white;
+}
+
+.form {
+  display: flex;
+  width: auto;
+  color: black;
+  background-color: #5d6abf;
+  padding-top: 4px;
+}
+
+.row {
+  display: flex;
+  max-width: 400px;
+  align-items: center;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.label {
+  margin-right: 10px;
+  width: 125px;
+  text-align: right;
+  color: white;
+  height: 25px;
+  margin-top: 1px;
+  font-size: large;
+}
+
+
+.input-form {
+  border: none;
+  height: 24px;
+  margin-top: 1px;
+  font-size: large;
+  text-align: center;
+}
+
+.formRowProc {
+  width: 50%;
+  text-align: center;
+  height: 25px;
+  margin-top: 1px;
+  font-size: large;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 1000px;
+  background-color: #5d6abf;
+  color: white;
+  padding: 4rem;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  text-align: center;
+}
+
+.closeModalButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  font-size: bold;
+  width: 30px;
+  height: 32px;
+  padding: 0.6rem;
+  cursor: pointer;
+}
+.closeModalButton:hover {
+  background-color: rgb(192, 4, 4);
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  font-size: large;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  color: #000;
+  margin: 1px;
+  padding: 5px;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: #dddddd;
+}
+
+.addbutton {
+  height: 25px;
+  width: 23px;
+  border: none;
+  background-color: white;
+  border-radius: 3px;
+  font-size: large;
+  margin: 1px;
+}
+.addbutton:hover {
+  cursor: pointer;
+  background-color: #dddddd;
+}
+
+.select-form {
+  flex: 0;
+  border: none;
+  text-align: center;
+  height: 25px;
+  margin-top: 1px;
+  font-size: large;
+  border-radius: 0; /* Removendo o border-radius */
+}
+
+.select-form option {
+  text-align: left; /* Alinha o texto à direita */
+  width: 50px; /* Largura fixa para os itens do select */
+}
+
+#proc-list {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
+  max-width: 293px;
+  margin: auto;
+  margin-top: 10px;
+}
+
+.proc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  background-color: #0ba044;
+  font-size: large;
+  width: 71px; /* Largura fixa de 71px */
+  height: 17px;
+  margin: 1px;
+  padding-left: 5px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.remove-button {
+  border: none;
+  color: white;
+  background-color: #b91010;
+  width: 16px;
+  margin-left: 5px;
+}
+
+.remove-button:hover {
+  cursor: pointer;
+}
+
+#remove-all-button {
+  border: none;
+  color: white;
+  background-color: #b91010;
+  width: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#remove-all-button:hover {
+  cursor: pointer;
+}
