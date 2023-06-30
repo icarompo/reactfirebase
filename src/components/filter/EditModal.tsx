@@ -34,6 +34,7 @@ function EditProcessModal({
   const [newPrioridade, setNewPrioridade] = useState("");
   const appElement = document.getElementById("root");
   const processRef = collection(db, "dados");
+  const [newFields, setNewFields] = useState({});
 
   //correctly pick the div element on html modal by the class ".proc-list" to be able to change the content of the div
 
@@ -55,6 +56,23 @@ function EditProcessModal({
     setNewPrioridade("");
   };
 
+  const fieldsToCheck = [
+    { field: "ano", value: newAno },
+    { field: "assunto", value: newAssunto },
+    { field: "data", value: newData },
+    { field: "datadecisao", value: newDataDecisao },
+    { field: "dias", value: newDias },
+    { field: "assessor", value: newAssessor },
+    { field: "entidade", value: newEntidade },
+    { field: "vinculado", value: newVinculado },
+    { field: "conselheiro", value: newConselheiro },
+    { field: "orgaojulgador", value: newOrgaoJulgador },
+    { field: "encaminhamento", value: newEncaminhamento },
+    { field: "definicao", value: newDefinicao },
+    { field: "meta", value: newMeta },
+    { field: "prioridade", value: newPrioridade },
+  ];
+
   const [procList, setProcList] = useState<Array<{ id: string, proc: number }>>([]);
 
   const getProcess = async () => {
@@ -74,13 +92,18 @@ function EditProcessModal({
   };
   
   const editProcess = async () => {
-    console.log(newProcesso, newAno, newAssunto, newData, newDataDecisao, newDias, newAssessor, newEntidade, newVinculado, newConselheiro, newOrgaoJulgador, newEncaminhamento, newDefinicao, newMeta, newPrioridade)
-};
-
+    
+  //verifique primeiro quais campos foram preenchidos no formulário e altere apenas esses campos no banco de dados
+  fieldsToCheck.forEach((item) => {
+    if (item.value !== "" && item.value !== null && item.value !== undefined) {
+      setNewFields({ ...newFields, [item.field]: item.value });
+    }
+  });
+  console.log(newFields);
+  };
   const procDiv: HTMLElement | null = document.getElementById("proc-list");
   
   useEffect(() => {
-    console.log(procList);
     if (procDiv) {
       procDiv.innerHTML = "";
       procList.forEach((item) => {
@@ -108,14 +131,34 @@ function EditProcessModal({
     if (procList.length === 0) {
       alert("Adicione um processo!");
     } else {
-    if (confirm("Deseja alterar esses valores no banco de dados?")) {
-      editProcess();
-    } else {
-      alert("Cancelado!");
-      console.log("Cancelado!");
+      if (
+        newAno === "" &&
+        newAssunto === "" &&
+        newData === "" &&
+        newDataDecisao === "" &&
+        newDias === "" &&
+        newAssessor === "" &&
+        newEntidade === "" &&
+        newVinculado === "" &&
+        newConselheiro === "" &&
+        newOrgaoJulgador === "" &&
+        newEncaminhamento === "" &&
+        newDefinicao === "" &&
+        newMeta === "" &&
+        newPrioridade === ""
+      ) {
+        alert("Nenhum campo foi preenchido para editar");
+      } else {
+        if (confirm("Deseja alterar esses valores no banco de dados?")) {
+          editProcess();
+        } else {
+          alert("Cancelado!");
+          console.log("Cancelado!");
+        }
+      }
     }
-  }
   };
+
 
   const handleAddClick = () => {
     if (Number(newProcesso) == 0) {
