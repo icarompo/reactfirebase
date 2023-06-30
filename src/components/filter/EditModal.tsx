@@ -36,8 +36,6 @@ function EditProcessModal({
   const processRef = collection(db, "dados");
   const [newFields, setNewFields] = useState({});
 
-  //correctly pick the div element on html modal by the class ".proc-list" to be able to change the content of the div
-
   const handleClearClick = () => {
     setNewProcesso("");
     setNewAno("");
@@ -76,31 +74,56 @@ function EditProcessModal({
   const [procList, setProcList] = useState<Array<{ id: string, proc: number }>>([]);
 
   const getProcess = async () => {
-    
     const q = query(processRef, where("proc", "==", Number(newProcesso)));
     const querySnapshot = await getDocs(q);
-  
+
     if (querySnapshot.empty) {
       alert("Processo não encontrado");
     } else {
-      const newProcList = []as Array<{ id: string, proc: number }>;
+      const newProcList = [] as Array<{ id: string; proc: number }>;
       querySnapshot.forEach((doc) => {
         newProcList.push({ id: doc.id, proc: doc.data().proc });
       });
       setProcList([...procList, ...newProcList]);
     }
   };
-  
+
   const editProcess = async () => {
-    
-  //verifique primeiro quais campos foram preenchidos no formulário e altere apenas esses campos no banco de dados
-  fieldsToCheck.forEach((item) => {
-    if (item.value !== "" && item.value !== null && item.value !== undefined) {
-      setNewFields({ ...newFields, [item.field]: item.value });
-    }
-  });
-  console.log(newFields);
+
+    fieldsToCheck.forEach((item) => {
+      if (
+        item.value !== "" &&
+        item.value !== null &&
+        item.value !== undefined
+      ) {
+        setNewFields({ ...newFields, [item.field]: item.value });
+      }
+    });
+
+    console.log(newFields);
+
+    setNewAno("");
+    setNewAssunto("");
+    setNewData("");
+    setNewDataDecisao("");
+    setNewDias("");
+    setNewAssessor("0");
+    setNewEntidade("");
+    setNewVinculado("");
+    setNewConselheiro("");
+    setNewOrgaoJulgador("");
+    setNewEncaminhamento("");
+    setNewDefinicao("");
+    setNewMeta("");
+    setNewPrioridade("");
+
+    setNewFields({});
   };
+
+  useEffect(() => {
+    console.log(newFields);
+  }, [newFields]);
+
   const procDiv: HTMLElement | null = document.getElementById("proc-list");
   
   useEffect(() => {
