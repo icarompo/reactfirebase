@@ -38,7 +38,6 @@ function EditProcessModal({
   //correctly pick the div element on html modal by the class ".proc-list" to be able to change the content of the div
 
   const handleClearClick = () => {
-    //Limpa os campos do formulário
     setNewProcesso("");
     setNewAno("");
     setNewAssunto("");
@@ -55,8 +54,6 @@ function EditProcessModal({
     setNewMeta("");
     setNewPrioridade("");
   };
-
- 
 
   const [procList, setProcList] = useState<Array<{ id: string, proc: number }>>([]);
 
@@ -77,8 +74,7 @@ function EditProcessModal({
   };
   
   const editProcess = async () => {
-    
-
+    console.log(newProcesso, newAno, newAssunto, newData, newDataDecisao, newDias, newAssessor, newEntidade, newVinculado, newConselheiro, newOrgaoJulgador, newEncaminhamento, newDefinicao, newMeta, newPrioridade)
 };
 
   const procDiv: HTMLElement | null = document.getElementById("proc-list");
