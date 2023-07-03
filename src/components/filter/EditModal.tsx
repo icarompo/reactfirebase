@@ -34,10 +34,10 @@ function EditProcessModal({
   const [newPrioridade, setNewPrioridade] = useState("");
   const appElement = document.getElementById("root");
   const processRef = collection(db, "dados");
-  const [newFields, setNewFields] = useState({});
+  const [newFields, setNewFields] = useState<Record<string, any>[]>([]);
 
   const handleClearClick = () => {
-    setNewFields({});
+    setNewFields([]);
     setNewProcesso("");
     setNewAno("");
     setNewAssunto("");
@@ -55,7 +55,12 @@ function EditProcessModal({
     setNewPrioridade("");
   };
 
-  const fieldsToCheck = [
+  interface FieldData {
+    field: string;
+    value: string;
+  }
+  
+  const fieldsToCheck: FieldData[] = [
     { field: "ano", value: newAno },
     { field: "assunto", value: newAssunto },
     { field: "data", value: newData },
@@ -90,26 +95,20 @@ function EditProcessModal({
   };
 
   const editProcess = async () => {
-    fieldsToCheck.forEach((item) => {
-      if (
-        item.value !== "" &&
-        item.value !== null &&
-        item.value !== undefined
-      ) {
-        setNewFields({ ...newFields, [item.field]: item.value });
-        console.log(item.field, item.value);
-        console.log(newFields);
-      }
+    const filteredFields = fieldsToCheck.filter((item) => {
+      return item.value; // Verifica se o valor é "truthy"
     });
-    console.log('FIM DOS ITENS VERIFICADOS')
-
+  
+    const updatedFields = filteredFields.reduce((acc, item) => {
+      return { ...acc, [item.field]: item.value };
+    }, {});
+  
+    setNewFields([updatedFields]); // Inicializa como um array contendo o objeto atualizado
+    //console.log(updatedFields);
+    
+    //console.log('FIM DOS ITENS VERIFICADOS');
     handleClearClick();
-
   };
-
-  useEffect(() => {
-    console.log(newFields); 
-  }, [newFields]);
 
   const procDiv: HTMLElement | null = document.getElementById("proc-list");
   
@@ -130,6 +129,7 @@ function EditProcessModal({
         procDiv.appendChild(div);
       });
     }
+    console.log(procList);
   }, [procList]);
   
   const removeProcess = (id: String) => {
@@ -168,7 +168,6 @@ function EditProcessModal({
       }
     }
   };
-
 
   const handleAddClick = () => {
     if (Number(newProcesso) == 0) {
