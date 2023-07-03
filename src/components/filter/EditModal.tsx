@@ -37,13 +37,14 @@ function EditProcessModal({
   const [newFields, setNewFields] = useState({});
 
   const handleClearClick = () => {
+    setNewFields({});
     setNewProcesso("");
     setNewAno("");
     setNewAssunto("");
     setNewData("");
     setNewDataDecisao("");
     setNewDias("");
-    setNewAssessor("0");
+    setNewAssessor("");
     setNewEntidade("");
     setNewVinculado("");
     setNewConselheiro("");
@@ -89,7 +90,6 @@ function EditProcessModal({
   };
 
   const editProcess = async () => {
-
     fieldsToCheck.forEach((item) => {
       if (
         item.value !== "" &&
@@ -97,31 +97,18 @@ function EditProcessModal({
         item.value !== undefined
       ) {
         setNewFields({ ...newFields, [item.field]: item.value });
+        console.log(item.field, item.value);
+        console.log(newFields);
       }
     });
+    console.log('FIM DOS ITENS VERIFICADOS')
 
-    console.log(newFields);
+    handleClearClick();
 
-    setNewAno("");
-    setNewAssunto("");
-    setNewData("");
-    setNewDataDecisao("");
-    setNewDias("");
-    setNewAssessor("0");
-    setNewEntidade("");
-    setNewVinculado("");
-    setNewConselheiro("");
-    setNewOrgaoJulgador("");
-    setNewEncaminhamento("");
-    setNewDefinicao("");
-    setNewMeta("");
-    setNewPrioridade("");
-
-    setNewFields({});
   };
 
   useEffect(() => {
-    console.log(newFields);
+    console.log(newFields); 
   }, [newFields]);
 
   const procDiv: HTMLElement | null = document.getElementById("proc-list");
