@@ -16,6 +16,8 @@ function FilterProcessButton() {
 
 interface TableFilterProps {
   onSelectChange: (value: string) => void;
+  //set the type below as a string array
+  selectedProcValues: string[];
 }
 
 function TableFilter(props: TableFilterProps ) {

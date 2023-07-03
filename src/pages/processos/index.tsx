@@ -80,6 +80,7 @@ function Table({ filterValue }: TableProps) {
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
   const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
+  const [selectedProcValues, setSelectedProcValues] = useState<string[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -110,9 +111,20 @@ function Table({ filterValue }: TableProps) {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedRows);
-  }, [selectedRows]);
+  const handleRowSelectionChange = (ids: GridRowId[]) => {
+
+    setSelectedProcValues(ids.map((selectedRowId) => {
+      const selectedRow = dados.find((row) => row.id === selectedRowId);
+      if (selectedRow) {
+        return selectedRow.proc.toString();
+      }
+      return undefined;
+    }) as string[]);
+  };
+
+useEffect(() => {
+  console.log(selectedProcValues);
+}, [selectedProcValues]);
 
   return (
     <>
@@ -145,7 +157,7 @@ function Table({ filterValue }: TableProps) {
             ]}
             checkboxSelection
             onRowSelectionModelChange={(ids) => {
-              setSelectedRows(ids);
+              handleRowSelectionChange(ids);  
             }}
             disableRowSelectionOnClick
           />
@@ -161,6 +173,10 @@ interface ProcessesProps {
 
 function Processes({ onLogOut }: ProcessesProps) {
   const [filterValue, setFilterValue] = useState("relatoria");
+  const [selectedProcValues, setSelectedProcValues] = useState<string[]>([]);
+
+  const handleRowSelectionChange = (ids: GridRowId[]) => {
+
 
   const handleSelectChange = (value: string) => {
     setFilterValue(value);
@@ -173,7 +189,7 @@ function Processes({ onLogOut }: ProcessesProps) {
         subtitle="Dados de Processos"
         onLogOut={onLogOut}
       />
-      <TableFilter onSelectChange={handleSelectChange} />
+      <TableFilter onSelectChange={handleSelectChange} selectedProcValues={selectedProcValues}/>
       <Table filterValue={filterValue} />
     </>
   );
