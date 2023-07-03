@@ -1,7 +1,7 @@
 import ReactModal from "react-modal";
 import EditIcon from "@mui/icons-material/Edit";
 import ProcessForm from "./form/Form.tsx";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
 import { useState, useEffect } from "react";
 import {
@@ -34,10 +34,10 @@ function EditProcessModal({
   const [newPrioridade, setNewPrioridade] = useState("");
   const appElement = document.getElementById("root");
   const processRef = collection(db, "dados");
-  const [newFields, setNewFields] = useState<Record<string, any>[]>([]);
+
 
   const handleClearClick = () => {
-    setNewFields([]);
+
     setNewProcesso("");
     setNewAno("");
     setNewAssunto("");
@@ -103,10 +103,17 @@ function EditProcessModal({
       return { ...acc, [item.field]: item.value };
     }, {});
   
-    setNewFields([updatedFields]); // Inicializa como um array contendo o objeto atualizado
-    //console.log(updatedFields);
-    
-    //console.log('FIM DOS ITENS VERIFICADOS');
+    console.log(updatedFields);
+  
+    // console.log('FIM DOS ITENS VERIFICADOS');
+  
+    procList.forEach(async (item) => {
+      const docRef = doc(db, "dados", item.id);
+      await updateDoc(docRef, updatedFields);
+    });
+
+    console.log(`Processos ${procList.forEach((item) => {console.log(item.proc.toString())})} editado com sucesso!`)
+  
     handleClearClick();
   };
 
