@@ -57,9 +57,10 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 
 interface TableProps {
   filterValue: string;
+  onRowCheck: (value: string[]) => void;
 }
 
-function Table({ filterValue }: TableProps) {
+function Table(props: TableProps) {
   type TipoDado = {
     id: string;
     proc: number;
@@ -120,6 +121,7 @@ function Table({ filterValue }: TableProps) {
       }
       return undefined;
     }) as string[]);
+    props.onRowCheck(selectedProcValues);
   };
 
 useEffect(() => {
@@ -135,7 +137,7 @@ useEffect(() => {
               backgroundColor: "#fff",
               color: "#000",
             }}
-            rows={filteredValues(filterValue)}
+            rows={filteredValues(props.filterValue)}
             getRowClassName={(params) =>
               params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
             }
@@ -169,14 +171,16 @@ useEffect(() => {
 
 interface ProcessesProps {
   onLogOut: () => void;
+  onRowCheck: (value: string[]) => void;
 }
 
-function Processes({ onLogOut }: ProcessesProps) {
+function Processes(props: ProcessesProps) {
   const [filterValue, setFilterValue] = useState("relatoria");
   const [selectedProcValues, setSelectedProcValues] = useState<string[]>([]);
 
-  const handleRowSelectionChange = (ids: GridRowId[]) => {
-
+  const handleRowCheck = (value: string[]) => {
+    props.onRowCheck(value);
+  }
 
   const handleSelectChange = (value: string) => {
     setFilterValue(value);
@@ -187,10 +191,10 @@ function Processes({ onLogOut }: ProcessesProps) {
       <Header
         title="Controle E-Contas"
         subtitle="Dados de Processos"
-        onLogOut={onLogOut}
+        onLogOut={props.onLogOut}
       />
-      <TableFilter onSelectChange={handleSelectChange} selectedProcValues={selectedProcValues}/>
-      <Table filterValue={filterValue} />
+      <TableFilter onSelectChange={handleSelectChange} onRowCheck={handleRowCheck}/>
+      <Table filterValue={filterValue} onRowCheck={handleRowCheck}/>
     </>
   );
 }

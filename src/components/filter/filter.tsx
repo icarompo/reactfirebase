@@ -1,10 +1,8 @@
 import AddProcessButton from "./AddModal.tsx";
 import EditProcessButton from "./EditModal.tsx";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import "./styles.css";
-
 import SelectLocation from "../select/Select.tsx";
-
+import "./styles.css";
 
 function FilterProcessButton() {
   return (
@@ -16,8 +14,7 @@ function FilterProcessButton() {
 
 interface TableFilterProps {
   onSelectChange: (value: string) => void;
-  //set the type below as a string array
-  selectedProcValues: string[];
+  onRowCheck: (value: string[]) => void;
 }
 
 function TableFilter(props: TableFilterProps ) {
