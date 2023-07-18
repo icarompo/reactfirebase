@@ -8,7 +8,7 @@ import {
   ThemeProvider,
 } from "@mui/material/styles";
 import { DataGrid, GridRowId, gridClasses, ptBR } from "@mui/x-data-grid";
-import TableFilter from "../../components/filter/Filter.tsx";
+import TableFilter from "../../components/filter/filter.tsx";
 import Header from "../../components/header/Header.tsx";
 import "./styles.css";
 
@@ -89,8 +89,7 @@ function Table(props: TableProps) {
       const dadosQuery = query(usersCollectionRef);
       const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
       const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
-      dadosSnapshot.forEach((doc) => {
-        // Percorre os documentos retornados
+      dadosSnapshot.forEach((doc) => {  // Percorre os documentos retornados
         const { id, ...rest } = doc.data() as TipoDado; // Extrai a propriedade 'id' e o restante das propriedades do documento
         fetchedData.push({ id: doc.id, ...rest }); // Adiciona o documento ao array de dados buscados
       });
@@ -107,26 +106,24 @@ function Table(props: TableProps) {
       return dados.filter(
         (Processo) =>
           Processo.definicao &&
-          Processo.definicao.toLowerCase() === filterValue.toLowerCase()
-      );
-    }
-  };
-
+          Processo.definicao.toLowerCase() === filterValue.toLowerCase() 
+      ); 
+    } 
+  }; 
+ 
   const handleRowSelectionChange = (ids: GridRowId[]) => {
-
-    setSelectedProcValues(ids.map((selectedRowId) => {
-      const selectedRow = dados.find((row) => row.id === selectedRowId);
-      if (selectedRow) {
-        return selectedRow.proc.toString();
-      }
-      return undefined;
-    }) as string[]);
-    props.onRowCheck(selectedProcValues);
+    // Certifique-se de que a prop onRowCheck seja uma função antes de chamá-la
+    if (typeof props.onRowCheck === "function") {
+      const selectedProcValues = ids.map((selectedRowId) => {
+        const selectedRow = dados.find((row) => row.id === selectedRowId);
+        if (selectedRow) {
+          return selectedRow.proc.toString();
+        }
+        return undefined;
+      }) as string[];
+      props.onRowCheck(selectedProcValues);
+    } else {console.log("Não é uma função")}
   };
-
-useEffect(() => {
-  console.log(selectedProcValues);
-}, [selectedProcValues]);
 
   return (
     <>
@@ -176,7 +173,6 @@ interface ProcessesProps {
 
 function Processes(props: ProcessesProps) {
   const [filterValue, setFilterValue] = useState("relatoria");
-  const [selectedProcValues, setSelectedProcValues] = useState<string[]>([]);
 
   const handleRowCheck = (value: string[]) => {
     props.onRowCheck(value);
@@ -193,7 +189,7 @@ function Processes(props: ProcessesProps) {
         subtitle="Dados de Processos"
         onLogOut={props.onLogOut}
       />
-      <TableFilter onSelectChange={handleSelectChange} onRowCheck={handleRowCheck}/>
+      <TableFilter onSelectChange={handleSelectChange} onRowCheckChange={handleRowCheck}/>
       <Table filterValue={filterValue} onRowCheck={handleRowCheck}/>
     </>
   );
