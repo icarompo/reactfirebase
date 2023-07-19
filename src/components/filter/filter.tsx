@@ -14,7 +14,6 @@ function FilterProcessButton() {
 
 interface TableFilterProps {
   onSelectChange: (value: string) => void;
-  onRowCheck: (value: string[]) => void;
 }
 
 function TableFilter(props: TableFilterProps ) {
@@ -25,8 +24,8 @@ function TableFilter(props: TableFilterProps ) {
 
   return (
     <div className="filterContainer">
-      <AddProcessButton/>
       <SelectLocation onSelectChange={handleSelectChange} />
+      <AddProcessButton/>
       <EditProcessButton/>
       <FilterProcessButton />
     </div>

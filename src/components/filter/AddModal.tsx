@@ -121,6 +121,14 @@ function AddProcessModal({
 
   const createProcess = async () => {
     const dadosCollectionRef = collection(db, "dados");
+    const querySnapshot = await getDocs(dadosCollectionRef);
+    const existingProcess = querySnapshot.docs.find(doc => doc.data().proc === fullFilledProcessToDb.proc);
+  
+    if (existingProcess) {
+      alert("Esse número de processo ja existe no banco de dados");
+      return;
+    }
+  
     try {
       await addDoc(dadosCollectionRef, fullFilledProcessToDb);
       handleClearClick();
@@ -262,17 +270,18 @@ function AddProcessButton() {
     <>
       <button
         type="button"
-        className="addProcessButton"
+        className="filter-button"
         onClick={() => {
           setModalOpen(true);
         }}
       >
-        {<AddIcon className="filter-icon" />}
-        <span>Adicionar</span>
+        {<AddIcon/>}
       </button>
       <AddProcessModal isOpen={modalOpen} closeModal={closeModal} />
     </>
   );
 }
+
+
 
 export default AddProcessButton;
