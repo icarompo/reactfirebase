@@ -1,19 +1,40 @@
 .card {
     text-align: center;
-    background-color: white;
-    border: 2px solid #999999;
-    border-radius: 10px;
-    padding: 5px;
+    border: none;
+    border-radius: 5px;
+
     width: 260px;
     height: 160px;
     margin: 10px;
 }
 
+#type-high-priority {
+    background-color: #f01616;
+}
+#type-middle-priority {
+    background-color: #f0da16;
+}
+#type-low-priority {
+    background-color: #16f016;
+}
+
+#card-body-high-priority {
+    background-color: #fac6c6;
+}
+#card-body-middle-priority {
+    background-color: #faf7c6;
+}
+#card-body-low-priority {
+    background-color: #c0fac0;
+}
+
 .name-title {
-    color: #999999;
+    background-color: white;
+    border-radius: 5px 5px 0 0;
+    color: white;
     font-size: 1.2em;
     font-weight: bold;
-    margin: 10px 0;
+    height: 25px;
 }
 
 .value {
@@ -23,7 +44,7 @@
 }
 
 .text {
-    color: #999999;
+    color: #424242;
     font-size: 1.0em;
     margin: 10px 0;
 }

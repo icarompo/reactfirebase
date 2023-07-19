@@ -2,15 +2,14 @@ import { useState, useEffect } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
 import {
-  alpha,
-  styled,
   createTheme,
   ThemeProvider,
 } from "@mui/material/styles";
-import { DataGrid, GridRowId, gridClasses, ptBR } from "@mui/x-data-grid";
+import { GridRowId, ptBR } from "@mui/x-data-grid";
 import TableFilter from "../../components/filter/filter.tsx";
 import Header from "../../components/header/Header.tsx";
 import "./styles.css";
+import { StripedDataGrid } from "../../utils/stripedDataGrid.ts"
 
 const theme = createTheme(
   {
@@ -20,40 +19,6 @@ const theme = createTheme(
   },
   ptBR
 );
-
-const ODD_OPACITY = 0.1;
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: theme.palette.grey[200],
-    "&:hover, &.Mui-hovered": {
-      backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
-      "@media (hover: none)": {
-        backgroundColor: "transparent",
-      },
-    },
-    "&.Mui-selected": {
-      backgroundColor: alpha(
-        theme.palette.primary.main,
-        ODD_OPACITY + theme.palette.action.selectedOpacity
-      ),
-      "&:hover, &.Mui-hovered": {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          ODD_OPACITY +
-            theme.palette.action.selectedOpacity +
-            theme.palette.action.hoverOpacity
-        ),
-        "@media (hover: none)": {
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            ODD_OPACITY + theme.palette.action.selectedOpacity
-          ),
-        },
-      },
-    },
-  },
-}));
 
 interface TableProps {
   filterValue: string;
