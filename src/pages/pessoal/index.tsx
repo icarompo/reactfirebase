@@ -61,13 +61,11 @@ function Painel() {
     fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
   }, []);
 
-  const meta = dados.filter(
-    (Processo) => Processo.meta.toLowerCase() === "sim"
-  ).length;
-  const anoAtual = dados.filter((Processo) => Processo.ano === 2023).length;
-  const prioridade = dados.filter(
-    (Processo) => Processo.prioridade.toLowerCase() === "alta"
-  ).length;
+  const meta = dados.filter((Processo) => Processo.meta.toLowerCase() === "sim");
+  const anoAtual = dados.filter((Processo) => Processo.ano === 2023);
+  const prioridade = dados.filter((Processo) => Processo.prioridade.toLowerCase() === "alta");
+
+  const [dataGrid, setDataGrid] = useState<Array<TipoDado>>(dados);
 
   const verificaPrioridade = (quantidade: number) => {
     if (quantidade > 3 && quantidade <= 6) {
@@ -79,35 +77,53 @@ function Painel() {
     }
   }
 
+  const handleClick = (card: string) => {
+    if(card === "processos") {
+      setDataGrid(dados);
+  } else if (card === "meta") {
+    setDataGrid(meta);
+  } else if (card === "prioridade") {
+    setDataGrid(prioridade);
+  } else if (card === "anoAtual") {
+    setDataGrid(anoAtual);
+  }
+}
+
   return (
     <>
       <div className="personal-container">
         <div className="container-header"></div>
         <div className="container-body">
+          <div className="cards">
           <Card
             name="Processos"
             value={dados.length}
             text="Quantidade de processos abertos"
             id={verificaPrioridade(dados.length)}
+            onClick={() => handleClick("processos")}
           />
           <Card
             name="Meta"
-            value={meta}
+            value={meta.length}
             text="Quantidade de processos em meta"
-            id={verificaPrioridade(meta)}
+            id={verificaPrioridade(meta.length)}
+            onClick={() => handleClick("meta")}
           />
           <Card
             name="Prioridade"
-            value={prioridade}
+            value={prioridade.length}
             text="Quantidade de processos em prioridade"
-            id={verificaPrioridade(prioridade)}
+            id={verificaPrioridade(prioridade.length)}
+            onClick={() => handleClick("prioridade")}
           />
           <Card
             name="2023"
-            value={anoAtual}
+            value={anoAtual.length}
             text="Quantidade de processos pessoais do ano atual na relatoria"
-            id={verificaPrioridade(anoAtual)}
+            id={verificaPrioridade(anoAtual.length)}
+            onClick={() => handleClick("anoAtual")}
           />
+          </div>
 
     <div className="datagrid" >
         <ThemeProvider theme={theme}>
@@ -116,7 +132,7 @@ function Painel() {
               backgroundColor: "#fff",
               color: "#000",
             }}
-            rows={dados}
+            rows={dataGrid}
             getRowClassName={(params) =>
               params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
             }
@@ -135,8 +151,6 @@ function Painel() {
               { field: "meta", headerName: "Meta", width: 75 },
               { field: "prioridade", headerName: "Prioridade", width: 75 },
             ]}
-            checkboxSelection
-            disableRowSelectionOnClick
           />
         </ThemeProvider>
       </div>

@@ -6,9 +6,14 @@ interface CardProps {
     value: number;
     text: string;
     id: string;
+    onClick: (tipo: string) => void;
 }
 
-function Card({name, value, text, id}: CardProps) {
+function Card(props: CardProps) {
+
+  const handleClick = () => {
+    props.onClick('');
+  }
 
 const verificaCorCorpo = (id: string) => {
   if (id === "type-high-priority") {
@@ -21,10 +26,10 @@ const verificaCorCorpo = (id: string) => {
 }
 
   return (
-    <div className="card" id={verificaCorCorpo(id)}>
-     <h3 className='name-title' id={id}>{name}</h3>
-     <h1 className='value'>{value}</h1>
-     <p className='text'>{text}</p>
+    <div className="card" id={verificaCorCorpo(props.id)} onClick={handleClick}>
+     <h3 className='name-title' id={props.id}>{props.name}</h3>
+     <h1 className='value'>{props.value}</h1>
+     <p className='text'>{props.text}</p>
     </div>
   );
 }
