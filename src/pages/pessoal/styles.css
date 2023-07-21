@@ -1,15 +1,7 @@
-.container-header {
-    height: 10px;
-    background-color: #4256c9;
-    color: white;
-    padding-left: 10px;
-  }
-  
-  .container-body {
+
+  .personal-container {
     display: flex;
     flex-direction: column;
-    background-color: #f3f3f2;
-    height: 85vh;
     padding: 10px;
   }
   

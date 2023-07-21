@@ -7,11 +7,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ptBR } from "@mui/x-data-grid";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import UserContext from "../../context/userContext";
-import { DataGrid, GridSortModel } from "@mui/x-data-grid";
+import { GridSortModel } from "@mui/x-data-grid";
 
 import "./styles.css";
 
-function Painel() {
+function Page() {
   const theme = createTheme(
     {
       palette: {
@@ -105,15 +105,12 @@ function Painel() {
   };
 
   useEffect(() => {
-    // Atualiza o estado 'dataGridRows' com o valor de 'dados' assim que a página é carregada
     setDataGrid(dados);
   }, [dados]);
 
   return (
     <>
-      <div className="personal-container">
-        <div className="container-header"></div>
-        <div className="container-body">
+        <div className="personal-container">
           <div className="cards">
             <Card
               name="Processos"
@@ -194,7 +191,6 @@ function Painel() {
             </ThemeProvider>
           </div>
         </div>
-      </div>
     </>
   );
 }
@@ -211,7 +207,7 @@ function Personal({ onLogOut }: PersonalProps) {
         subtitle="Página Pessoal"
         onLogOut={onLogOut}
       />
-      <Painel />
+      <Page />
     </>
   );
 }

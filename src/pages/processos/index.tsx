@@ -20,11 +20,11 @@ const theme = createTheme(
   ptBR
 );
 
-interface TableProps {
+interface PageProps {
   filterValue: string;
 }
 
-function Table(props: TableProps) {
+function Page(props: PageProps) {
   type TipoDado = {
     id: string;
     proc: number;
@@ -151,7 +151,7 @@ function Processes(props: ProcessesProps) {
         onLogOut={props.onLogOut}
       />
       <TableFilter onSelectChange={handleSelectChange}/>
-      <Table filterValue={filterValue}/>
+      <Page filterValue={filterValue}/>
     </>
   );
 }
