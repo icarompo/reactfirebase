@@ -69,7 +69,7 @@ function Painel() {
     (Processo) => Processo.prioridade.toLowerCase() === "alta"
   );
 
-  const [dataGrid, setDataGrid] = useState<Array<TipoDado>>(dados);
+  const [dataGrid, setDataGrid] = useState<Array<TipoDado>>(dados);;
 
   const verificaPrioridade = (quantidade: number) => {
     if (quantidade > 3 && quantidade <= 6) {
@@ -94,7 +94,6 @@ function Painel() {
   };
 
   const [sortModel, setSortModel] = useState<GridSortModel>([
-    // Configuração inicial da ordenação por ordem alfabética decrescente para o campo "Definição"
     {
       field: 'definicao',
       sort: 'asc',
@@ -102,9 +101,13 @@ function Painel() {
   ]);
 
   const handleSortModelChange = (newSortModel: GridSortModel) => {
-    // Atualizar o estado com a nova configuração de ordenação quando o usuário fizer alterações
     setSortModel(newSortModel);
   };
+
+  useEffect(() => {
+    // Atualiza o estado 'dataGridRows' com o valor de 'dados' assim que a página é carregada
+    setDataGrid(dados);
+  }, [dados]);
 
   return (
     <>

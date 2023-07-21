@@ -91,7 +91,8 @@ useEffect(() => {
 
   return (
     <>
-      <div style={{ height: "100%", width: "100%" }}>
+    <div className="proc-container">
+      <div className="proc-datagrid">
         <ThemeProvider theme={theme}>
           <StripedDataGrid
             sx={{
@@ -126,6 +127,7 @@ useEffect(() => {
           />
         </ThemeProvider>
       </div>
+    </div>
     </>
   );
 }
