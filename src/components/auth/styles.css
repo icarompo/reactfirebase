@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300&display=swap');
 
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f3f3f2;
+    height: 100vh;
+}
+
 #root {
   --blue: #2d3e9e;
   margin: 0;
   padding: 0;
-  background-color: #f3f3f2;
-  height: 100vh;
 }
 
 .login-form {
