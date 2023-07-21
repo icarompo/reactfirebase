@@ -1,35 +1,40 @@
-
-import './styles.css'
+import "./styles.css";
 
 interface CardProps {
-    name: string;
-    value: number;
-    text: string;
-    id: string;
-    onClick: (tipo: string) => void;
+  name: string;
+  value: number;
+  text: string;
+  id: string;
+  onClick: (tipo: string) => void;
 }
 
 function Card(props: CardProps) {
-
   const handleClick = () => {
-    props.onClick('');
-  }
+    props.onClick("");
+  };
 
-const verificaCorCorpo = (id: string) => {
-  if (id === "type-high-priority") {
-    return "card-body-high-priority"
-  } if (id === "type-middle-priority") {
-    return "card-body-middle-priority"
-  } else {
-    return "card-body-low-priority"
-  }
-}
+  const verificaCorCorpo = (id: string) => {
+    if (id === "card-header-high-priority") {
+      return "card-body-high-priority";
+    }
+    if (id === "card-header-middle-priority") {
+      return "card-body-middle-priority";
+    } else {
+      return "card-body-low-priority";
+    }
+  };
 
   return (
-    <div className="card" id={verificaCorCorpo(props.id)} onClick={handleClick}>
-     <h3 className='name-title' id={props.id}>{props.name}</h3>
-     <h1 className='value'>{props.value}</h1>
-     <p className='text'>{props.text}</p>
+    <div className="card"  onClick={handleClick}>
+      <div className="card-header" id={props.id}>
+        <h3 className="name-title" >
+          {props.name}
+        </h3>
+      </div>
+      <div className="card-body" id={verificaCorCorpo(props.id)}>
+        <h1 className="value">{props.value}</h1>
+        <p className="text">{props.text}</p>
+      </div>
     </div>
   );
 }

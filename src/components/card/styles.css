@@ -1,11 +1,9 @@
 .card {
     text-align: center;
     border: none;
-    border-radius: 5px;
-
-    width: 260px;
-    height: 160px;
-    margin: 10px;
+    width: 200px;
+    height: 150px;
+    margin: 5px;
 }
 
 .card:hover {
@@ -13,33 +11,52 @@
     cursor: pointer;
 }
 
-#type-high-priority {
-    background-color: #f01616;
+#card-header-high-priority {
+    background-color: #f7d5d6;
+    border: 2px solid #ea9798;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    color: #d52f30;
+    height: auto;
 }
-#type-middle-priority {
-    background-color: #f0da16;
+#card-header-middle-priority {
+    background-color: #fff8e2;
+    border: 2px solid #fade94;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    color:  #ffa000;
+    height: auto;
 }
-#type-low-priority {
-    background-color: #16f016;
+
+#card-header-low-priority {
+    background-color: #d6f6d5;
+    border: 2px solid #9aea96;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    color:  #34d42c;
+    height: auto;
 }
 
 #card-body-high-priority {
-    background-color: #fac6c6;
+    background-color: white;
+    border: 2px solid #ea9798;
+    color: #d52f30;
+    border-radius: 0 0 5px 5px;
+    height: 85%;
 }
 #card-body-middle-priority {
-    background-color: #faf7c6;
+    background-color: white;
+    border: 2px solid #fade94;
+    color: #ffa000;
+    border-radius: 0 0 5px 5px;
+    height: 85%;
 }
 #card-body-low-priority {
-    background-color: #c0fac0;
-}
-
-.name-title {
     background-color: white;
-    border-radius: 5px 5px 0 0;
-    color: white;
-    font-size: 1.2em;
-    font-weight: bold;
-    height: 25px;
+    border: 2px solid #9aea96;
+    color: #34d42c;
+    border-radius: 0 0 5px 5px;
+    height: 85%;
 }
 
 .value {
@@ -49,7 +66,7 @@
 }
 
 .text {
-    color: #424242;
+
     font-size: 1.0em;
     margin: 10px 0;
 }
