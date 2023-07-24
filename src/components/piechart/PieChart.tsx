@@ -36,7 +36,7 @@ interface PieChartData {
     };
   
     const total = data.reduce((sum, item) => sum + item.value, 0);
-  
+
     let startAngle = 0;
     const slices = data.map((item, index) => {
       const angle = calculateAngle(item.value, total);
@@ -56,15 +56,16 @@ interface PieChartData {
           key={index}
           d={slicePath}
           fill={item.color}
-          stroke="#fff"
+          stroke="#f3f3f2"
           strokeWidth={strokeWidth}
         />
       );
     });
+
   
-    return (
+  return (
       <svg width={radius * 2} height={radius * 2} viewBox={`0 0 ${radius * 2} ${radius * 2}`}>
         {slices}
       </svg>
-    );
-  }
+  );
+}

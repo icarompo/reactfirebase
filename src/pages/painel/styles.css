@@ -1,10 +1,27 @@
-.row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 24px;
-  }
+.painel-container {
+  display: flex;
+  background-color: white;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  width: fit-content;
+}
+.pie-chart {
+  display: flex;
+}
+
+.grafico {
+  display: flex;
+  margin: 10px;
+}
   
-  .pie-chart {
-  }
+.detalhe {
+  display: flex;
+  max-width: 400px;
+  align-items: center;
+}
+
+.assessor-info {
+  display: flex;
+  align-items: center;
+}
