@@ -1,27 +1,45 @@
 .painel-container {
   display: flex;
+  flex-direction: column; 
   background-color: white;
   margin: 10px;
   padding: 10px;
   border-radius: 5px;
-  width: fit-content;
+  width: auto;
+  height: auto;
 }
+
 .pie-chart {
   display: flex;
+  flex-direction: column; 
 }
 
 .grafico {
   display: flex;
   margin: 10px;
 }
-  
+
 .detalhe {
   display: flex;
   max-width: 400px;
   align-items: center;
 }
 
+.detalhes {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
 .assessor-info {
   display: flex;
   align-items: center;
+}
+
+.select {
+  display: flex;
+}
+
+.pizza {
+  display: flex;
 }

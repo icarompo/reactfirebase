@@ -3,9 +3,13 @@ import PieChart from "../../components/piechart/PieChart";
 import { useEffect, useState } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import SelectLocation from "../../components/select/Select.tsx";
 import "./styles.css";
 
-function Page() {
+interface PageProps {
+}
+
+function Page(props: PageProps) {
   type TipoDado = {
     id: string;
     proc: number;
@@ -25,14 +29,13 @@ function Page() {
   };
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
+  const [definicao, setDefinicao] = useState<string>("");
 
   useEffect(() => {
     async function fetchData() {
       const dadosCollectionRef = collection(db, "dados"); // Referência para a coleção 'dados'
-      const dadosQuery = query(
-        dadosCollectionRef,
-        where("definicao", "==", "relatoria")
-      );
+      const dadosQuery = query(dadosCollectionRef);
+      console.log(definicao)
       const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
       const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
       dadosSnapshot.forEach((doc) => {
@@ -69,6 +72,18 @@ function Page() {
     fetchUsers(); // Chama a função 'fetchUsers' para buscar os dados usando o hook useEffect
   }, []);
 
+  const filteredValues = (filterValue: string): TipoDado[] => {
+    if (filterValue === "*") {
+      return dados;
+    } else {
+      return dados.filter(
+        (Processo) =>
+          Processo.definicao &&
+          Processo.definicao.toLowerCase() === filterValue.toLowerCase()
+      );
+    }
+  };
+
   interface PieChartData {
     label: string;
     value: number;
@@ -93,7 +108,7 @@ function Page() {
   ];
 
   for (let i = 1; i <= 11; i++) {
-    const filteredData = dados.filter((Processo) => Processo.assessor === i);
+    const filteredData = filteredValues(definicao).filter((Processo) => Processo.assessor === i);
     assessorData.push(filteredData);
 
     const assessorLabel = `Assessor ${i}`;
@@ -109,17 +124,31 @@ function Page() {
   const pieChartRadius: number = 100;
   const strokeWidth: number = 3;
 
+  const handleSelectChange = (value: string) => {
+    setDefinicao(value);
+  };
+
+  useEffect(() => {
+    console.log(definicao);
+  }, [definicao]); 
+
   return (
     <>
-      <div className="painel-container">
-        <div className="pie-chart">
-          <div className="grafico">
+    <div className="painel-container">
+      <div className="pie-chart">
+        <div className="select">
+          <SelectLocation onSelectChange={handleSelectChange} />
+        </div>
+        <div className="grafico">
+          <div className="pizza">
             <PieChart
               data={data}
               radius={pieChartRadius}
               strokeWidth={strokeWidth}
             />
           </div>
+        </div>
+      
 
           <div className="detalhes">
             {assessorData.map((assessor, index) => {
@@ -154,7 +183,7 @@ function Page() {
             })}
           </div>
         </div>
-      </div>
+        </div>
     </>
   );
 }
@@ -163,11 +192,12 @@ interface PainelProps {
   onLogOut: () => void;
 }
 
-function Painel({ onLogOut }: PainelProps): JSX.Element {
+function Painel(props: PainelProps) {
+
   return (
     <>
-      <Header title="Controle E-Contas" subtitle="Painel" onLogOut={onLogOut} />
-      <Page />
+      <Header title="Controle E-Contas" subtitle="Painel" onLogOut={props.onLogOut} />
+      <Page/>
     </>
   );
 }
