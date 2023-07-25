@@ -29,7 +29,7 @@ function Page(props: PageProps) {
   };
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
-  const [definicao, setDefinicao] = useState<string>("");
+  const [definicao, setDefinicao] = useState<string>("relatoria");
 
   useEffect(() => {
     async function fetchData() {
@@ -136,10 +136,11 @@ function Page(props: PageProps) {
     <>
     <div className="painel-container">
       <div className="pie-chart">
-        <div className="select">
-          <SelectLocation onSelectChange={handleSelectChange} />
-        </div>
         <div className="grafico">
+          <div className="select">
+            <SelectLocation onSelectChange={handleSelectChange} />
+          </div>
+
           <div className="pizza">
             <PieChart
               data={data}
@@ -149,7 +150,6 @@ function Page(props: PageProps) {
           </div>
         </div>
       
-
           <div className="detalhes">
             {assessorData.map((assessor, index) => {
               const userAssessor = user.find(
