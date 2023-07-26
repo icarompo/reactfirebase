@@ -32,7 +32,6 @@ function Page() {
     async function fetchData() {
       const dadosCollectionRef = collection(db, "dados"); // Referência para a coleção 'dados'
       const dadosQuery = query(dadosCollectionRef);
-      console.log(definicao)
       const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
       const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
       dadosSnapshot.forEach((doc) => {
@@ -68,10 +67,6 @@ function Page() {
     }
     fetchUsers(); // Chama a função 'fetchUsers' para buscar os dados usando o hook useEffect
   }, []);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   const filteredValues = (filterValue: string): TipoDado[] => {
     if (filterValue === "*") {
@@ -122,10 +117,6 @@ function Page() {
   const handleSelectChange = (value: string) => {
     setDefinicao(value);
   };
-
-  useEffect(() => {
-    console.log(definicao);
-  }, [definicao]); 
 
   return (
     <>

@@ -104,9 +104,7 @@ function EditProcessModal({
     }, {});
   
     console.log(updatedFields);
-  
-    // console.log('FIM DOS ITENS VERIFICADOS');
-  
+    
     procList.forEach(async (item) => {
       const docRef = doc(db, "dados", item.id);
       await updateDoc(docRef, updatedFields);

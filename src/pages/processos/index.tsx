@@ -85,10 +85,6 @@ function Page(props: PageProps) {
     }) as string[]);
   };
 
-useEffect(() => {
-  console.log(selectedProcValues);
-}, [selectedProcValues]);
-
   return (
     <>
     <div className="proc-container">
