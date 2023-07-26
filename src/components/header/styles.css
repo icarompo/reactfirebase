@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@200&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300&display=swap');
 
 .header {
   --blue: #2d3e9e;
@@ -80,7 +80,7 @@
   color: white;
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: 2px;
+  padding-bottom: 10px;
   box-sizing: border-box;
 }
 

@@ -1,7 +1,7 @@
 import ReactModal from "react-modal";
 import EditIcon from "@mui/icons-material/Edit";
 import ProcessForm from "./form/Form.tsx";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
 import { useState, useEffect } from "react";
 import {
@@ -34,16 +34,17 @@ function EditProcessModal({
   const [newPrioridade, setNewPrioridade] = useState("");
   const appElement = document.getElementById("root");
   const processRef = collection(db, "dados");
-  const [newFields, setNewFields] = useState({});
+
 
   const handleClearClick = () => {
+
     setNewProcesso("");
     setNewAno("");
     setNewAssunto("");
     setNewData("");
     setNewDataDecisao("");
     setNewDias("");
-    setNewAssessor("0");
+    setNewAssessor("");
     setNewEntidade("");
     setNewVinculado("");
     setNewConselheiro("");
@@ -54,7 +55,12 @@ function EditProcessModal({
     setNewPrioridade("");
   };
 
-  const fieldsToCheck = [
+  interface FieldData {
+    field: string;
+    value: string;
+  }
+  
+  const fieldsToCheck: FieldData[] = [
     { field: "ano", value: newAno },
     { field: "assunto", value: newAssunto },
     { field: "data", value: newData },
@@ -89,40 +95,27 @@ function EditProcessModal({
   };
 
   const editProcess = async () => {
-
-    fieldsToCheck.forEach((item) => {
-      if (
-        item.value !== "" &&
-        item.value !== null &&
-        item.value !== undefined
-      ) {
-        setNewFields({ ...newFields, [item.field]: item.value });
-      }
+    const filteredFields = fieldsToCheck.filter((item) => {
+      return item.value; // Verifica se o valor é "truthy"
+    });
+  
+    const updatedFields = filteredFields.reduce((acc, item) => {
+      return { ...acc, [item.field]: item.value };
+    }, {});
+  
+    console.log(updatedFields);
+  
+    // console.log('FIM DOS ITENS VERIFICADOS');
+  
+    procList.forEach(async (item) => {
+      const docRef = doc(db, "dados", item.id);
+      await updateDoc(docRef, updatedFields);
     });
 
-    console.log(newFields);
-
-    setNewAno("");
-    setNewAssunto("");
-    setNewData("");
-    setNewDataDecisao("");
-    setNewDias("");
-    setNewAssessor("0");
-    setNewEntidade("");
-    setNewVinculado("");
-    setNewConselheiro("");
-    setNewOrgaoJulgador("");
-    setNewEncaminhamento("");
-    setNewDefinicao("");
-    setNewMeta("");
-    setNewPrioridade("");
-
-    setNewFields({});
+    console.log(`Processos ${procList.forEach((item) => {console.log(item.proc.toString())})} editado com sucesso!`)
+  
+    handleClearClick();
   };
-
-  useEffect(() => {
-    console.log(newFields);
-  }, [newFields]);
 
   const procDiv: HTMLElement | null = document.getElementById("proc-list");
   
@@ -143,6 +136,7 @@ function EditProcessModal({
         procDiv.appendChild(div);
       });
     }
+    console.log(procList);
   }, [procList]);
   
   const removeProcess = (id: String) => {
@@ -181,7 +175,6 @@ function EditProcessModal({
       }
     }
   };
-
 
   const handleAddClick = () => {
     if (Number(newProcesso) == 0) {

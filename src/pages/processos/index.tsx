@@ -2,15 +2,14 @@ import { useState, useEffect } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
 import {
-  alpha,
-  styled,
   createTheme,
   ThemeProvider,
 } from "@mui/material/styles";
-import { DataGrid, GridRowId, gridClasses, ptBR } from "@mui/x-data-grid";
-import TableFilter from "../../components/filter/Filter.tsx";
+import { GridRowId, ptBR } from "@mui/x-data-grid";
+import TableFilter from "../../components/filter/filter.tsx";
 import Header from "../../components/header/Header.tsx";
 import "./styles.css";
+import { StripedDataGrid } from "../../utils/stripedDataGrid.ts"
 
 const theme = createTheme(
   {
@@ -21,45 +20,11 @@ const theme = createTheme(
   ptBR
 );
 
-const ODD_OPACITY = 0.1;
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: theme.palette.grey[200],
-    "&:hover, &.Mui-hovered": {
-      backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
-      "@media (hover: none)": {
-        backgroundColor: "transparent",
-      },
-    },
-    "&.Mui-selected": {
-      backgroundColor: alpha(
-        theme.palette.primary.main,
-        ODD_OPACITY + theme.palette.action.selectedOpacity
-      ),
-      "&:hover, &.Mui-hovered": {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          ODD_OPACITY +
-            theme.palette.action.selectedOpacity +
-            theme.palette.action.hoverOpacity
-        ),
-        "@media (hover: none)": {
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            ODD_OPACITY + theme.palette.action.selectedOpacity
-          ),
-        },
-      },
-    },
-  },
-}));
-
-interface TableProps {
+interface PageProps {
   filterValue: string;
 }
 
-function Table({ filterValue }: TableProps) {
+function Page(props: PageProps) {
   type TipoDado = {
     id: string;
     proc: number;
@@ -79,11 +44,11 @@ function Table({ filterValue }: TableProps) {
   };
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
-  const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
+  const [selectedProcValues, setSelectedProcValues] = useState<string[]>([]);
 
   useEffect(() => {
     async function fetchData() {
-      const usersCollectionRef = collection(db, "dados"); // Referência para a coleção 'dados'
+      const usersCollectionRef = collection(db, "dados"); 
       const dadosQuery = query(usersCollectionRef);
       const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
       const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
@@ -110,20 +75,31 @@ function Table({ filterValue }: TableProps) {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedRows);
-  }, [selectedRows]);
+  const handleRowSelectionChange = (ids: GridRowId[]) => {
+    setSelectedProcValues(ids.map((selectedRowId) => {
+      const selectedRow = dados.find((row) => row.id === selectedRowId);
+      if (selectedRow) {
+        return selectedRow.proc.toString();
+      }
+      return undefined;
+    }) as string[]);
+  };
+
+useEffect(() => {
+  console.log(selectedProcValues);
+}, [selectedProcValues]);
 
   return (
     <>
-      <div style={{ height: "100%", width: "100%" }}>
+    <div className="proc-container">
+      <div className="proc-datagrid">
         <ThemeProvider theme={theme}>
           <StripedDataGrid
             sx={{
               backgroundColor: "#fff",
               color: "#000",
             }}
-            rows={filteredValues(filterValue)}
+            rows={filteredValues(props.filterValue)}
             getRowClassName={(params) =>
               params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
             }
@@ -145,12 +121,13 @@ function Table({ filterValue }: TableProps) {
             ]}
             checkboxSelection
             onRowSelectionModelChange={(ids) => {
-              setSelectedRows(ids);
+              handleRowSelectionChange(ids);  
             }}
             disableRowSelectionOnClick
           />
         </ThemeProvider>
       </div>
+    </div>
     </>
   );
 }
@@ -159,7 +136,7 @@ interface ProcessesProps {
   onLogOut: () => void;
 }
 
-function Processes({ onLogOut }: ProcessesProps) {
+function Processes(props: ProcessesProps) {
   const [filterValue, setFilterValue] = useState("relatoria");
 
   const handleSelectChange = (value: string) => {
@@ -171,10 +148,10 @@ function Processes({ onLogOut }: ProcessesProps) {
       <Header
         title="Controle E-Contas"
         subtitle="Dados de Processos"
-        onLogOut={onLogOut}
+        onLogOut={props.onLogOut}
       />
-      <TableFilter onSelectChange={handleSelectChange} />
-      <Table filterValue={filterValue} />
+      <TableFilter onSelectChange={handleSelectChange}/>
+      <Page filterValue={filterValue}/>
     </>
   );
 }

@@ -11,3 +11,12 @@
 .edit-button:hover {
     cursor: pointer;
 }
+
+.proc-container {
+    padding: 10px;
+}
+
+.proc-datagrid {
+    height: auto;
+    width: 100%;
+}

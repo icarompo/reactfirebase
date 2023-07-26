@@ -4,6 +4,7 @@ import HomeIcon from "@mui/icons-material/Home";
 
 function Navigation() {
   return (
+    <>
     <div className="navigation">
       <div className="links" >
       <Link to="/">
@@ -23,6 +24,7 @@ function Navigation() {
       </Link>
       </div>
     </div>
+    </>
   );
 }
 

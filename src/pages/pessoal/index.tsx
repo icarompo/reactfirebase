@@ -1,14 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Header from "../../components/header/Header.tsx";
 import Card from "../../components/card/index.tsx";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ptBR } from "@mui/x-data-grid";
+import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
+import UserContext from "../../context/userContext";
+import { GridSortModel } from "@mui/x-data-grid";
+
 import "./styles.css";
 
-import UserContext from "../../context/userContext";
-import { useContext } from "react";
+function Page() {
+  const theme = createTheme(
+    {
+      palette: {
+        primary: { main: "#1976d2" },
+      },
+    },
+    ptBR
+  );
 
-function Painel() {
   type TipoDado = {
     id: string;
     proc: number;
@@ -48,46 +60,137 @@ function Painel() {
     }
     fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
   }, []);
-  /* 
-  console.log(user?.identificador)
-  console.log(dados);
-*/
 
   const meta = dados.filter(
     (Processo) => Processo.meta.toLowerCase() === "sim"
-  ).length;
-  const anoAtual = dados.filter((Processo) => Processo.ano === 2023).length;
+  );
+  const anoAtual = dados.filter((Processo) => Processo.ano === 2023);
   const prioridade = dados.filter(
     (Processo) => Processo.prioridade.toLowerCase() === "alta"
-  ).length;
+  );
+
+  const [dataGrid, setDataGrid] = useState<Array<TipoDado>>(dados);;
+
+  const verificaPrioridade = (quantidade: number) => {
+    if (quantidade > 3 && quantidade <= 6) {
+      return "card-header-middle-priority";
+    } else if (quantidade > 6) {
+      return "card-header-high-priority";
+    } else {
+      return "card-header-low-priority";
+    }
+  };
+
+  const handleClick = (card: string) => {
+    if (card === "processos") {
+      setDataGrid(dados);
+    } else if (card === "meta") {
+      setDataGrid(meta);
+    } else if (card === "prioridade") {
+      setDataGrid(prioridade);
+    } else if (card === "anoAtual") {
+      setDataGrid(anoAtual);
+    }
+  };
+
+  const [sortModel, setSortModel] = useState<GridSortModel>([
+    {
+      field: 'definicao',
+      sort: 'asc',
+    },
+  ]);
+
+  const handleSortModelChange = (newSortModel: GridSortModel) => {
+    setSortModel(newSortModel);
+  };
+
+  useEffect(() => {
+    setDataGrid(dados);
+  }, [dados]);
 
   return (
     <>
-      <div className="personal-container">
-        <div className="container-header"></div>
-        <div className="container-body">
-          <Card
-            name="Processos"
-            value={dados.length}
-            text="Quantidade de processos abertos"
-          />
-          <Card
-            name="Meta"
-            value={meta}
-            text="Quantidade de processos em meta"
-          />
-          <Card
-            name="Prioridade"
-            value={prioridade}
-            text="Quantidade de processos em prioridade"
-          />
-          <Card
-            name="2023"
-            value={anoAtual}
-            text="Quantidade de processos pessoais do ano atual na relatoria"
-          />
+        <div className="personal-container">
+          <div className="cards">
+            <Card
+              name="Processos"
+              value={dados.length}
+              text="Processos pessoais"
+              id={verificaPrioridade(dados.length)}
+              onClick={() => handleClick("processos")}
+            />
+            <Card
+              name="Meta"
+              value={meta.length}
+              text="Processos em meta"
+              id={verificaPrioridade(meta.length)}
+              onClick={() => handleClick("meta")}
+            />
+            <Card
+              name="Prioridade"
+              value={prioridade.length}
+              text="Processos em prioridade"
+              id={verificaPrioridade(prioridade.length)}
+              onClick={() => handleClick("prioridade")}
+            />
+            <Card
+              name="2023"
+              value={anoAtual.length}
+              text="Processos do ano Atual"
+              id={verificaPrioridade(anoAtual.length)}
+              onClick={() => handleClick("anoAtual")}
+            />
+          </div>
+
+          <div className="datagrid">
+            <ThemeProvider theme={theme}>
+              <StripedDataGrid
+                sx={{
+                  backgroundColor: "#fff",
+                  color: "#000",
+                }}
+                rows={dataGrid}
+                getRowClassName={(params) =>
+                  params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+                }
+                columns={[
+                  { field: "proc", headerName: "Processo", width: 75 },
+                  { field: "ano", headerName: "Ano", width: 75 },
+                  { field: "assunto", headerName: "Assunto", width: 300 },
+                  { field: "data", headerName: "Data de inserção", width: 125 },
+                  {
+                    field: "datadecisao",
+                    headerName: "Data de decisão",
+                    width: 125,
+                  },
+                  { field: "entidade", headerName: "Entidade", width: 300 },
+                  { field: "vinculado", headerName: "Vinculado", width: 100 },
+                  {
+                    field: "conselheiro",
+                    headerName: "Conselheiro",
+                    width: 75,
+                  },
+                  {
+                    field: "orgaojulgador",
+                    headerName: "Órgão Julgador",
+                    width: 100,
+                  },
+                  {
+                    field: "encaminhamento",
+                    headerName: "Encaminhamento",
+                    width: 100,
+                  },
+                  { field: "definicao", headerName: "Definição", width: 100 },
+                  { field: "meta", headerName: "Meta", width: 75 },
+                  { field: "prioridade", headerName: "Prioridade", width: 75 },
+                ]}
+
+                sortModel={sortModel}
+                onSortModelChange={handleSortModelChange}
+              />
+            </ThemeProvider>
+          </div>
         </div>
-      </div>
     </>
   );
 }
@@ -104,7 +207,7 @@ function Personal({ onLogOut }: PersonalProps) {
         subtitle="Página Pessoal"
         onLogOut={onLogOut}
       />
-      <Painel />
+      <Page />
     </>
   );
 }

@@ -1,0 +1,19 @@
+.mydiv {
+    padding: 10px;
+    width: 130px;
+    height: 55px;
+    background-color: #ffffff8f;
+    vertical-align: middle;
+    display: none;
+    position: absolute;
+    font-size: large;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px rgba(16, 0, 54, 0.2);
+    color: rgb(0, 0, 0); /* Altere a cor do texto para uma cor visível */
+    transition: 0.1s ease-out;
+    left: 14.7%; /* Posiciona a div horizontalmente no centro do contêiner */
+    top: 46%; /* Posiciona a div verticalmente no centro do contêiner */
+    z-index: 1; 
+  }
+  

@@ -1,6 +1,19 @@
+.filter-button {
+  border: none;
+  margin-left: 10px;
+  background: none;
+  color: white;
+  width: 20px;
+}
+
+.filter-button:hover {
+  cursor: pointer;
+  color: #d8d8d8;
+}
+
+
 .addProcessButton {
   width: auto;
-  background-color: #00cc00;
   display: flex;
   align-items: center;
   font-size: large;
