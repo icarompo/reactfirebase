@@ -6,10 +6,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import SelectLocation from "../../components/select/Select.tsx";
 import "./styles.css";
 
-interface PageProps {
-}
-
-function Page(props: PageProps) {
+function Page() {
   type TipoDado = {
     id: string;
     proc: number;
@@ -72,6 +69,10 @@ function Page(props: PageProps) {
     fetchUsers(); // Chama a função 'fetchUsers' para buscar os dados usando o hook useEffect
   }, []);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   const filteredValues = (filterValue: string): TipoDado[] => {
     if (filterValue === "*") {
       return dados;
@@ -84,6 +85,13 @@ function Page(props: PageProps) {
     }
   };
 
+  const findAssessor = (id: number) => {
+    const userAssessor = user.find((item) => Number(item.identificador) === id);
+    if (userAssessor) {
+      return userAssessor?.nome;
+    }
+  };
+
   interface PieChartData {
     label: string;
     value: number;
@@ -93,27 +101,14 @@ function Page(props: PageProps) {
   const data: PieChartData[] = [];
 
   const assessorData = [];
-  const colors = [
-    "#c6e0b4",
-    "#b4c6e7",
-    "#ffe699",
-    "#dbdbdb",
-    "#f8cbad",
-    "#bdd7ee",
-    "#cccc00",
-    "#ffccff",
-    "#66ff99",
-    "#99ffcc",
-    "#a6a6a6",
-  ];
+  const colors = ["#c6e0b4", "#b4c6e7", "#ffe699", "#dbdbdb", "#f8cbad", "#bdd7ee", "#cccc00", "#ffccff", "#66ff99", "#99ffcc", "#a6a6a6",];
 
   for (let i = 1; i <= 11; i++) {
     const filteredData = filteredValues(definicao).filter((Processo) => Processo.assessor === i);
     assessorData.push(filteredData);
 
-    const assessorLabel = `Assessor ${i}`;
     const pieChartData: PieChartData = {
-      label: assessorLabel,
+      label: findAssessor(i) ?? "",
       value: filteredData.length,
       color: colors[i - 1],
     };
@@ -142,11 +137,7 @@ function Page(props: PageProps) {
           </div>
 
           <div className="pizza">
-            <PieChart
-              data={data}
-              radius={pieChartRadius}
-              strokeWidth={strokeWidth}
-            />
+            <PieChart data={data} radius={pieChartRadius} strokeWidth={strokeWidth} />
           </div>
         </div>
       

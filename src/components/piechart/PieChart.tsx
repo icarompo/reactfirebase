@@ -1,3 +1,5 @@
+import "./styles.css"
+
 interface PieChartData {
     label: string;
     value: number;
@@ -37,6 +39,21 @@ interface PieChartData {
   
     const total = data.reduce((sum, item) => sum + item.value, 0);
 
+    const handleSliceMouseEnter = (item: PieChartData) => {
+      const label = document.querySelector(".mydiv");
+      if (label) {
+        label.innerHTML = `${item.label} <br/> ${item.value} Processos`;
+        label.style.display = "flex";
+      }
+    };
+
+    const handleSliceMouseLeave = () => {
+      const label = document.querySelector(".mydiv");
+      if (label) {
+        label.style.display = "none";
+      }
+    };
+
     let startAngle = 0;
     const slices = data.map((item, index) => {
       const angle = calculateAngle(item.value, total);
@@ -58,14 +75,20 @@ interface PieChartData {
           fill={item.color}
           stroke="#f3f3f2"
           strokeWidth={strokeWidth}
+          onMouseEnter={() => handleSliceMouseEnter(item)}
+          onMouseLeave={handleSliceMouseLeave}
         />
       );
     });
 
-  
+
   return (
+    <>
       <svg width={radius * 2} height={radius * 2} viewBox={`0 0 ${radius * 2} ${radius * 2}`}>
         {slices}
       </svg>
+
+    <div className="mydiv"></div>
+    </>
   );
 }
