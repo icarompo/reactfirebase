@@ -27,6 +27,7 @@ function Page() {
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
   const [definicao, setDefinicao] = useState<string>("relatoria");
+  const [ano, setAno] = useState<string>("2023");
 
   useEffect(() => {
     async function fetchData() {
@@ -68,18 +69,27 @@ function Page() {
     fetchUsers(); // Chama a função 'fetchUsers' para buscar os dados usando o hook useEffect
   }, []);
 
-  const filteredValues = (filterValue: string): TipoDado[] => {
-    if (filterValue === "*") {
+  const filteredValues = (definicao: string, ano: string): TipoDado[] => {
+    if (definicao === "*" && ano === "*") {
       return dados;
+    } else if (definicao === "*") {
+      return dados.filter((Processo) => Processo.ano === Number(ano));
+    } else if (ano === "*") {
+      return dados.filter(
+        (Processo) =>
+          Processo.definicao &&
+          Processo.definicao.toLowerCase() === definicao.toLowerCase()
+      );
     } else {
       return dados.filter(
         (Processo) =>
           Processo.definicao &&
-          Processo.definicao.toLowerCase() === filterValue.toLowerCase()
+          Processo.definicao.toLowerCase() === definicao.toLowerCase() &&
+          Processo.ano === Number(ano)
       );
     }
   };
-
+  
   const findAssessor = (id: number) => {
     const userAssessor = user.find((item) => Number(item.identificador) === id);
     if (userAssessor) {
@@ -87,7 +97,7 @@ function Page() {
     }
   };
 
-  interface PieChartData {
+  interface PieChartData { 
     label: string;
     value: number;
     color: string;
@@ -98,8 +108,8 @@ function Page() {
   const assessorData = [];
   const colors = ["#c6e0b4", "#b4c6e7", "#ffe699", "#dbdbdb", "#f8cbad", "#bdd7ee", "#cccc00", "#ffccff", "#66ff99", "#99ffcc", "#a6a6a6",];
 
-  for (let i = 1; i <= 11; i++) {
-    const filteredData = filteredValues(definicao).filter((Processo) => Processo.assessor === i);
+  for (let i = 1; i <= 10; i++) {
+    const filteredData = filteredValues(definicao, ano).filter((Processo) => Processo.assessor === i);
     assessorData.push(filteredData);
 
     const pieChartData: PieChartData = {
@@ -118,20 +128,42 @@ function Page() {
     setDefinicao(value);
   };
 
+  const handleDetalheClick = (assessor: TipoDado[]) => () => {
+    console.log(assessor);
+  };
+
+  const handleAnoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setAno(event.target.value);
+  };
+
   return (
     <>
-    <div className="painel-container">
-      <div className="pie-chart">
-        <div className="grafico">
-          <div className="select">
-            <SelectLocation onSelectChange={handleSelectChange} />
+      <div className="painel-container">
+        <div className="pie-chart-container">
+          <div className="column">
+            <div className="select">
+              <SelectLocation onSelectChange={handleSelectChange} />
+              <select className="ano" onChange={handleAnoChange} defaultValue={2023}>
+                <option value="*">Todos</option>
+                {Array.from({ length: 41 }, (_, index) => 1990 + index).map(
+                  (ano) => (
+                    <option key={ano} value={ano}>
+                      {ano}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+
+            <div className="pie-chart">
+              <PieChart
+                data={data}
+                radius={pieChartRadius}
+                strokeWidth={strokeWidth}
+              />
+            </div>
           </div>
 
-          <div className="pizza">
-            <PieChart data={data} radius={pieChartRadius} strokeWidth={strokeWidth} />
-          </div>
-        </div>
-      
           <div className="detalhes">
             {assessorData.map((assessor, index) => {
               const userAssessor = user.find(
@@ -140,7 +172,11 @@ function Page() {
 
               if (userAssessor) {
                 return (
-                  <div className="detalhe" key={index}>
+                  <div
+                    className="detalhe"
+                    key={index}
+                    onClick={handleDetalheClick(assessor)}
+                  >
                     <div className="assessor-info">
                       <span
                         style={{
@@ -165,7 +201,7 @@ function Page() {
             })}
           </div>
         </div>
-        </div>
+      </div>
     </>
   );
 }
