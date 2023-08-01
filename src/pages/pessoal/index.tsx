@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Header from "../../components/header/Header.tsx";
-import Card from "../../components/card/index.tsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ptBR } from "@mui/x-data-grid";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
@@ -61,37 +60,7 @@ function Page() {
     fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
   }, []);
 
-  const meta = dados.filter(
-    (Processo) => Processo.meta.toLowerCase() === "sim"
-  );
-  const anoAtual = dados.filter((Processo) => Processo.ano === 2023);
-  const prioridade = dados.filter(
-    (Processo) => Processo.prioridade.toLowerCase() === "alta"
-  );
-
   const [dataGrid, setDataGrid] = useState<Array<TipoDado>>(dados);;
-
-  const verificaPrioridade = (quantidade: number) => {
-    if (quantidade > 3 && quantidade <= 6) {
-      return "card-header-middle-priority";
-    } else if (quantidade > 6) {
-      return "card-header-high-priority";
-    } else {
-      return "card-header-low-priority";
-    }
-  };
-
-  const handleClick = (card: string) => {
-    if (card === "processos") {
-      setDataGrid(dados);
-    } else if (card === "meta") {
-      setDataGrid(meta);
-    } else if (card === "prioridade") {
-      setDataGrid(prioridade);
-    } else if (card === "anoAtual") {
-      setDataGrid(anoAtual);
-    }
-  };
 
   const [sortModel, setSortModel] = useState<GridSortModel>([
     {
@@ -111,36 +80,7 @@ function Page() {
   return (
     <>
         <div className="personal-container">
-          <div className="cards">
-            <Card
-              name="Processos"
-              value={dados.length}
-              text="Processos pessoais"
-              id={verificaPrioridade(dados.length)}
-              onClick={() => handleClick("processos")}
-            />
-            <Card
-              name="Meta"
-              value={meta.length}
-              text="Processos em meta"
-              id={verificaPrioridade(meta.length)}
-              onClick={() => handleClick("meta")}
-            />
-            <Card
-              name="Prioridade"
-              value={prioridade.length}
-              text="Processos em prioridade"
-              id={verificaPrioridade(prioridade.length)}
-              onClick={() => handleClick("prioridade")}
-            />
-            <Card
-              name="2023"
-              value={anoAtual.length}
-              text="Processos do ano Atual"
-              id={verificaPrioridade(anoAtual.length)}
-              onClick={() => handleClick("anoAtual")}
-            />
-          </div>
+          
 
           <div className="datagrid">
             <ThemeProvider theme={theme}>

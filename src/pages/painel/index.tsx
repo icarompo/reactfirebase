@@ -3,6 +3,7 @@ import PieChart from "../../components/piechart/PieChart";
 import { useEffect, useState } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import Card from "../../components/card/index.tsx";
 import SelectLocation from "../../components/select/Select.tsx";
 import "./styles.css";
 
@@ -111,13 +112,11 @@ function Page() {
   for (let i = 1; i <= 10; i++) {
     const filteredData = filteredValues(definicao, ano).filter((Processo) => Processo.assessor === i);
     assessorData.push(filteredData);
-
     const pieChartData: PieChartData = {
       label: findAssessor(i) ?? "",
       value: filteredData.length,
       color: colors[i - 1],
     };
-
     data.push(pieChartData);
   }
 
@@ -129,11 +128,44 @@ function Page() {
   };
 
   const handleDetalheClick = (assessor: TipoDado[]) => () => {
-    console.log(assessor);
-  };
+    const result = document.querySelector("#result-container") as HTMLDivElement;
+    if (assessor.length != 0) {
+    result.innerHTML = "";
+    for (let i = 0; i < assessor.length; i++) {
+      const div = document.createElement("div");
+      div.classList.add("result-item");
+      div.innerHTML = assessor[i].proc.toString();
+      result.appendChild(div);
+    }
+  }
+  else {
+    result.innerHTML = "Nenhum processo encontrado";
+  }};
 
   const handleAnoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setAno(event.target.value);
+  };
+
+  const verificaPrioridade = (quantidade: number) => {
+    if (quantidade > 3 && quantidade <= 6) {
+      return "card-header-middle-priority";
+    } else if (quantidade > 6) {
+      return "card-header-high-priority";
+    } else {
+      return "card-header-low-priority";
+    }
+  };
+
+  const handleClick = (card: string) => {
+    if (card === "processos") {
+      console.log('opa');
+    } else if (card === "meta") {
+      console.log('opa');
+    } else if (card === "prioridade") {
+      console.log('opa');
+    } else if (card === "anoAtual") {
+      console.log('opa');
+    }
   };
 
   return (
@@ -143,7 +175,11 @@ function Page() {
           <div className="column">
             <div className="select">
               <SelectLocation onSelectChange={handleSelectChange} />
-              <select className="ano" onChange={handleAnoChange} defaultValue={2023}>
+              <select
+                className="ano"
+                onChange={handleAnoChange}
+                defaultValue={2023}
+              >
                 <option value="*">Todos</option>
                 {Array.from({ length: 41 }, (_, index) => 1990 + index).map(
                   (ano) => (
@@ -200,6 +236,40 @@ function Page() {
               }
             })}
           </div>
+
+          <div className="column" id="result-container">
+          <div className="cards">
+            <Card
+              name="Processos"
+              value={dados.length}
+              text="Processos pessoais"
+              id={verificaPrioridade(dados.length)}
+              onClick={() => handleClick("processos")}
+            />
+            <Card
+              name="Meta"
+              value={8}
+              text="Processos em meta"
+              id={verificaPrioridade(8)}
+              onClick={() => handleClick("meta")}
+            />
+            <Card
+              name="Prioridade"
+              value={2}
+              text="Processos em prioridade"
+              id={verificaPrioridade(2)}
+              onClick={() => handleClick("prioridade")}
+            />
+            <Card
+              name="2023"
+              value={4}
+              text="Processos do ano Atual"
+              id={verificaPrioridade(4)}
+              onClick={() => handleClick("anoAtual")}
+            />
+          </div>
+          </div>
+
         </div>
       </div>
     </>
