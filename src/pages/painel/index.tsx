@@ -5,6 +5,7 @@ import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Card from "../../components/card/index.tsx";
 import SelectLocation from "../../components/select/Select.tsx";
+import Navigation from "../../components/navigation/Navigation.tsx";
 import "./styles.css";
 
 function Page() {
@@ -127,21 +128,17 @@ function Page() {
     setDefinicao(value);
   };
 
+  
+  let filteredData = filteredValues(definicao, ano);
+  
   const handleDetalheClick = (assessor: TipoDado[]) => () => {
-    const result = document.querySelector("#result-container") as HTMLDivElement;
-    if (assessor.length != 0) {
-    result.innerHTML = "";
-    for (let i = 0; i < assessor.length; i++) {
-      const div = document.createElement("div");
-      div.classList.add("result-item");
-      div.innerHTML = assessor[i].proc.toString();
-      result.appendChild(div);
-    }
-  }
-  else {
-    result.innerHTML = "Nenhum processo encontrado";
-  }};
-
+    filteredData = assessor;
+    alert(assessor.length);
+    };
+    const meta = filteredData.filter((Processo) => Processo.meta === "sim").length;
+    const prioridade = filteredData.filter((Processo) => Processo.prioridade === "alta").length;
+    const ano_atual = filteredData.filter((Processo) => Processo.ano === 2023).length;
+    
   const handleAnoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setAno(event.target.value);
   };
@@ -153,8 +150,7 @@ function Page() {
       return "card-header-high-priority";
     } else {
       return "card-header-low-priority";
-    }
-  };
+    }};
 
   const handleClick = (card: string) => {
     if (card === "processos") {
@@ -165,15 +161,13 @@ function Page() {
       console.log('opa');
     } else if (card === "anoAtual") {
       console.log('opa');
-    }
-  };
+    }};
 
   return (
     <>
       <div className="painel-container">
-        <div className="pie-chart-container">
-          <div className="column">
-            <div className="select">
+
+      <div className="filter-container">
               <SelectLocation onSelectChange={handleSelectChange} />
               <select
                 className="ano"
@@ -184,12 +178,48 @@ function Page() {
                 {Array.from({ length: 41 }, (_, index) => 1990 + index).map(
                   (ano) => (
                     <option key={ano} value={ano}>
+                      
                       {ano}
                     </option>
                   )
                 )}
               </select>
             </div>
+
+            <div className="cards">
+            <Card
+              name="Processos"
+              value={filteredData.length}
+              text="Quantidade de processos no total"
+              id={verificaPrioridade(filteredData.length)}
+              onClick={() => handleClick("processos")}
+            />
+            <Card
+              name="Meta"
+              value={meta}
+              text="Processos em meta"
+              id={verificaPrioridade(meta)}
+              onClick={() => handleClick("meta")}
+            />
+            <Card
+              name="Prioridade"
+              value={prioridade}
+              text="Processos em prioridade"
+              id={verificaPrioridade(prioridade)}
+              onClick={() => handleClick("prioridade")}
+            />
+            <Card
+              name="2023"
+              value={ano_atual}
+              text="Processos do ano Atual"
+              id={verificaPrioridade(ano_atual)}
+              onClick={() => handleClick("anoAtual")}
+            />
+          </div>
+
+        <div className="pie-chart-container">
+          <div className="column">
+
 
             <div className="pie-chart">
               <PieChart
@@ -232,42 +262,14 @@ function Page() {
                   </div>
                 );
               } else {
-                return null; // Não exibir nada caso o assessor não tenha o identificador entre 1 e 11
+                return null; 
               }
             })}
           </div>
 
+          
+
           <div className="column" id="result-container">
-          <div className="cards">
-            <Card
-              name="Processos"
-              value={dados.length}
-              text="Processos pessoais"
-              id={verificaPrioridade(dados.length)}
-              onClick={() => handleClick("processos")}
-            />
-            <Card
-              name="Meta"
-              value={8}
-              text="Processos em meta"
-              id={verificaPrioridade(8)}
-              onClick={() => handleClick("meta")}
-            />
-            <Card
-              name="Prioridade"
-              value={2}
-              text="Processos em prioridade"
-              id={verificaPrioridade(2)}
-              onClick={() => handleClick("prioridade")}
-            />
-            <Card
-              name="2023"
-              value={4}
-              text="Processos do ano Atual"
-              id={verificaPrioridade(4)}
-              onClick={() => handleClick("anoAtual")}
-            />
-          </div>
           </div>
 
         </div>
@@ -284,8 +286,13 @@ function Painel(props: PainelProps) {
 
   return (
     <>
+    <div className="section">
+    <Navigation />
+    <div className="painel">
       <Header title="Controle E-Contas" subtitle="Painel" onLogOut={props.onLogOut} />
-      <Page/>
+        <Page/>
+        </div>
+      </div>
     </>
   );
 }

@@ -6,6 +6,8 @@ function Navigation() {
   return (
     <>
     <div className="navigation">
+    <img src="https://irbcontas.org.br/wp-content/uploads/2020/03/associado-titular-logo-tce-to.png" alt="Logo do TCE-TO" className="logo"/>
+
       <div className="links" >
       <Link to="/">
         <HomeIcon className="navigation-icon"/>

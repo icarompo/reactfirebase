@@ -10,6 +10,7 @@ import TableFilter from "../../components/filter/filter.tsx";
 import Header from "../../components/header/Header.tsx";
 import "./styles.css";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts"
+import Navigation from "../../components/navigation/Navigation.tsx"; 
 
 const theme = createTheme(
   {
@@ -146,6 +147,7 @@ function Processes(props: ProcessesProps) {
         subtitle="Dados de Processos"
         onLogOut={props.onLogOut}
       />
+      <Navigation />
       <TableFilter onSelectChange={handleSelectChange}/>
       <Page filterValue={filterValue}/>
     </>

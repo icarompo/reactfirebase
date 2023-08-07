@@ -7,6 +7,7 @@ import { ptBR } from "@mui/x-data-grid";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import UserContext from "../../context/userContext";
 import { GridSortModel } from "@mui/x-data-grid";
+import Navigation from "../../components/navigation/Navigation.tsx"; 
 
 import "./styles.css";
 
@@ -147,6 +148,7 @@ function Personal({ onLogOut }: PersonalProps) {
         subtitle="Página Pessoal"
         onLogOut={onLogOut}
       />
+      <Navigation />
       <Page />
     </>
   );
