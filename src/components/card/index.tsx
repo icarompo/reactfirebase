@@ -25,11 +25,9 @@ function Card(props: CardProps) {
   };
 
   return (
-    <div className="card"  onClick={handleClick}>
+    <div className="card" onClick={handleClick}>
       <div className="card-header" id={props.id}>
-        <h3 className="name-title" >
-          {props.name}
-        </h3>
+        <h3 className="name-title">{props.name}</h3>
       </div>
       <div className="card-body" id={verificaCorCorpo(props.id)}>
         <h1 className="value">{props.value}</h1>

@@ -218,16 +218,14 @@ function Page() {
           </div>
 
         <div className="pie-chart-container">
-          <div className="column">
+          <div className="pie-chart">
 
-
-            <div className="pie-chart">
               <PieChart
                 data={data}
                 radius={pieChartRadius}
                 strokeWidth={strokeWidth}
               />
-            </div>
+
           </div>
 
           <div className="detalhes">

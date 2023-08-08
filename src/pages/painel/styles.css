@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   flex-direction: row; 
-  padding: 2rem;
+padding: 10px;
   border-radius: 5px;
 }
 
@@ -12,8 +12,8 @@
 }
 
 .column {
-  display: flex;
-  flex-direction: column; /* Altere para 'relative' */
+  justify-items: center;
+  align-items: center;
 }
 
 .detalhe {
@@ -56,11 +56,13 @@
   margin-left: 10px;
   width: 100px;
   height: 25px;
+  font-weight: bold;
 }
 
 .pie-chart {
-  margin-top: 1rem;
+  padding-top: 3rem;
 }
+
 
 #result-container {
   width: 700px;
@@ -82,10 +84,11 @@
 
 .cards {
   display: flex;
-  justify-content: flex-start;
-  width: 80%;
-  height: 20%;
-  margin-top: 1rem;
+  flex-direction: row;
+  column-gap: 2rem;
+  width: auto;
+  height: auto;
+  margin: 1rem 0rem 1rem 0rem;
 }
 
 .section {

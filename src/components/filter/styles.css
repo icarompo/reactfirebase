@@ -4,7 +4,10 @@
   color: white;
   box-sizing: border-box;
   height: 35px;
-  flex: auto;
+  width: max-content;
+  padding: 1rem;
+  margin: 10px 0 0 10px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
 }
@@ -53,7 +56,7 @@
 }
 
 .select {
-  margin-left: 10px;
+
   width: 150px;
   display: flex;
   align-items: center;
