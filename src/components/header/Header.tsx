@@ -6,12 +6,11 @@ import { auth } from '../../api/firebase-config';
 import { useNavigate } from 'react-router-dom'; 
 
 interface HeaderProps {
-    title: string;
     subtitle: string;
     onLogOut: () => void;
   }
   
-  function Header({ title, subtitle, onLogOut }: HeaderProps): JSX.Element {
+  function Header({ subtitle, onLogOut }: HeaderProps): JSX.Element {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
 
@@ -30,7 +29,6 @@ interface HeaderProps {
         <div className="header">
 
           <div className="text-container">
-            <h2 className='header-h2'>{title}</h2>
             <h3 className='header-h3'>{subtitle}</h3>
           </div>
           <div className="header-buttons">

@@ -143,7 +143,6 @@ function Processes(props: ProcessesProps) {
   return (
     <>
       <Header
-        title="Controle E-Contas"
         subtitle="Dados de Processos"
         onLogOut={props.onLogOut}
       />

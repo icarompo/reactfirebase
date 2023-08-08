@@ -144,7 +144,6 @@ function Personal({ onLogOut }: PersonalProps) {
   return (
     <>
       <Header
-        title="Controle E-Contas"
         subtitle="Página Pessoal"
         onLogOut={onLogOut}
       />

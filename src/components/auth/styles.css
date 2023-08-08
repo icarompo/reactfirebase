@@ -1,18 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300&display=swap');
 
 body {
+    font-family: "IBM Plex Serif", serif;
     margin: 0;
     padding: 0;
     background-color: #f3f3f2;
-    height: 100vh;
 }
 
 #root {
   --blue: #2d3e9e;
-  margin: 0;
-  padding: 0;
-  width: 100vh;
-  height: 100vh;
+  width: auto;
 }
 
 .login-form {

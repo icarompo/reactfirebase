@@ -289,7 +289,7 @@ function Painel(props: PainelProps) {
     <div className="section">
     <Navigation />
     <div className="painel">
-      <Header title="Controle E-Contas" subtitle="Painel" onLogOut={props.onLogOut} />
+      <Header subtitle="Painel" onLogOut={props.onLogOut} />
         <Page/>
         </div>
       </div>
