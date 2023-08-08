@@ -7,9 +7,13 @@ interface CheckProps {
 
 function Check({ onLogOut } : CheckProps): JSX.Element {
     return (
-        <>
-            <Header title="Controle E-Contas" subtitle="Página de Checagem" onLogOut={onLogOut}/>
-            <Navigation />
+        <>      
+        <div className="app">
+        <Navigation />
+        <div className="main-content">
+          <Header subtitle="Página de Checagem" onLogOut={onLogOut}/>
+            </div>
+        </div>
         </>
     );
 }

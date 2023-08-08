@@ -1,31 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300&display=swap');
 
 .header {
   --blue: #2d3e9e;
   display: flex;
   align-items: center;
-  background: var(--blue);
-  color: white;
+  background: white;
+  border-bottom: 3px solid white;
+  color: black;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 20px;
   width: 100%;
   padding: 1rem;
-  box-sizing: border-box;
-  height: 55px;
+  height: 60px;
 }
 
 .text-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.header-h2 {
-  font-family: "IBM Plex Serif", serif;
-}
-
-.header-h3 {
-  margin: 2rem;
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 200;
 }
 
 .header-buttons {

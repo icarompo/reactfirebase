@@ -283,14 +283,13 @@ interface PainelProps {
 }
 
 function Painel(props: PainelProps) {
-
   return (
     <>
-    <div className="section">
-    <Navigation />
-    <div className="painel">
-      <Header subtitle="Painel" onLogOut={props.onLogOut} />
-        <Page/>
+      <div className="app">
+        <Navigation />
+        <div className="main-content">
+          <Header subtitle="Painel" onLogOut={props.onLogOut} />
+          <Page />
         </div>
       </div>
     </>

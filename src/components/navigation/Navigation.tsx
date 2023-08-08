@@ -1,6 +1,10 @@
 import "./styles.css";
 import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
+import PersonIcon from "@mui/icons-material/Person";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import TableRowsIcon from "@mui/icons-material/TableRows";
+import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 
 function Navigation() {
   return (
@@ -18,19 +22,24 @@ function Navigation() {
           </div>
         </div>
         <div className="links">
-          <Link to="/">
+          <Link to="/" className="link">
             <HomeIcon className="navigation-icon" />
+            Home
           </Link>
           <Link to="/pessoal" className="link">
+            <PersonIcon className="navigation-icon" />
             Pessoal
           </Link>
           <Link to="/painel" className="link">
+            <DashboardIcon className="navigation-icon" />
             Painel
           </Link>
           <Link to="/processos" className="link">
+            <TableRowsIcon className="navigation-icon" />
             Processos
           </Link>
           <Link to="/checagem" className="link">
+            <LibraryAddCheckIcon className="navigation-icon" />
             Checagem
           </Link>
         </div>

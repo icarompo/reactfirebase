@@ -16,7 +16,6 @@
   width: auto;
   display: flex;
   align-items: center;
-  font-size: large;
   height: 25px;
   border: none;
   border-radius: 5px;
@@ -71,7 +70,6 @@
   color: white;
   height: 25px;
   margin-top: 1px;
-  font-size: large;
 }
 
 
@@ -79,7 +77,6 @@
   border: none;
   height: 24px;
   margin-top: 1px;
-  font-size: large;
   text-align: center;
 }
 
@@ -88,7 +85,6 @@
   text-align: center;
   height: 25px;
   margin-top: 1px;
-  font-size: large;
 }
 
 .modal {
@@ -113,7 +109,6 @@
   background-color: red;
   color: white;
   border: none;
-  font-size: bold;
   width: 30px;
   height: 32px;
   padding: 0.6rem;
@@ -126,7 +121,6 @@
 .button {
   display: flex;
   align-items: center;
-  font-size: large;
   height: 25px;
   border: none;
   border-radius: 5px;
@@ -146,7 +140,6 @@
   border: none;
   background-color: white;
   border-radius: 3px;
-  font-size: large;
   margin: 1px;
 }
 .addbutton:hover {
@@ -160,7 +153,6 @@
   text-align: center;
   height: 25px;
   margin-top: 1px;
-  font-size: large;
   border-radius: 0; /* Removendo o border-radius */
 }
 
@@ -184,7 +176,6 @@
   justify-content: space-between;
   color: white;
   background-color: #0ba044;
-  font-size: large;
   width: 71px; /* Largura fixa de 71px */
   height: 17px;
   margin: 1px;
