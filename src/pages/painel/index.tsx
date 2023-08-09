@@ -129,15 +129,10 @@ function Page() {
   };
 
   
-  let filteredData = filteredValues(definicao, ano);
-  
-  const handleDetalheClick = (assessor: TipoDado[]) => () => {
-    filteredData = assessor;
-    alert(assessor.length);
-    };
+    let filteredData = filteredValues(definicao, ano);
     const meta = filteredData.filter((Processo) => Processo.meta === "sim").length;
     const prioridade = filteredData.filter((Processo) => Processo.prioridade === "alta").length;
-    const ano_atual = filteredData.filter((Processo) => Processo.ano === 2023).length;
+    const vinculado = filteredData.filter((Processo) => Processo.vinculado === "PRINCIPAL" || Processo.vinculado === "principal").length;
     
   const handleAnoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setAno(event.target.value);
@@ -159,7 +154,7 @@ function Page() {
       console.log('opa');
     } else if (card === "prioridade") {
       console.log('opa');
-    } else if (card === "anoAtual") {
+    } else if (card === "vinculado") {
       console.log('opa');
     }};
 
@@ -209,11 +204,11 @@ function Page() {
               onClick={() => handleClick("prioridade")}
             />
             <Card
-              name="2023"
-              value={ano_atual}
-              text="Processos do ano Atual"
-              id={verificaPrioridade(ano_atual)}
-              onClick={() => handleClick("anoAtual")}
+              name="Vinculado"
+              value={vinculado}
+              text="Processos Principais"
+              id={verificaPrioridade(vinculado)}
+              onClick={() => handleClick("vinculado")}
             />
           </div>
 
@@ -239,7 +234,6 @@ function Page() {
                   <div
                     className="detalhe"
                     key={index}
-                    onClick={handleDetalheClick(assessor)}
                   >
                     <div className="assessor-info">
                       <span
@@ -264,12 +258,8 @@ function Page() {
               }
             })}
           </div>
-
-          
-
           <div className="column" id="result-container">
           </div>
-
         </div>
       </div>
     </>
