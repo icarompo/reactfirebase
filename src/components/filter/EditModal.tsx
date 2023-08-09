@@ -4,10 +4,6 @@ import ProcessForm from "./form/Form.tsx";
 import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../api/firebase-config";
 import { useState, useEffect } from "react";
-import {
-  convertDateIn,
-  convertDateOut,
-} from "../../utils/dateTypeConverter.ts";
 import "./form/modal.styles.css";
 
 function EditProcessModal({
