@@ -98,20 +98,15 @@ function EditProcessModal({
     const filteredFields = fieldsToCheck.filter((item) => {
       return item.value; // Verifica se o valor é "truthy"
     });
-  
     const updatedFields = filteredFields.reduce((acc, item) => {
       return { ...acc, [item.field]: item.value };
     }, {});
-  
     console.log(updatedFields);
-    
     procList.forEach(async (item) => {
       const docRef = doc(db, "dados", item.id);
       await updateDoc(docRef, updatedFields);
     });
-
     console.log(`Processos ${procList.forEach((item) => {console.log(item.proc.toString())})} editado com sucesso!`)
-  
     handleClearClick();
   };
 
@@ -124,13 +119,11 @@ function EditProcessModal({
         const div = document.createElement("div");
         div.className = "proc-item";
         div.innerHTML = item.proc.toString();
-  
         const button = document.createElement("button");
         button.innerHTML = "X";
         button.className = "remove-button";
         button.addEventListener("click", () => removeProcess(item.id));
         div.appendChild(button);
-  
         procDiv.appendChild(div);
       });
     }
@@ -199,43 +192,97 @@ function EditProcessModal({
           onRequestClose={closeModal}
           appElement={appElement as HTMLElement}
         >
-          <h2>Editar Processo</h2>
-          <button className="closeModalButton" onClick={closeModal}>
-            X
-          </button>
+          <div className="modal-header">
+            <div className="modal-title">
+            <h2><EditIcon /> Editar Processo</h2>
+            </div>
+            <button className="closeModalButton" onClick={closeModal}>
+              X
+            </button>
+          </div>
           <div id="proc-list"></div>
-          <button type="button" id="remove-all-button" onClick={handleRemoveAllClick}>Remover todos</button>
+          <button
+            type="button"
+            id="remove-all-button"
+            onClick={handleRemoveAllClick}
+          >
+            Remover todos
+          </button>
           <form
             onSubmit={handleFormSubmit}
             name="Adicionar processo"
             className="form"
           >
-            <div className="column">
-              <div className="row">
-                {/*PROCESSO*/}
-                <label className="label" htmlFor="proc">
-                  Processo:
-                </label>
+            <div className="columns">
+            <div className="column1">
+              <label className="label" htmlFor="proc">Processo:</label>
+              <label className="label" htmlFor="ano">Ano:</label>
+              <label className="label" htmlFor="assunto">Assunto:</label>
+              <label className="label" htmlFor="data">Data de inserção:</label>
+              <label className="label" htmlFor="datadecisao">Data de decisão:</label>
+              <label className="label" htmlFor="dias">Dias:</label>
+              <label className="label" htmlFor="assessor">Assessor:</label>
+              <label className="label" htmlFor="entidade">Entidade:</label>
+              <label className="label" htmlFor="vinculado">Vinculado:</label>
+              <label className="label" htmlFor="conselheiro">Conselheiro:</label>
+              <label className="label" htmlFor="julgador">Órgão Julgador:</label>
+              <label className="label" htmlFor="encaminhamento">Encaminhamento:</label>
+              <label className="label" htmlFor="definicao">Definição:</label>
+              <label className="label" htmlFor="meta">Meta:</label>
+              <label className="label" htmlFor="prioridade">Prioridade:</label>
+            </div>
+            <div className="column2">
+                <div className="row">
                 <input
                   onChange={(event) => {
                     setNewProcesso(event.target.value);
                   }}
                   type="number"
-                  className="formRowProc"
+                  className="input-form"
                   placeholder="Processo..."
                 />
-                <button className="addbutton" type="button" name="addNumber" onClick={handleAddClick}>+</button>
-              </div>
-
-              <ProcessForm setNewAno={setNewAno} setNewAssunto={setNewAssunto} setNewData={setNewData} setNewDataDecisao={setNewDataDecisao} setNewDias={setNewDias}
-            setNewAssessor={setNewAssessor}setNewEntidade={setNewEntidade}setNewVinculado={setNewVinculado}setNewConselheiro={setNewConselheiro}
-            setNewOrgaoJulgador={setNewOrgaoJulgador}setNewEncaminhamento={setNewEncaminhamento}setNewDefinicao={setNewDefinicao}setNewMeta={setNewMeta}
-            setNewPrioridade={setNewPrioridade}newAno={newAno}newAssunto={newAssunto}newData={newData}newDataDecisao={newDataDecisao}newDias={newDias}
-            newAssessor={newAssessor}newEntidade={newEntidade}newVinculado={newVinculado}newConselheiro={newConselheiro}newOrgaoJulgador={newOrgaoJulgador}
-            newEncaminhamento={newEncaminhamento}newDefinicao={newDefinicao}newMeta={newMeta}newPrioridade={newPrioridade}/>
-            
+                <button
+                  className="addbutton"
+                  type="button"
+                  name="addNumber"
+                  onClick={handleAddClick}
+                >
+                  +
+                </button>
+                </div>
+              <ProcessForm
+                setNewAno={setNewAno}
+                setNewAssunto={setNewAssunto}
+                setNewData={setNewData}
+                setNewDataDecisao={setNewDataDecisao}
+                setNewDias={setNewDias}
+                setNewAssessor={setNewAssessor}
+                setNewEntidade={setNewEntidade}
+                setNewVinculado={setNewVinculado}
+                setNewConselheiro={setNewConselheiro}
+                setNewOrgaoJulgador={setNewOrgaoJulgador}
+                setNewEncaminhamento={setNewEncaminhamento}
+                setNewDefinicao={setNewDefinicao}
+                setNewMeta={setNewMeta}
+                setNewPrioridade={setNewPrioridade}
+                newAno={newAno}
+                newAssunto={newAssunto}
+                newData={newData}
+                newDataDecisao={newDataDecisao}
+                newDias={newDias}
+                newAssessor={newAssessor}
+                newEntidade={newEntidade}
+                newVinculado={newVinculado}
+                newConselheiro={newConselheiro}
+                newOrgaoJulgador={newOrgaoJulgador}
+                newEncaminhamento={newEncaminhamento}
+                newDefinicao={newDefinicao}
+                newMeta={newMeta}
+                newPrioridade={newPrioridade}
+              />
             </div>
-            <div className="column">
+            </div>
+            <div className="modal_buttons">
               <button
                 className="button"
                 type="button"

@@ -195,30 +195,48 @@ function AddProcessModal({
           onRequestClose={closeModal}
           appElement={appElement as HTMLElement}
         >
-          <h2>Adicionar Processo</h2>
+          <div className="modal-header">
+            <div className="modal-title">
+          <h2><AddIcon/> Adicionar Processo</h2>
+          </div>
           <button className="closeModalButton" onClick={closeModal}>
             X
           </button>
+          </div>
           <form
             onSubmit={handleFormSubmit}
             name="Adicionar processo"
             className="form"
           >
-            <div className="column">
-              <div className="row">
-                {/*PROCESSO*/}
-                <label className="label" htmlFor="proc">
-                  Processo:
-                </label>
+            <div className="columns">
+            <div className="column1">
+              <label className="label" htmlFor="proc">Processo:</label>
+              <label className="label" htmlFor="ano">Ano:</label>
+              <label className="label" htmlFor="assunto">Assunto:</label>
+              <label className="label" htmlFor="data">Data de inserção:</label>
+              <label className="label" htmlFor="datadecisao">Data de decisão:</label>
+              <label className="label" htmlFor="dias">Dias:</label>
+              <label className="label" htmlFor="assessor">Assessor:</label>
+              <label className="label" htmlFor="entidade">Entidade:</label>
+              <label className="label" htmlFor="vinculado">Vinculado:</label>
+              <label className="label" htmlFor="conselheiro">Conselheiro:</label>
+              <label className="label" htmlFor="julgador">Órgão Julgador:</label>
+              <label className="label" htmlFor="encaminhamento">Encaminhamento:</label>
+              <label className="label" htmlFor="definicao">Definição:</label>
+              <label className="label" htmlFor="meta">Meta:</label>
+              <label className="label" htmlFor="prioridade">Prioridade:</label>
+            </div>
+              <div className="column2">
+
                 <input
                   onChange={(event) => {
                     setNewProcesso(event.target.value);
                   }}
-                  className="formRowProc"
+                  className="input-form"
                   type="number"
                   placeholder="Processo..."
                 />
-              </div>
+
 
               <ProcessForm 
             setNewAno={setNewAno} setNewAssunto={setNewAssunto} setNewData={setNewData} setNewDataDecisao={setNewDataDecisao} setNewDias={setNewDias}
@@ -227,6 +245,7 @@ function AddProcessModal({
             setNewPrioridade={setNewPrioridade}newAno={newAno}newAssunto={newAssunto}newData={newData}newDataDecisao={newDataDecisao}
             newDias={newDias}newAssessor={newAssessor}newEntidade={newEntidade}newVinculado={newVinculado}newConselheiro={newConselheiro}newOrgaoJulgador={newOrgaoJulgador}
             newEncaminhamento={newEncaminhamento}newDefinicao={newDefinicao}newMeta={newMeta}newPrioridade={newPrioridade}/>
+            </div>
             </div>
 
             <div className="column">
@@ -252,6 +271,7 @@ function AddProcessModal({
                 Adicionar
               </button>
             </div>
+
           </form>
         </ReactModal>
       )}
