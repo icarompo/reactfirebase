@@ -110,3 +110,7 @@
 #filter-button {
   margin-left: 1rem;
 }
+
+.checkBox {
+  width: 30px;
+}

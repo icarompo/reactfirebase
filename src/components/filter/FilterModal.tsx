@@ -12,6 +12,35 @@ function FilterProcessModal({
   closeModal: () => void;
 }) {
   const appElement = document.getElementById("root");
+
+  function CheckboxList() {
+    const [checkboxes, setCheckboxes] = useState([
+      processo: true,
+      ano: true,
+      assunto: true,
+      dias: true,
+      dataInsercao: true,
+      dataDecisao: true,
+      assessor: true,
+      entidade: true,
+      vinculado: true,
+      conselheiro: true,
+      orgaoJulgador: true,
+      encaminhamento: true,
+      definicao: true,
+      prioridade: true,
+      meta: true,
+      aguardando: true,
+    ]);
+  }
+
+  const toggleCheckbox = (name) => {
+    setCheckboxes(prevState => ({
+        ...prevState,
+        [name]: !prevState[name]
+    }));
+};
+
   return (
     <>
       {isOpen && (
@@ -77,65 +106,69 @@ function FilterProcessModal({
                 Campos
               </label>
               <div className="checkList">
-                <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true} />
-                  <label htmlFor="relatoria">Relatoria</label>
+                <div >
+                    <input type="checkbox" id="checkBox" name="processo" value="processo" checked={checkbox.} onChange={() => toggleCheckbox('processo')}/>
+                    <label htmlFor="processo" >Processo</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="ano" value="ano" checked={checkbox.ano} onChange={() => toggleCheckbox('ano')} />
+                    <label htmlFor="ano">Ano</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="assunto" value="assunto" checked={checkbox.assunto} onChange={() => toggleCheckbox('assunto')} />
+                    <label htmlFor="assunto">Assunto</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="data" value="data" checked={checkbox.dias} onChange={() => toggleCheckbox('dias')} />
+                    <label htmlFor="data">Data</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="data-insercao" value="data-insercao" checked={checkbox.dataInsercao} onChange={() => toggleCheckbox('dataInsercao')} />
+                    <label htmlFor="data-insercao">Data de inserção</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="data-decisao" value="data-decisao" checked={checkbox.dataDecisao} onChange={() => toggleCheckbox('dataDecisao')} />
+                    <label htmlFor="data-decisao">Data de decisão</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="assessor" value="assessor" checked={checkbox.assessor} onChange={() => toggleCheckbox('assessor')} />
+                    <label htmlFor="assessor">Assessor</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="entidade" value="entidade" checked={checkbox.entidade} onChange={() => toggleCheckbox('entidade')} />
+                    <label htmlFor="entidade">Entidade</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="vinculado" value="vinculado" checked={checkbox.vinculado} onChange={() => toggleCheckbox('processo')} />
+                    <label htmlFor="vinculado">Vinculado</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="conselheiro" value="conselheiro" checked={checkbox.conselheiro} onChange={() => toggleCheckbox('processo')} />
+                    <label htmlFor="conselheiro">Conselheiro</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="orgaoJulgador" value="orgaoJulgador" checked={checkbox.orgaoJulgador} onChange={() => toggleCheckbox('processo')} />
+                    <label htmlFor="orgaoJulgador">Órgão Julgador</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="encaminhamento" value="encaminhamento" checked={checkbox.encaminhamento} onChange={() => toggleCheckbox('processo')} />
+                    <label htmlFor="encaminhamento">Encaminhamento</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="definicao" value="definicao" checked={checkbox.definicao} onChange={() => toggleCheckbox('processo')} />
+                    <label htmlFor="definicao">Definição</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="prioridade" value="prioridade" checked={checkbox.prioridade} onChange={() => toggleCheckbox('processo')} />
+                    <label htmlFor="prioridade">Prioridade</label>
                 </div>
                 <div>
-                  <input type="checkbox" name="relatoria" value="relatoria" checked={true}/>
-                  <label htmlFor="relatoria">Relatoria</label>
+                    <input type="checkbox" id="checkBox" name="meta" value="meta" checked={checkbox.meta} onChange={() => toggleCheckbox('processo')} />
+                    <label htmlFor="meta">Meta</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="checkBox" name="aguardando" value="aguardando" checked={checkbox.aguardando} onChange={() => toggleCheckbox('processo')} />
+                    <label htmlFor="aguardando">Aguardando</label>
                 </div>
               </div>
               <div className="button-field">
