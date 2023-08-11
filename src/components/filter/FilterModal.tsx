@@ -13,32 +13,38 @@ function FilterProcessModal({
 }) {
   const appElement = document.getElementById("root");
 
-  function CheckboxList() {
-    const [checkboxes, setCheckboxes] = useState([
-      processo: true,
-      ano: true,
-      assunto: true,
-      dias: true,
-      dataInsercao: true,
-      dataDecisao: true,
-      assessor: true,
-      entidade: true,
-      vinculado: true,
-      conselheiro: true,
-      orgaoJulgador: true,
-      encaminhamento: true,
-      definicao: true,
-      prioridade: true,
-      meta: true,
-      aguardando: true,
-    ]);
-  }
+  interface Checkbox {
+    name: string;
+    checked: boolean;
+}
 
-  const toggleCheckbox = (name) => {
-    setCheckboxes(prevState => ({
-        ...prevState,
-        [name]: !prevState[name]
-    }));
+    const [checkboxes, setCheckboxes] = useState<Checkbox[]>([
+      { name: 'processo', checked: true },
+      { name: 'ano', checked: true },
+      { name: 'assunto', checked: true },
+      { name: 'dias', checked: true },
+      { name: 'dataInsercao', checked: true },
+      { name: 'dataDecisao', checked: true },
+      { name: 'assessor', checked: true },
+      { name: 'entidade', checked: true },
+      { name: 'vinculado', checked: true },
+      { name: 'conselheiro', checked: true },
+      { name: 'orgaoJulgador', checked: true },
+      { name: 'encaminhamento', checked: true },
+      { name: 'definicao', checked: true },
+      { name: 'prioridade', checked: true },
+      { name: 'meta', checked: true },
+      { name: 'aguardando', checked: true },
+    ]); 
+
+const toggleCheckbox = (name: String) => {
+  setCheckboxes(prevCheckboxes =>
+      prevCheckboxes.map(checkbox =>
+          checkbox.name === name
+              ? { ...checkbox, checked: !checkbox.checked }
+              : checkbox
+      )
+  );
 };
 
   return (
@@ -78,16 +84,19 @@ function FilterProcessModal({
                 </div>
                 <div className="line"></div>
               </div>
-              <div className="order">
+              <div className="bellow-div">
+                <div className="order">
                 <label className="label" htmlFor="search">
                   Ordem
                 </label>
                 <div className="input">
                   <select className="input-form" id="order-definition">
-                    <option value="relatoria">Relatoria</option>
+                    <option value="proc">Processo</option>
+                    <option value="ano">Ano</option>
+                    <option value="assunto">assunto</option>
                     <option value="assessor">Assessor</option>
                     <option value="entidade">Entidade</option>
-                    <option value="vinculado">Vinculado</option>
+                    <option value="conselheiro">Conselheiro</option>
                     <option value="conselheiro">Conselheiro</option>
                   </select>
                   <select className="input-form" id="order-filter">
@@ -100,82 +109,46 @@ function FilterProcessModal({
                 </div>
                 <div className="order-selected"></div>
               </div>
+              <div className="section">
+                <label className="label" htmlFor="search">
+                  Intervalo
+                </label>
+                <div className="input">
+                  <input className="input-form" type="date" id="date-input-start" /> 
+                  <input className="input-form" type="date" id="date-input-end" />
+                </div>
+                <label className="label" htmlFor="search">
+                  Dias
+                </label>
+                <div className="input">
+                  <input className="input-form" type="number" id="days-input-start" />
+                </div>
+              </div>
+              </div>
             </div>
             <div className="field">
               <label className="label" htmlFor="search">
                 Campos
               </label>
               <div className="checkList">
-                <div >
-                    <input type="checkbox" id="checkBox" name="processo" value="processo" checked={checkbox.} onChange={() => toggleCheckbox('processo')}/>
-                    <label htmlFor="processo" >Processo</label>
+            {checkboxes.map(checkbox => (
+                <div key={checkbox.name}>
+                    <input
+                        type="checkbox"
+                        id={checkbox.name}
+                        name={checkbox.name}
+                        checked={checkbox.checked}
+                        onChange={() => toggleCheckbox(checkbox.name)}
+                    />
+                    <label htmlFor={checkbox.name}> {checkbox.name}</label>
                 </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="ano" value="ano" checked={checkbox.ano} onChange={() => toggleCheckbox('ano')} />
-                    <label htmlFor="ano">Ano</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="assunto" value="assunto" checked={checkbox.assunto} onChange={() => toggleCheckbox('assunto')} />
-                    <label htmlFor="assunto">Assunto</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="data" value="data" checked={checkbox.dias} onChange={() => toggleCheckbox('dias')} />
-                    <label htmlFor="data">Data</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="data-insercao" value="data-insercao" checked={checkbox.dataInsercao} onChange={() => toggleCheckbox('dataInsercao')} />
-                    <label htmlFor="data-insercao">Data de inserção</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="data-decisao" value="data-decisao" checked={checkbox.dataDecisao} onChange={() => toggleCheckbox('dataDecisao')} />
-                    <label htmlFor="data-decisao">Data de decisão</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="assessor" value="assessor" checked={checkbox.assessor} onChange={() => toggleCheckbox('assessor')} />
-                    <label htmlFor="assessor">Assessor</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="entidade" value="entidade" checked={checkbox.entidade} onChange={() => toggleCheckbox('entidade')} />
-                    <label htmlFor="entidade">Entidade</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="vinculado" value="vinculado" checked={checkbox.vinculado} onChange={() => toggleCheckbox('processo')} />
-                    <label htmlFor="vinculado">Vinculado</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="conselheiro" value="conselheiro" checked={checkbox.conselheiro} onChange={() => toggleCheckbox('processo')} />
-                    <label htmlFor="conselheiro">Conselheiro</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="orgaoJulgador" value="orgaoJulgador" checked={checkbox.orgaoJulgador} onChange={() => toggleCheckbox('processo')} />
-                    <label htmlFor="orgaoJulgador">Órgão Julgador</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="encaminhamento" value="encaminhamento" checked={checkbox.encaminhamento} onChange={() => toggleCheckbox('processo')} />
-                    <label htmlFor="encaminhamento">Encaminhamento</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="definicao" value="definicao" checked={checkbox.definicao} onChange={() => toggleCheckbox('processo')} />
-                    <label htmlFor="definicao">Definição</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="prioridade" value="prioridade" checked={checkbox.prioridade} onChange={() => toggleCheckbox('processo')} />
-                    <label htmlFor="prioridade">Prioridade</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="meta" value="meta" checked={checkbox.meta} onChange={() => toggleCheckbox('processo')} />
-                    <label htmlFor="meta">Meta</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="checkBox" name="aguardando" value="aguardando" checked={checkbox.aguardando} onChange={() => toggleCheckbox('processo')} />
-                    <label htmlFor="aguardando">Aguardando</label>
-                </div>
+            ))}
               </div>
               <div className="button-field">
-                <button className="button" id="filter-button" type="button">
+                <button className="button" id="filter-button-reset" type="button">
                   Redefinir
                 </button>
-                <button className="button" id="filter-button" type="button">
+                <button className="button" id="filter-button-apply" type="button">
                   Aplicar
                 </button>
               </div>

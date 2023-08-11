@@ -85,6 +85,30 @@ function Page(props: PageProps) {
     );
   };
 
+  interface Checkbox {
+    name: string;
+    checked: boolean;
+}
+
+    const [checkboxes, setCheckboxes] = useState<Checkbox[]>([
+      { name: 'processo', checked: true },
+      { name: 'ano', checked: true },
+      { name: 'assunto', checked: true },
+      { name: 'dias', checked: true },
+      { name: 'dataInsercao', checked: true },
+      { name: 'dataDecisao', checked: true },
+      { name: 'assessor', checked: true },
+      { name: 'entidade', checked: true },
+      { name: 'vinculado', checked: true },
+      { name: 'conselheiro', checked: true },
+      { name: 'orgaoJulgador', checked: false },
+      { name: 'encaminhamento', checked: false },
+      { name: 'definicao', checked: false },
+      { name: 'prioridade', checked: false },
+      { name: 'meta', checked: false },
+      { name: 'aguardando', checked: false },
+    ]); 
+
   return (
     <>
       <div className="proc-container">
@@ -104,25 +128,13 @@ function Page(props: PageProps) {
                 { field: "ano", headerName: "Ano", width: 75 },
                 { field: "assunto", headerName: "Assunto", width: 300 },
                 { field: "data", headerName: "Data de inserção", width: 125 },
-                {
-                  field: "datadecisao",
-                  headerName: "Data de decisão",
-                  width: 125,
-                },
+                { field: "datadecisao", headerName: "Data de decisão", width: 125 },
                 { field: "assessor", headerName: "Assessor", width: 75 },
                 { field: "entidade", headerName: "Entidade", width: 300 },
                 { field: "vinculado", headerName: "Vinculado", width: 100 },
                 { field: "conselheiro", headerName: "Conselheiro", width: 75 },
-                {
-                  field: "orgaojulgador",
-                  headerName: "Órgão Julgador",
-                  width: 100,
-                },
-                {
-                  field: "encaminhamento",
-                  headerName: "Encaminhamento",
-                  width: 100,
-                },
+                { field: "orgaojulgador", headerName: "Órgão Julgador", width: 100 },
+                { field: "encaminhamento", headerName: "Encaminhamento", width: 100 },
                 { field: "definicao", headerName: "Definição", width: 100 },
                 { field: "meta", headerName: "Meta", width: 75 },
                 { field: "prioridade", headerName: "Prioridade", width: 75 },
