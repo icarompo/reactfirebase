@@ -1,18 +1,12 @@
 
   .personal-container {
-    display: flex;
-    flex-direction: column;
     padding: 10px;
-  }
-  
-  .cards {
-    display: flex;
-    gap: 10px;
     width: 100%;
+    height: 100%;
   }
   
   .datagrid {
     padding: 5px;
-    width: 100%;
+    width: 1300px;
     height: auto;
   }

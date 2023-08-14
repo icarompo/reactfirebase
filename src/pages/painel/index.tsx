@@ -3,7 +3,9 @@ import PieChart from "../../components/piechart/PieChart";
 import { useEffect, useState } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import Card from "../../components/card/index.tsx";
 import SelectLocation from "../../components/select/Select.tsx";
+import Navigation from "../../components/navigation/Navigation.tsx";
 import "./styles.css";
 
 function Page() {
@@ -27,12 +29,12 @@ function Page() {
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
   const [definicao, setDefinicao] = useState<string>("relatoria");
+  const [ano, setAno] = useState<string>("2023");
 
   useEffect(() => {
     async function fetchData() {
       const dadosCollectionRef = collection(db, "dados"); // Referência para a coleção 'dados'
       const dadosQuery = query(dadosCollectionRef);
-      console.log(definicao)
       const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
       const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
       dadosSnapshot.forEach((doc) => {
@@ -69,22 +71,27 @@ function Page() {
     fetchUsers(); // Chama a função 'fetchUsers' para buscar os dados usando o hook useEffect
   }, []);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
-  const filteredValues = (filterValue: string): TipoDado[] => {
-    if (filterValue === "*") {
+  const filteredValues = (definicao: string, ano: string): TipoDado[] => {
+    if (definicao === "*" && ano === "*") {
       return dados;
+    } else if (definicao === "*") {
+      return dados.filter((Processo) => Processo.ano === Number(ano));
+    } else if (ano === "*") {
+      return dados.filter(
+        (Processo) =>
+          Processo.definicao &&
+          Processo.definicao.toLowerCase() === definicao.toLowerCase()
+      );
     } else {
       return dados.filter(
         (Processo) =>
           Processo.definicao &&
-          Processo.definicao.toLowerCase() === filterValue.toLowerCase()
+          Processo.definicao.toLowerCase() === definicao.toLowerCase() &&
+          Processo.ano === Number(ano)
       );
     }
   };
-
+  
   const findAssessor = (id: number) => {
     const userAssessor = user.find((item) => Number(item.identificador) === id);
     if (userAssessor) {
@@ -92,7 +99,7 @@ function Page() {
     }
   };
 
-  interface PieChartData {
+  interface PieChartData { 
     label: string;
     value: number;
     color: string;
@@ -103,16 +110,14 @@ function Page() {
   const assessorData = [];
   const colors = ["#c6e0b4", "#b4c6e7", "#ffe699", "#dbdbdb", "#f8cbad", "#bdd7ee", "#cccc00", "#ffccff", "#66ff99", "#99ffcc", "#a6a6a6",];
 
-  for (let i = 1; i <= 11; i++) {
-    const filteredData = filteredValues(definicao).filter((Processo) => Processo.assessor === i);
+  for (let i = 1; i <= 10; i++) {
+    const filteredData = filteredValues(definicao, ano).filter((Processo) => Processo.assessor === i);
     assessorData.push(filteredData);
-
     const pieChartData: PieChartData = {
       label: findAssessor(i) ?? "",
       value: filteredData.length,
       color: colors[i - 1],
     };
-
     data.push(pieChartData);
   }
 
@@ -123,24 +128,101 @@ function Page() {
     setDefinicao(value);
   };
 
-  useEffect(() => {
-    console.log(definicao);
-  }, [definicao]); 
+  
+    let filteredData = filteredValues(definicao, ano);
+    const meta = filteredData.filter((Processo) => Processo.meta === "sim").length;
+    const prioridade = filteredData.filter((Processo) => Processo.prioridade === "alta").length;
+    const vinculado = filteredData.filter((Processo) => Processo.vinculado === "PRINCIPAL" || Processo.vinculado === "principal").length;
+    
+  const handleAnoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setAno(event.target.value);
+  };
+
+  const verificaPrioridade = (quantidade: number) => {
+    if (quantidade > 3 && quantidade <= 6) {
+      return "card-header-middle-priority";
+    } else if (quantidade > 6) {
+      return "card-header-high-priority";
+    } else {
+      return "card-header-low-priority";
+    }};
+
+  const handleClick = (card: string) => {
+    if (card === "processos") {
+      console.log('opa');
+    } else if (card === "meta") {
+      console.log('opa');
+    } else if (card === "prioridade") {
+      console.log('opa');
+    } else if (card === "vinculado") {
+      console.log('opa');
+    }};
 
   return (
     <>
-    <div className="painel-container">
-      <div className="pie-chart">
-        <div className="grafico">
-          <div className="select">
-            <SelectLocation onSelectChange={handleSelectChange} />
+      <div className="painel-container">
+
+      <div className="filter-container">
+              <SelectLocation onSelectChange={handleSelectChange} />
+              <select
+                className="ano"
+                onChange={handleAnoChange}
+                defaultValue={2023}
+              >
+                <option value="*">Todos</option>
+                {Array.from({ length: 41 }, (_, index) => 1990 + index).map(
+                  (ano) => (
+                    <option key={ano} value={ano}>
+                      
+                      {ano}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+
+            <div className="cards">
+            <Card
+              name="Processos"
+              value={filteredData.length}
+              text="Quantidade de processos no total"
+              id={verificaPrioridade(filteredData.length)}
+              onClick={() => handleClick("processos")}
+            />
+            <Card
+              name="Meta"
+              value={meta}
+              text="Processos em meta"
+              id={verificaPrioridade(meta)}
+              onClick={() => handleClick("meta")}
+            />
+            <Card
+              name="Prioridade"
+              value={prioridade}
+              text="Processos em prioridade"
+              id={verificaPrioridade(prioridade)}
+              onClick={() => handleClick("prioridade")}
+            />
+            <Card
+              name="Vinculado"
+              value={vinculado}
+              text="Processos Principais"
+              id={verificaPrioridade(vinculado)}
+              onClick={() => handleClick("vinculado")}
+            />
           </div>
 
-          <div className="pizza">
-            <PieChart data={data} radius={pieChartRadius} strokeWidth={strokeWidth} />
+        <div className="pie-chart-container">
+          <div className="pie-chart">
+
+              <PieChart
+                data={data}
+                radius={pieChartRadius}
+                strokeWidth={strokeWidth}
+              />
+
           </div>
-        </div>
-      
+
           <div className="detalhes">
             {assessorData.map((assessor, index) => {
               const userAssessor = user.find(
@@ -149,7 +231,10 @@ function Page() {
 
               if (userAssessor) {
                 return (
-                  <div className="detalhe" key={index}>
+                  <div
+                    className="detalhe"
+                    key={index}
+                  >
                     <div className="assessor-info">
                       <span
                         style={{
@@ -169,12 +254,14 @@ function Page() {
                   </div>
                 );
               } else {
-                return null; // Não exibir nada caso o assessor não tenha o identificador entre 1 e 11
+                return null; 
               }
             })}
           </div>
+          <div className="column" id="result-container">
+          </div>
         </div>
-        </div>
+      </div>
     </>
   );
 }
@@ -184,11 +271,15 @@ interface PainelProps {
 }
 
 function Painel(props: PainelProps) {
-
   return (
     <>
-      <Header title="Controle E-Contas" subtitle="Painel" onLogOut={props.onLogOut} />
-      <Page/>
+      <div className="app">
+        <Navigation />
+        <div className="main-content">
+          <Header subtitle="Painel" onLogOut={props.onLogOut} />
+          <Page />
+        </div>
+      </div>
     </>
   );
 }

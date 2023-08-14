@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
-import {
-  createTheme,
-  ThemeProvider,
-} from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { GridRowId, ptBR } from "@mui/x-data-grid";
 import TableFilter from "../../components/filter/filter.tsx";
 import Header from "../../components/header/Header.tsx";
 import "./styles.css";
-import { StripedDataGrid } from "../../utils/stripedDataGrid.ts"
+import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
+import Navigation from "../../components/navigation/Navigation.tsx";
 
 const theme = createTheme(
   {
@@ -48,7 +46,7 @@ function Page(props: PageProps) {
 
   useEffect(() => {
     async function fetchData() {
-      const usersCollectionRef = collection(db, "dados"); 
+      const usersCollectionRef = collection(db, "dados");
       const dadosQuery = query(usersCollectionRef);
       const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
       const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
@@ -76,58 +74,80 @@ function Page(props: PageProps) {
   };
 
   const handleRowSelectionChange = (ids: GridRowId[]) => {
-    setSelectedProcValues(ids.map((selectedRowId) => {
-      const selectedRow = dados.find((row) => row.id === selectedRowId);
-      if (selectedRow) {
-        return selectedRow.proc.toString();
-      }
-      return undefined;
-    }) as string[]);
+    setSelectedProcValues(
+      ids.map((selectedRowId) => {
+        const selectedRow = dados.find((row) => row.id === selectedRowId);
+        if (selectedRow) {
+          return selectedRow.proc.toString();
+        }
+        return undefined;
+      }) as string[]
+    );
   };
 
-useEffect(() => {
-  console.log(selectedProcValues);
-}, [selectedProcValues]);
+  interface Checkbox {
+    name: string;
+    checked: boolean;
+}
+
+    const [checkboxes, setCheckboxes] = useState<Checkbox[]>([
+      { name: 'processo', checked: true },
+      { name: 'ano', checked: true },
+      { name: 'assunto', checked: true },
+      { name: 'dias', checked: true },
+      { name: 'dataInsercao', checked: true },
+      { name: 'dataDecisao', checked: true },
+      { name: 'assessor', checked: true },
+      { name: 'entidade', checked: true },
+      { name: 'vinculado', checked: true },
+      { name: 'conselheiro', checked: true },
+      { name: 'orgaoJulgador', checked: false },
+      { name: 'encaminhamento', checked: false },
+      { name: 'definicao', checked: false },
+      { name: 'prioridade', checked: false },
+      { name: 'meta', checked: false },
+      { name: 'aguardando', checked: false },
+    ]); 
 
   return (
     <>
-    <div className="proc-container">
-      <div className="proc-datagrid">
-        <ThemeProvider theme={theme}>
-          <StripedDataGrid
-            sx={{
-              backgroundColor: "#fff",
-              color: "#000",
-            }}
-            rows={filteredValues(props.filterValue)}
-            getRowClassName={(params) =>
-              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-            }
-            columns={[
-              { field: "proc", headerName: "Processo", width: 75 },
-              { field: "ano", headerName: "Ano", width: 75 },
-              { field: "assunto", headerName: "Assunto", width: 300 },
-              { field: "data", headerName: "Data de inserção", width: 125 },
-              { field: "datadecisao", headerName: "Data de decisão", width: 125, },
-              { field: "assessor", headerName: "Assessor", width: 75 },
-              { field: "entidade", headerName: "Entidade", width: 300 },
-              { field: "vinculado", headerName: "Vinculado", width: 100 },
-              { field: "conselheiro", headerName: "Conselheiro", width: 75 },
-              { field: "orgaojulgador", headerName: "Órgão Julgador", width: 100, },
-              { field: "encaminhamento", headerName: "Encaminhamento", width: 100, },
-              { field: "definicao", headerName: "Definição", width: 100 },
-              { field: "meta", headerName: "Meta", width: 75 },
-              { field: "prioridade", headerName: "Prioridade", width: 75 },
-            ]}
-            checkboxSelection
-            onRowSelectionModelChange={(ids) => {
-              handleRowSelectionChange(ids);  
-            }}
-            disableRowSelectionOnClick
-          />
-        </ThemeProvider>
+      <div className="proc-container">
+        <div className="proc-datagrid">
+          <ThemeProvider theme={theme}>
+            <StripedDataGrid
+              sx={{
+                backgroundColor: "#fff",
+                color: "#000",
+              }}
+              rows={filteredValues(props.filterValue)}
+              getRowClassName={(params) =>
+                params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+              }
+              columns={[
+                { field: "proc", headerName: "Processo", width: 75 },
+                { field: "ano", headerName: "Ano", width: 75 },
+                { field: "assunto", headerName: "Assunto", width: 300 },
+                { field: "data", headerName: "Data de inserção", width: 125 },
+                { field: "datadecisao", headerName: "Data de decisão", width: 125 },
+                { field: "assessor", headerName: "Assessor", width: 75 },
+                { field: "entidade", headerName: "Entidade", width: 300 },
+                { field: "vinculado", headerName: "Vinculado", width: 100 },
+                { field: "conselheiro", headerName: "Conselheiro", width: 75 },
+                { field: "orgaojulgador", headerName: "Órgão Julgador", width: 100 },
+                { field: "encaminhamento", headerName: "Encaminhamento", width: 100 },
+                { field: "definicao", headerName: "Definição", width: 100 },
+                { field: "meta", headerName: "Meta", width: 75 },
+                { field: "prioridade", headerName: "Prioridade", width: 75 },
+              ]}
+              checkboxSelection
+              onRowSelectionModelChange={(ids) => {
+                handleRowSelectionChange(ids);
+              }}
+              disableRowSelectionOnClick
+            />
+          </ThemeProvider>
+        </div>
       </div>
-    </div>
     </>
   );
 }
@@ -145,13 +165,14 @@ function Processes(props: ProcessesProps) {
 
   return (
     <>
-      <Header
-        title="Controle E-Contas"
-        subtitle="Dados de Processos"
-        onLogOut={props.onLogOut}
-      />
-      <TableFilter onSelectChange={handleSelectChange}/>
-      <Page filterValue={filterValue}/>
+      <div className="app">
+        <Navigation />
+        <div className="main-content">
+          <Header subtitle="Dados de Processos" onLogOut={props.onLogOut} />
+          <TableFilter onSelectChange={handleSelectChange} />
+          <Page filterValue={filterValue} />
+        </div>
+      </div>
     </>
   );
 }
