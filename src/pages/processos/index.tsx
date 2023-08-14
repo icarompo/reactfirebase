@@ -19,7 +19,8 @@ const theme = createTheme(
 );
 
 interface PageProps {
-  filterValue: string;
+  definitionValue: string;
+  filterValue: Array<string>;
 }
 
 function Page(props: PageProps) {
@@ -119,7 +120,7 @@ function Page(props: PageProps) {
                 backgroundColor: "#fff",
                 color: "#000",
               }}
-              rows={filteredValues(props.filterValue)}
+              rows={filteredValues(props.definitionValue)}
               getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
               }
@@ -157,11 +158,16 @@ interface ProcessesProps {
 }
 
 function Processes(props: ProcessesProps) {
-  const [filterValue, setFilterValue] = useState("relatoria");
+  const [definitionValue, setDefinitionValue] = useState("relatoria");
+  const [filterValue, setFilterValue] = useState([""]);
 
   const handleSelectChange = (value: string) => {
-    setFilterValue(value);
+    setDefinitionValue(value);
   };
+
+  const handleFilterChange = (value: Array<string>) => {
+     setFilterValue(value);
+   };
 
   return (
     <>
@@ -169,8 +175,8 @@ function Processes(props: ProcessesProps) {
         <Navigation />
         <div className="main-content">
           <Header subtitle="Dados de Processos" onLogOut={props.onLogOut} />
-          <TableFilter onSelectChange={handleSelectChange} />
-          <Page filterValue={filterValue} />
+          <TableFilter onSelectChange={handleSelectChange} onFilterChange={handleFilterChange}/>
+          <Page definitionValue={definitionValue} filterValue={filterValue}/>
         </div>
       </div>
     </>

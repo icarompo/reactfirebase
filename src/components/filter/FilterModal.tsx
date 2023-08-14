@@ -7,11 +7,14 @@ import "./filter.styles.css";
 function FilterProcessModal({
   isOpen,
   closeModal,
+  onFilterChange,
 }: {
   isOpen: boolean;
   closeModal: () => void;
+  onFilterChange: (value: Array<string>) => void;
 }) {
   const appElement = document.getElementById("root");
+  const [newSearch, setNewSearch] = useState("");
   const [newOrder, setNewOrder] = useState("");
   const [newDate0, setNewDate0] = useState("");
   const [newDate1, setNewDate1] = useState("");
@@ -50,16 +53,19 @@ function FilterProcessModal({
     );
   };
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    const pesquisaEm = document.getElementById("search-select") as HTMLSelectElement;
+    const campoPesquisa = pesquisaEm.value;
+    const pesquisa = document.getElementById("search-input") as HTMLInputElement;
+    const pesquisaValor = pesquisa.value;
+  };
 
-  const [newSearch, setNewSearch] = useState("");
   const handleClearClick = () => {
     setNewSearch("");
     setNewOrder("");
     setNewDate0("");
     setNewDate1("");
     setNewDays("");
-
     setCheckboxes((prevCheckboxes) =>
       prevCheckboxes.map((checkbox) => ({ ...checkbox, checked: true }))
     );
@@ -217,11 +223,19 @@ function FilterProcessModal({
   );
 }
 
-function FilterProcessButton() {
+type FilterProcessButtonProps = {
+  onFilterChange: (value: Array<string>) => void;
+};
+
+function FilterProcessButton(props: FilterProcessButtonProps) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const handleFilterChange = (value: Array<string>) => {
+    props.onFilterChange(value);
   };
 
   return (
@@ -235,7 +249,7 @@ function FilterProcessButton() {
       >
         {<FilterAltIcon />}
       </button>
-      <FilterProcessModal isOpen={modalOpen} closeModal={closeModal} />
+      <FilterProcessModal isOpen={modalOpen} closeModal={closeModal} onFilterChange={handleFilterChange}/>
     </>
   );
 }

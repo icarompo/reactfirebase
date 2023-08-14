@@ -6,6 +6,7 @@ import "./styles.css";
 
 interface TableFilterProps {
   onSelectChange: (value: string) => void;
+  onFilterChange: (value: Array<string>) => void;
 }
 
 function TableFilter(props: TableFilterProps ) {
@@ -14,12 +15,16 @@ function TableFilter(props: TableFilterProps ) {
     props.onSelectChange(value);
   };
 
+  const handleFilterChange = (value: Array<string>) => {
+    props.onFilterChange(value);
+  }
+
   return (
     <div className="filterContainer">
       <SelectLocation onSelectChange={handleSelectChange} />
       <AddProcessButton/>
       <EditProcessButton/>
-      <FilterProcessButton />
+      <FilterProcessButton onFilterChange={handleFilterChange}/>
     </div>
   );
 }
