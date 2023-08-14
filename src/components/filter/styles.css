@@ -116,16 +116,4 @@
   background-color: #e68a00;
 }
 
-#editProcessFormButton {
-  margin-top: 10px;
-  margin-right: auto;
-  display: flex;
-  background-color: #2067eb;
-  border: none;
-  color: white;
-}
-#editProcessFormButton:hover {
-  cursor: pointer;
-  background-color: #1a51b6;
-  color: white;
-}
+

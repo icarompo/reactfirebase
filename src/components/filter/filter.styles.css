@@ -1,14 +1,13 @@
 .modal-body {
-  width: 900px;
+  width: 700px;
   height: 350px;
   display: flex;
-  margin: 1rem 2rem 2rem 2rem;
-  padding-bottom: 2rem;
+  margin: 1rem;
   color: black;
 }
 
 .input-section {
-  width: 75%;
+  width: 90%;
   justify-content: start;
 }
 
@@ -75,12 +74,13 @@
 }
 
 .field {
-  width: 25%;
+  padding-top: 1rem;
+  width: auto;
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: start;
-  padding-right: 1rem;
+
 }
 
 .input {
@@ -131,11 +131,17 @@
   align-items: end;
   justify-content: end;
   width: 100%;
-  height: 20%;
+  height: 100%;
 }
 
 #filter-button-apply {
-  margin-left: 1rem;
+  margin-top: 1rem;
+  background: #606060;
+  color: white;
+}
+
+#filter-button-apply:hover {
+  background: #3b3b3b;
 }
 
 .checkBox {

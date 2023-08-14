@@ -12,40 +12,58 @@ function FilterProcessModal({
   closeModal: () => void;
 }) {
   const appElement = document.getElementById("root");
-
+  const [newOrder, setNewOrder] = useState("");
+  const [newDate0, setNewDate0] = useState("");
+  const [newDate1, setNewDate1] = useState("");
+  const [newDays, setNewDays] = useState("");
   interface Checkbox {
     name: string;
     checked: boolean;
-}
+  }
 
-    const [checkboxes, setCheckboxes] = useState<Checkbox[]>([
-      { name: 'processo', checked: true },
-      { name: 'ano', checked: true },
-      { name: 'assunto', checked: true },
-      { name: 'dias', checked: true },
-      { name: 'dataInsercao', checked: true },
-      { name: 'dataDecisao', checked: true },
-      { name: 'assessor', checked: true },
-      { name: 'entidade', checked: true },
-      { name: 'vinculado', checked: true },
-      { name: 'conselheiro', checked: true },
-      { name: 'orgaoJulgador', checked: true },
-      { name: 'encaminhamento', checked: true },
-      { name: 'definicao', checked: true },
-      { name: 'prioridade', checked: true },
-      { name: 'meta', checked: true },
-      { name: 'aguardando', checked: true },
-    ]); 
+  const [checkboxes, setCheckboxes] = useState<Checkbox[]>([
+    { name: "processo", checked: true },
+    { name: "ano", checked: true },
+    { name: "assunto", checked: true },
+    { name: "dias", checked: true },
+    { name: "dataInsercao", checked: true },
+    { name: "dataDecisao", checked: true },
+    { name: "assessor", checked: true },
+    { name: "entidade", checked: true },
+    { name: "vinculado", checked: true },
+    { name: "conselheiro", checked: true },
+    { name: "orgaoJulgador", checked: true },
+    { name: "encaminhamento", checked: true },
+    { name: "definicao", checked: true },
+    { name: "prioridade", checked: true },
+    { name: "meta", checked: true },
+    { name: "aguardando", checked: true },
+  ]);
 
-const toggleCheckbox = (name: String) => {
-  setCheckboxes(prevCheckboxes =>
-      prevCheckboxes.map(checkbox =>
-          checkbox.name === name
-              ? { ...checkbox, checked: !checkbox.checked }
-              : checkbox
+  const toggleCheckbox = (name: String) => {
+    setCheckboxes((prevCheckboxes) =>
+      prevCheckboxes.map((checkbox) =>
+        checkbox.name === name
+          ? { ...checkbox, checked: !checkbox.checked }
+          : checkbox
       )
-  );
-};
+    );
+  };
+
+  const handleClick = () => {};
+
+  const [newSearch, setNewSearch] = useState("");
+  const handleClearClick = () => {
+    setNewSearch("");
+    setNewOrder("");
+    setNewDate0("");
+    setNewDate1("");
+    setNewDays("");
+
+    setCheckboxes((prevCheckboxes) =>
+      prevCheckboxes.map((checkbox) => ({ ...checkbox, checked: true }))
+    );
+  };
 
   return (
     <>
@@ -80,78 +98,117 @@ const toggleCheckbox = (name: String) => {
                     <option value="vinculado">Vinculado</option>
                     <option value="conselheiro">Conselheiro</option>
                   </select>
-                  <input className="input-form" type="text" id="search-input" />
+                  <input
+                    className="input-form"
+                    type="text"
+                    id="search-input"
+                    value={newSearch}
+                    onChange={(event) => {
+                      setNewSearch(event.target.value);
+                    }}
+                  />
                 </div>
                 <div className="line"></div>
               </div>
               <div className="bellow-div">
                 <div className="order">
-                <label className="label" htmlFor="search">
-                  Ordem
-                </label>
-                <div className="input">
-                  <select className="input-form" id="order-definition">
-                    <option value="proc">Processo</option>
-                    <option value="ano">Ano</option>
-                    <option value="assunto">assunto</option>
-                    <option value="assessor">Assessor</option>
-                    <option value="entidade">Entidade</option>
-                    <option value="conselheiro">Conselheiro</option>
-                    <option value="conselheiro">Conselheiro</option>
-                  </select>
-                  <select className="input-form" id="order-filter">
-                    <option value="asc">Crescente</option>
-                    <option value="desc">Decrescente</option>
-                  </select>
-                  <button className="button" id="button" type="button">
-                    +
-                  </button>
+                  <label className="label" htmlFor="search">
+                    Ordem
+                  </label>
+                  <div className="input">
+                    <select className="input-form" id="order-definition">
+                      <option value="ano">Ano</option>
+                      <option value="proc">Processo</option>
+                      <option value="assunto">assunto</option>
+                      <option value="assessor">Assessor</option>
+                      <option value="entidade">Entidade</option>
+                      <option value="conselheiro">Conselheiro</option>
+                      <option value="conselheiro">Conselheiro</option>
+                    </select>
+                    <select className="input-form" id="order-filter" value={newOrder} onChange={(event) => {
+                      setNewOrder(event.target.value);
+                    }}>
+                      <option value=""></option>
+                      <option value="asc">Crescente</option>
+                      <option value="desc">Decrescente</option>
+                    </select>
+                  </div>
+                  <label className="label" htmlFor="search">
+                    Intervalo
+                  </label>
+                  <div className="input">
+                    <input
+                      className="input-form"
+                      type="date"
+                      id="date-input-start"
+                      value={newDate0}
+                      onChange={(event) => {
+                        setNewDate0(event.target.value);
+                      }}
+                    />
+                    <input
+                      className="input-form"
+                      type="date"
+                      id="date-input-end"
+                      value={newDate1}
+                      onChange={(event) => {
+                        setNewDate1(event.target.value);
+                      }}
+                    />
+                  </div>
+                  <label className="label" htmlFor="search">
+                    Dias
+                  </label>
+                  <div className="input">
+                    <input
+                      className="input-form"
+                      type="number"
+                      id="days-input-start"
+                      value={newDays}
+                      onChange={(event) => {
+                        setNewDays(event.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="order-selected"></div>
-              </div>
-              <div className="section">
-                <label className="label" htmlFor="search">
-                  Intervalo
-                </label>
-                <div className="input">
-                  <input className="input-form" type="date" id="date-input-start" /> 
-                  <input className="input-form" type="date" id="date-input-end" />
+                <div className="section">
+                  <label className="label" htmlFor="search">
+                    Campos
+                  </label>
+                  <div className="checkList">
+                    {checkboxes.map((checkbox) => (
+                      <div key={checkbox.name}>
+                        <input
+                          type="checkbox"
+                          id={checkbox.name}
+                          name={checkbox.name}
+                          checked={checkbox.checked}
+                          onChange={() => toggleCheckbox(checkbox.name)}
+                        />
+                        <label htmlFor={checkbox.name}> {checkbox.name}</label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <label className="label" htmlFor="search">
-                  Dias
-                </label>
-                <div className="input">
-                  <input className="input-form" type="number" id="days-input-start" />
-                </div>
-              </div>
               </div>
             </div>
             <div className="field">
-              <label className="label" htmlFor="search">
-                Campos
-              </label>
-              <div className="checkList">
-            {checkboxes.map(checkbox => (
-                <div key={checkbox.name}>
-                    <input
-                        type="checkbox"
-                        id={checkbox.name}
-                        name={checkbox.name}
-                        checked={checkbox.checked}
-                        onChange={() => toggleCheckbox(checkbox.name)}
-                    />
-                    <label htmlFor={checkbox.name}> {checkbox.name}</label>
-                </div>
-            ))}
-              </div>
-              <div className="button-field">
-                <button className="button" id="filter-button-reset" type="button">
-                  Redefinir
-                </button>
-                <button className="button" id="filter-button-apply" type="button">
-                  Aplicar
-                </button>
-              </div>
+              <button
+                className="button"
+                id="filter-button-reset"
+                type="button"
+                onClick={handleClearClick}
+              >
+                Limpar
+              </button>
+              <button
+                className="button"
+                id="filter-button-apply"
+                type="button"
+                onClick={handleClick}
+              >
+                Filtrar
+              </button>
             </div>
           </div>
         </ReactModal>
