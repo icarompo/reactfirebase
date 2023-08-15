@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { GridRowId, ptBR } from "@mui/x-data-grid";
+import { /* GridRowId, */ ptBR } from "@mui/x-data-grid";
 import TableFilter from "../../components/filter/filter.tsx";
 import Header from "../../components/header/Header.tsx";
 import "./styles.css";
@@ -43,8 +43,8 @@ function Page(props: PageProps) {
   };
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
-  const [selectedProcValues, setSelectedProcValues] = useState<string[]>([]);
-
+/*   const [selectedProcValues, setSelectedProcValues] = useState<string[]>([]);
+ */
   useEffect(() => {
     async function fetchData() {
       const usersCollectionRef = collection(db, "dados");
@@ -74,7 +74,7 @@ function Page(props: PageProps) {
     }
   };
 
-  const handleRowSelectionChange = (ids: GridRowId[]) => {
+/*   const handleRowSelectionChange = (ids: GridRowId[]) => {
     setSelectedProcValues(
       ids.map((selectedRowId) => {
         const selectedRow = dados.find((row) => row.id === selectedRowId);
@@ -84,36 +84,11 @@ function Page(props: PageProps) {
         return undefined;
       }) as string[]
     );
-  };
-
-  interface Checkbox {
-    name: string;
-    checked: boolean;
-}
-
-    const [checkboxes, setCheckboxes] = useState<Checkbox[]>([
-      { name: 'processo', checked: true },
-      { name: 'ano', checked: true },
-      { name: 'assunto', checked: true },
-      { name: 'dias', checked: true },
-      { name: 'dataInsercao', checked: true },
-      { name: 'dataDecisao', checked: true },
-      { name: 'assessor', checked: true },
-      { name: 'entidade', checked: true },
-      { name: 'vinculado', checked: true },
-      { name: 'conselheiro', checked: true },
-      { name: 'orgaoJulgador', checked: false },
-      { name: 'encaminhamento', checked: false },
-      { name: 'definicao', checked: false },
-      { name: 'prioridade', checked: false },
-      { name: 'meta', checked: false },
-      { name: 'aguardando', checked: false },
-    ]); 
+  }; */
 
   return (
     <>
       <div className="proc-container">
-        <div className="proc-datagrid">
           <ThemeProvider theme={theme}>
             <StripedDataGrid
               sx={{
@@ -140,15 +115,14 @@ function Page(props: PageProps) {
                 { field: "meta", headerName: "Meta", width: 75 },
                 { field: "prioridade", headerName: "Prioridade", width: 75 },
               ]}
-              checkboxSelection
+/*               checkboxSelection
               onRowSelectionModelChange={(ids) => {
                 handleRowSelectionChange(ids);
-              }}
+              }} */
               disableRowSelectionOnClick
             />
           </ThemeProvider>
         </div>
-      </div>
     </>
   );
 }

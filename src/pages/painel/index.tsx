@@ -158,6 +158,23 @@ function Page() {
       console.log('opa');
     }};
 
+  const handleDetalheClick = (index: Array<TipoDado>) => () => {
+    const resultContainer = document.getElementById("result-container") as HTMLDivElement;
+    if (index.length > 0) {
+      resultContainer.innerHTML = ''; 
+
+      index.forEach((item) => {
+      const processNumberDiv = document.createElement('div') as HTMLDivElement;
+      processNumberDiv.classList.add('process-number');
+      processNumberDiv.innerHTML = `${item.proc}`; 
+      resultContainer.appendChild(processNumberDiv);
+      });
+    } else {
+      resultContainer.innerHTML = 'Usuário não tem processos atribuídos nesta definição';
+    }
+    console.log();
+  };
+
   return (
     <>
       <div className="painel-container">
@@ -234,6 +251,7 @@ function Page() {
                   <div
                     className="detalhe"
                     key={index}
+                    onClick={handleDetalheClick(assessor)}
                   >
                     <div className="assessor-info">
                       <span

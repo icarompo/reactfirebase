@@ -66,14 +66,36 @@ padding: 10px;
   padding-top: 3rem;
 }
 
-
 #result-container {
   width: 40rem;
   height: 17rem;
   margin: 1rem;
+  padding: 1rem;
+  font-weight: bold;
   background-color: #eceef2;
   border-radius: 5px;
-  color: white;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.process-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-size: medium;
+  flex-basis: calc(20% - 1rem);
+  text-align: center;
+  width: 80px;
+  height: max-content;
+  box-shadow: gray 0px 0px 5px;
+  margin: 0.5rem;
+  background: white;
+}
+
+.process-number:hover {
+  cursor: pointer;
+  background-color: #f2f2f2;
 }
 
 .result-item {

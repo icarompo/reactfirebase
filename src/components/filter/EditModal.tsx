@@ -155,6 +155,7 @@ function EditProcessModal({
       } else {
         if (confirm("Deseja alterar esses valores no banco de dados?")) {
           editProcess();
+          alert("Processo(s) editado com sucesso!");
         } else {
           alert("Cancelado!");
           console.log("Cancelado!");
