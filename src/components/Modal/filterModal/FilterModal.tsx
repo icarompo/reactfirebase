@@ -1,7 +1,7 @@
 import ReactModal from "react-modal";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useState } from "react";
-import "./form/modal.styles.css";
+import "../form/modal.styles.css";
 import "./filter.styles.css";
 
 function FilterProcessModal({

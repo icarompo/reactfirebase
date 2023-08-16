@@ -1,6 +1,6 @@
-import AddProcessButton from "./AddModal.tsx";
-import EditProcessButton from "./EditModal.tsx";
-import FilterProcessButton from "./FilterModal.tsx";
+import AddProcessButton from "../Modal/addModal/AddModal.tsx";
+import EditProcessButton from "../Modal/editModal/EditModal.tsx";
+import FilterProcessButton from "../Modal/filterModal/FilterModal.tsx";
 import SelectLocation from "../select/Select.tsx";
 import "./styles.css";
 

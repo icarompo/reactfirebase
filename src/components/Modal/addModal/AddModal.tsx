@@ -1,14 +1,14 @@
 import ReactModal from "react-modal";
 import AddIcon from "@material-ui/icons/Add";
-import ProcessForm from "./form/Form.tsx";
+import ProcessForm from "../form/Form.tsx";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../api/firebase-config.ts";
+import { db } from "../../../api/firebase-config.ts";
 import {
   convertDateIn,
   convertDateOut,
-} from "../../utils/dateTypeConverter.ts";
+} from "../../../utils/dateTypeConverter.ts";
 import { useState, useEffect } from "react";
-import "./form/modal.styles.css";
+import "../form/modal.styles.css";
 
 function AddProcessModal({
   isOpen,
@@ -305,3 +305,4 @@ function AddProcessButton() {
 
 
 export default AddProcessButton;
+

@@ -29,7 +29,7 @@ function Page() {
 
   const [dados, setDados] = useState<Array<TipoDado>>([]);
   const [definicao, setDefinicao] = useState<string>("relatoria");
-  const [ano, setAno] = useState<string>("2023");
+  const [ano, setAno] = useState<string>("*");
 
   useEffect(() => {
     async function fetchData() {
@@ -184,9 +184,9 @@ function Page() {
               <select
                 className="ano"
                 onChange={handleAnoChange}
-                defaultValue={2023}
+                defaultValue={"*"}
               >
-                <option value="*">Todos</option>
+                <option value="*"> Anos </option>
                 {Array.from({ length: 41 }, (_, index) => 1990 + index).map(
                   (ano) => (
                     <option key={ano} value={ano}>
