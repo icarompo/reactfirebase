@@ -15,6 +15,8 @@ type ProcessFormProps = {
   setNewDefinicao: (value: string) => void;
   setNewMeta: (value: string) => void;
   setNewPrioridade: (value: string) => void;
+  setNewJulgador: (value: string) => void;
+  //aguardando
   newAno: string;
   newAssunto: string;
   newData: string;
@@ -29,6 +31,8 @@ type ProcessFormProps = {
   newDefinicao: string;
   newMeta: string;
   newPrioridade: string;
+  newJulgador: string;
+  //aguardando
 };
 
 function ProcessForm(props: ProcessFormProps) {
@@ -159,6 +163,16 @@ function ProcessForm(props: ProcessFormProps) {
         type="text"
         placeholder="Encaminhamento..."
         value={props.newEncaminhamento}
+      />
+
+      <input
+        onChange={(event) => {
+          props.setNewJulgador(event.target.value);
+        }}
+        className="input-form"
+        type="text"
+        placeholder="Julgador..."
+        value={props.newJulgador}
       />
 
       <select

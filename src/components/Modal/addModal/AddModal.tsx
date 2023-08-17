@@ -32,6 +32,7 @@ function AddProcessModal({
   const [newDefinicao, setNewDefinicao] = useState("");
   const [newMeta, setNewMeta] = useState("");
   const [newPrioridade, setNewPrioridade] = useState("");
+  const [newJulgador, setNewJulgador] = useState("");
   const appElement = document.getElementById("root");
 
   const fullFilledProcessToDb = {
@@ -51,6 +52,7 @@ function AddProcessModal({
     definicao: newDefinicao,
     meta: newMeta,
     prioridade: newPrioridade,
+    julgador: newJulgador,
   };
 
   const handleClearClick = () => {
@@ -70,6 +72,7 @@ function AddProcessModal({
     setNewDefinicao("");
     setNewMeta("");
     setNewPrioridade("");
+    setNewJulgador("");
   };
 
   const emptyProcessToLocal = {
@@ -89,6 +92,7 @@ function AddProcessModal({
     definicao: "",
     meta: "",
     prioridade: "",
+    julgador: "",
   };
   const [process, setProcess] = useState<TipoProcesso>(emptyProcessToLocal);
 
@@ -109,6 +113,7 @@ function AddProcessModal({
     definicao: string;
     meta: string;
     prioridade: string;
+    julgador: string;
   };
 
   const handleLocateClick = () => {
@@ -172,6 +177,7 @@ function AddProcessModal({
       setNewDefinicao(process.definicao);
       setNewMeta(process.meta);
       setNewPrioridade(process.prioridade);
+      setNewJulgador(process.julgador);
     }
   }, [process, newProcesso]);
 
@@ -222,6 +228,7 @@ function AddProcessModal({
               <label className="label" htmlFor="conselheiro">Conselheiro:</label>
               <label className="label" htmlFor="julgador">Órgão Julgador:</label>
               <label className="label" htmlFor="encaminhamento">Encaminhamento:</label>
+              <label className="label" htmlFor="julgador">Julgador:</label>
               <label className="label" htmlFor="definicao">Definição:</label>
               <label className="label" htmlFor="meta">Meta:</label>
               <label className="label" htmlFor="prioridade">Prioridade:</label>
@@ -242,9 +249,9 @@ function AddProcessModal({
             setNewAno={setNewAno} setNewAssunto={setNewAssunto} setNewData={setNewData} setNewDataDecisao={setNewDataDecisao} setNewDias={setNewDias}
             setNewAssessor={setNewAssessor}setNewEntidade={setNewEntidade}setNewVinculado={setNewVinculado}setNewConselheiro={setNewConselheiro}
             setNewOrgaoJulgador={setNewOrgaoJulgador}setNewEncaminhamento={setNewEncaminhamento}setNewDefinicao={setNewDefinicao}setNewMeta={setNewMeta}
-            setNewPrioridade={setNewPrioridade}newAno={newAno}newAssunto={newAssunto}newData={newData}newDataDecisao={newDataDecisao}
+            setNewPrioridade={setNewPrioridade}setNewJulgador={setNewJulgador} /*aguardando*/ newAno={newAno}newAssunto={newAssunto}newData={newData}newDataDecisao={newDataDecisao}
             newDias={newDias}newAssessor={newAssessor}newEntidade={newEntidade}newVinculado={newVinculado}newConselheiro={newConselheiro}newOrgaoJulgador={newOrgaoJulgador}
-            newEncaminhamento={newEncaminhamento}newDefinicao={newDefinicao}newMeta={newMeta}newPrioridade={newPrioridade}/>
+            newEncaminhamento={newEncaminhamento}newDefinicao={newDefinicao}newMeta={newMeta}newPrioridade={newPrioridade}newJulgador={newJulgador}/*aguardando*//>
             </div>
             </div>
 

@@ -28,6 +28,7 @@ function EditProcessModal({
   const [newDefinicao, setNewDefinicao] = useState("");
   const [newMeta, setNewMeta] = useState("");
   const [newPrioridade, setNewPrioridade] = useState("");
+  const [newJulgador, setNewJulgador] = useState("");
   const appElement = document.getElementById("root");
   const processRef = collection(db, "dados");
 
@@ -49,20 +50,22 @@ function EditProcessModal({
     setNewDefinicao("");
     setNewMeta("");
     setNewPrioridade("");
+    setNewJulgador("");
+
   };
 
   interface FieldData {
     field: string;
-    value: string;
+    value: any;
   }
   
   const fieldsToCheck: FieldData[] = [
-    { field: "ano", value: newAno },
+    { field: "ano", value: Number(newAno) },
     { field: "assunto", value: newAssunto },
     { field: "data", value: newData },
     { field: "datadecisao", value: newDataDecisao },
-    { field: "dias", value: newDias },
-    { field: "assessor", value: newAssessor },
+    { field: "dias", value: Number(newDias) },
+    { field: "assessor", value: Number(newAssessor) },
     { field: "entidade", value: newEntidade },
     { field: "vinculado", value: newVinculado },
     { field: "conselheiro", value: newConselheiro },
@@ -71,6 +74,7 @@ function EditProcessModal({
     { field: "definicao", value: newDefinicao },
     { field: "meta", value: newMeta },
     { field: "prioridade", value: newPrioridade },
+    { field: "julgador", value: newJulgador },
   ];
 
   const [procList, setProcList] = useState<Array<{ id: string, proc: number }>>([]);
@@ -149,7 +153,8 @@ function EditProcessModal({
         newEncaminhamento === "" &&
         newDefinicao === "" &&
         newMeta === "" &&
-        newPrioridade === ""
+        newPrioridade === "" &&
+        newJulgador === ""
       ) {
         alert("Nenhum campo foi preenchido para editar");
       } else {
@@ -224,6 +229,7 @@ function EditProcessModal({
               <label className="label" htmlFor="conselheiro">Conselheiro:</label>
               <label className="label" htmlFor="julgador">Órgão Julgador:</label>
               <label className="label" htmlFor="encaminhamento">Encaminhamento:</label>
+              <label className="label" htmlFor="julgador">Julgador:</label>
               <label className="label" htmlFor="definicao">Definição:</label>
               <label className="label" htmlFor="meta">Meta:</label>
               <label className="label" htmlFor="prioridade">Prioridade:</label>
@@ -262,6 +268,7 @@ function EditProcessModal({
                 setNewDefinicao={setNewDefinicao}
                 setNewMeta={setNewMeta}
                 setNewPrioridade={setNewPrioridade}
+                setNewJulgador={setNewJulgador}
                 newAno={newAno}
                 newAssunto={newAssunto}
                 newData={newData}
@@ -276,6 +283,7 @@ function EditProcessModal({
                 newDefinicao={newDefinicao}
                 newMeta={newMeta}
                 newPrioridade={newPrioridade}
+                newJulgador={newJulgador}
               />
             </div>
             </div>
