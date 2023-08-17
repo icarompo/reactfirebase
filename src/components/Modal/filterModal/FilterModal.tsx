@@ -19,6 +19,15 @@ function FilterProcessModal({
   const [newDate0, setNewDate0] = useState("");
   const [newDate1, setNewDate1] = useState("");
   const [newDays, setNewDays] = useState("");
+
+  const searchSelect = document.getElementById("search-select") as HTMLSelectElement;
+  const searchInput = document.getElementById("search-input") as HTMLInputElement;
+  const orderDefinition = document.getElementById("order-definition") as HTMLSelectElement;
+  const orderFilter = document.getElementById("order-filter") as HTMLSelectElement;
+  const dateInputStart = document.getElementById("date-input-start") as HTMLInputElement;
+  const dateInputEnd = document.getElementById("date-input-end") as HTMLInputElement;
+  const daysInputStart = document.getElementById("days-input-start") as HTMLInputElement;
+
   interface Checkbox {
     name: string;
     checked: boolean;
@@ -54,9 +63,7 @@ function FilterProcessModal({
   };
 
   const handleClick = () => {
-    const pesquisaEm = document.getElementById("search-select") as HTMLSelectElement;
     const campoPesquisa = pesquisaEm.value;
-    const pesquisa = document.getElementById("search-input") as HTMLInputElement;
     const pesquisaValor = pesquisa.value;
   };
 
