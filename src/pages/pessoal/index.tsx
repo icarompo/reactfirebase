@@ -23,11 +23,11 @@ function Page() {
 
   type TipoDado = {
     id: string;
-    proc: number;
+    processo: number;
     ano: number;
     assunto: string;
     data: Date;
-    datadecisao: Date;
+    datadDecisao: Date;
     assessor: number;
     entidade: string;
     vinculado: string;
@@ -93,14 +93,13 @@ function Page() {
                 params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
               }
               columns={[
-                { field: "proc", headerName: "Processo", width: 75 },
-                { field: "ano", headerName: "Ano", width: 75 },
+                { field: "processo", headerName: "Processo", width: 75 },
                 { field: "assunto", headerName: "Assunto", width: 300 },
-                { field: "data", headerName: "Data de inserção", width: 125 },
+                { field: "data", headerName: "Data de inserção", width: 155 },
                 {
-                  field: "datadecisao",
+                  field: "dataDecisao",
                   headerName: "Data de decisão",
-                  width: 125,
+                  width: 155,
                 },
                 { field: "entidade", headerName: "Entidade", width: 300 },
                 { field: "vinculado", headerName: "Vinculado", width: 100 },
@@ -110,7 +109,12 @@ function Page() {
                   width: 75,
                 },
                 {
-                  field: "orgaojulgador",
+                  field: "julgador",
+                  headerName: "Julgador",
+                  width: 100,
+                },
+                {
+                  field: "orgaoJulgador",
                   headerName: "Órgão Julgador",
                   width: 100,
                 },

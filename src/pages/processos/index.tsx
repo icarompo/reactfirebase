@@ -8,6 +8,7 @@ import Header from "../../components/header/Header.tsx";
 import "./styles.css";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import Navigation from "../../components/navigation/Navigation.tsx";
+import { format } from "date-fns";
 
 const theme = createTheme(
   {
@@ -26,14 +27,14 @@ interface PageProps {
 function Page(props: PageProps) {
   type TipoDado = {
     id: string;
-    proc: number;
-    ano: number;
+    processo: number;
     assunto: string;
     data: Date;
-    datadecisao: Date;
+    dataDecisao: Date;
     assessor: number;
     entidade: string;
     vinculado: string;
+    dias: number;
     conselheiro: string;
     orgaoJulgador: string;
     encaminhamento: string;
@@ -47,8 +48,8 @@ function Page(props: PageProps) {
  */
   useEffect(() => {
     async function fetchData() {
-      const usersCollectionRef = collection(db, "dados");
-      const dadosQuery = query(usersCollectionRef);
+      const dadosCollectionRef = collection(db, "dados");
+      const dadosQuery = query(dadosCollectionRef);
       const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
       const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
       dadosSnapshot.forEach((doc) => {
@@ -62,6 +63,7 @@ function Page(props: PageProps) {
     fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
   }, []);
 
+
   const filteredValues = (filterValue: string): TipoDado[] => {
     if (filterValue === "*") {
       return dados;
@@ -73,18 +75,6 @@ function Page(props: PageProps) {
       );
     }
   };
-
-/*   const handleRowSelectionChange = (ids: GridRowId[]) => {
-    setSelectedProcValues(
-      ids.map((selectedRowId) => {
-        const selectedRow = dados.find((row) => row.id === selectedRowId);
-        if (selectedRow) {
-          return selectedRow.proc.toString();
-        }
-        return undefined;
-      }) as string[]
-    );
-  }; */
 
   return (
     <>
@@ -100,25 +90,41 @@ function Page(props: PageProps) {
                 params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
               }
               columns={[
-                { field: "proc", headerName: "Processo", width: 75 },
-                { field: "ano", headerName: "Ano", width: 75 },
+                { field: "processo", headerName: "Processo", width: 75 },
                 { field: "assunto", headerName: "Assunto", width: 300 },
-                { field: "data", headerName: "Data de inserção", width: 125 },
-                { field: "datadecisao", headerName: "Data de decisão", width: 125 },
                 { field: "assessor", headerName: "Assessor", width: 75 },
+                {
+                  field: "data",
+                  headerName: "Data de inserção",
+                  width: 125,
+                  valueGetter: (params) => {
+                    const timestamp = params.row.data; 
+                    const date = new Date(timestamp.seconds * 1000); 
+                    return format(date, "dd/MM/yyyy");
+                  },
+                },
+                {
+                  field: "dataDecisao",
+                  headerName: "Data de decisão",
+                  width: 125,
+                  valueGetter: (params) => {
+                    const timestamp = params.row.dataDecisao; 
+                    const date = new Date(timestamp.seconds * 1000); 
+                    return format(date, "dd/MM/yyyy");
+                  },
+                },
+                
                 { field: "entidade", headerName: "Entidade", width: 300 },
                 { field: "vinculado", headerName: "Vinculado", width: 100 },
                 { field: "conselheiro", headerName: "Conselheiro", width: 75 },
-                { field: "orgaojulgador", headerName: "Órgão Julgador", width: 100 },
+                { field: "julgador", headerName: "Julgador", width: 75 },
+                { field: "orgaoJulgador", headerName: "Órgão Julgador", width: 100 },
                 { field: "encaminhamento", headerName: "Encaminhamento", width: 100 },
                 { field: "definicao", headerName: "Definição", width: 100 },
+                { field: "dias", headerName: "Dias", width: 50 },
                 { field: "meta", headerName: "Meta", width: 75 },
                 { field: "prioridade", headerName: "Prioridade", width: 75 },
               ]}
-/*               checkboxSelection
-              onRowSelectionModelChange={(ids) => {
-                handleRowSelectionChange(ids);
-              }} */
               disableRowSelectionOnClick
             />
           </ThemeProvider>

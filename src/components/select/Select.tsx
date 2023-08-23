@@ -13,7 +13,7 @@ function SelectLocation(props: SelectLocationProps) {
       setSelectedOption(event.target.value as string);
       props.onSelectChange(event.target.value as string); // Chama a função de callback com o valor selecionado
       if (event.target.value == "relatoria") {setSelectedId("selectRelatoria")}
-      else if (event.target.value == "sobrest") {setSelectedId("selectSobrestado")}
+      else if (event.target.value == "sobrest.") {setSelectedId("selectSobrestado")}
       else if (event.target.value == "TRAMIT.") {setSelectedId("selectTramitando")}
       else if (event.target.value == "sim") {setSelectedId("selectFinalizado")}
       else {setSelectedId("selectTodos")}
@@ -30,7 +30,7 @@ function SelectLocation(props: SelectLocationProps) {
           <option id="selectTodos" value="*">Todos</option>
           <option id="selectFinalizado" value="sim">Finalizados</option>
           <option id="selectTramitando" value="TRAMIT.">Tramitando</option>
-          <option id="selectSobrestado" value="sobrest">Sobrestado</option>
+          <option id="selectSobrestado" value="sobrest.">Sobrestado</option>
           <option id="selectRelatoria" value="relatoria">Relatoria</option>
         </select>
       </div>
