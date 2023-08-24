@@ -9,6 +9,8 @@ import "./styles.css";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import Navigation from "../../components/navigation/Navigation.tsx";
 import { format } from "date-fns";
+import dataContext from "../../context/dataContext";
+import { useContext } from 'react';
 
 const theme = createTheme(
   {
@@ -43,31 +45,20 @@ function Page(props: PageProps) {
     prioridade: string;
   };
 
-  const [dados, setDados] = useState<Array<TipoDado>>([]);
-/*   const [selectedProcValues, setSelectedProcValues] = useState<string[]>([]);
- */
-  useEffect(() => {
-    async function fetchData() {
-      const dadosCollectionRef = collection(db, "dados");
-      const dadosQuery = query(dadosCollectionRef);
-      const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
-      const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
-      dadosSnapshot.forEach((doc) => {
-        // Percorre os documentos retornados
-        const { id, ...rest } = doc.data() as TipoDado; // Extrai a propriedade 'id' e o restante das propriedades do documento
-        fetchedData.push({ id: doc.id, ...rest }); // Adiciona o documento ao array de dados buscados
-      });
-      setDados(fetchedData); // Atualiza o estado 'dado' com os dados buscados
-    }
+  const dados = useContext(dataContext);
+  console.log(dados)
 
-    fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
+  useEffect(() => {
+    console.log(dados)
   }, []);
 
 
   const filteredValues = (filterValue: string): TipoDado[] => {
     if (filterValue === "*") {
+      console.log(dados)
       return dados;
     } else {
+      console.log(dados)
       return dados.filter(
         (Processo) =>
           Processo.definicao &&

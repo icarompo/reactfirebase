@@ -5,7 +5,7 @@ import Header from "../../components/header/Header.tsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ptBR } from "@mui/x-data-grid";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
-import UserContext from "../../context/userContext";
+import userContext from "../../context/userContext";
 import { GridSortModel } from "@mui/x-data-grid";
 import Navigation from "../../components/navigation/Navigation.tsx";
 
@@ -39,7 +39,7 @@ function Page() {
     prioridade: string;
   };
 
-  const { user } = useContext(UserContext);
+  const { user } = useContext(userContext);
   const [dados, setDados] = useState<Array<TipoDado>>([]);
 
   useEffect(() => {

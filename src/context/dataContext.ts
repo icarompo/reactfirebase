@@ -1,45 +1,67 @@
-import { createContext } from "react";
+import { useEffect, useState, useContext, createContext, Dispatch, SetStateAction } from "react";
 import { collection, query, getDocs } from "firebase/firestore";
-import { useState } from "react";
 import { db } from "../api/firebase-config";
 
-type TipoDado = {
-    id: string;
-    processo: number;
-    assunto: string;
-    data: Date;
-    dataDecisao: Date;
-    assessor: number;
-    entidade: string;
-    vinculado: string;
-    dias: number;
-    conselheiro: string;
-    orgaoJulgador: string;
-    encaminhamento: string;
-    definicao: string;
-    meta: string;
-    prioridade: string;
-  };
+type dataType = {
+  id: string;
+  processo: number;
+  assunto: string;
+  data: Date;
+  dataDecisao: Date;
+  assessor: number;
+  entidade: string;
+  vinculado: string;
+  dias: number;
+  conselheiro: string;
+  orgaoJulgador: string;
+  encaminhamento: string;
+  definicao: string;
+  meta: string;
+  prioridade: string;
+};
 
-const [dados, setDados] = useState<Array<TipoDado>>([]);
+type DataContextType = {
+  data: dataType[];
+  loading: boolean;
+};
 
-const dataContext = createContext<Array<TipoDado>>(dados);
+const dataContext = createContext<DataContextType | undefined>(undefined);
+const [data, setData] = useState<dataType[]>([]);
 
 export default dataContext;
 
-export const fetchData = async () => {
-    try {
-        const dadosCollectionRef = collection(db, "dados");
+export const DataProvider = ( children ) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+      const dadosCollectionRef = collection(db, "dados");
       const dadosQuery = query(dadosCollectionRef);
-      const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
-      const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
+      const dadosSnapshot = await getDocs(dadosQuery); 
+      const fetchedData: Array<dataType> = []; 
       dadosSnapshot.forEach((doc) => {
-        // Percorre os documentos retornados
-        const { id, ...rest } = doc.data() as TipoDado; // Extrai a propriedade 'id' e o restante das propriedades do documento
-        fetchedData.push({ id: doc.id, ...rest }); // Adiciona o documento ao array de dados buscados
+        const { id, ...rest } = doc.data() as dataType;
+        fetchedData.push({ id: doc.id, ...rest });
       });
-      setDados(fetchedData); // Atualiza o estado 'dado' com os dados buscados
-    } catch (error) {
-      console.log(error);
-    }
+      setData(fetchedData); 
+      setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+return (
+  
+  );
+};
+
+export const useData = () => {
+  const context = useContext(DataContext);
+  if (context === undefined) {
+    throw new Error('useData deve ser usado dentro de um DataProvider');
+  }
+  return context;
 };

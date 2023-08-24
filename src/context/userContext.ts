@@ -15,14 +15,13 @@ type UserContextType = {
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 };
 
-
-const UserContext = createContext<UserContextType>({
+const userContext = createContext<UserContextType>({
   user: null,
   setUser: () => {},
   setIsAuthenticated: () => {},
 });
 
-export default UserContext;
+export default userContext;
 
 export const fetchUserData = async (email: string, setUser: (user: User | null) => void) => {
   try {
