@@ -1,6 +1,5 @@
 import './styles.css';
 import userContext from "../../context/userContext";
-import dataContext from "../../context/dataContext";
 import { useContext } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../api/firebase-config';
@@ -14,7 +13,6 @@ interface HeaderProps {
   function Header({ subtitle, onLogOut }: HeaderProps): JSX.Element {
     const { user, setUser } = useContext(userContext);
     const navigate = useNavigate();
-
     const logOut = () => {
       signOut(auth).then(() => {
         onLogOut();

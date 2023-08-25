@@ -6,10 +6,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ptBR } from "@mui/x-data-grid";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import userContext from "../../context/userContext";
+import dataContext from "../../context/dataContext.ts";
 import { GridSortModel } from "@mui/x-data-grid";
 import Navigation from "../../components/navigation/Navigation.tsx";
-
+import { format } from "date-fns";
 import "./styles.css";
+import SelectLocation from "../../components/select/Select.tsx";
 
 function Page() {
   const theme = createTheme(
@@ -21,16 +23,16 @@ function Page() {
     ptBR
   );
 
-  type TipoDado = {
+  type dataType = {
     id: string;
     processo: number;
-    ano: number;
     assunto: string;
     data: Date;
-    datadDecisao: Date;
+    dataDecisao: Date;
     assessor: number;
     entidade: string;
     vinculado: string;
+    dias: number;
     conselheiro: string;
     orgaoJulgador: string;
     encaminhamento: string;
@@ -40,28 +42,10 @@ function Page() {
   };
 
   const { user } = useContext(userContext);
-  const [dados, setDados] = useState<Array<TipoDado>>([]);
+  const { data, setData } = useContext(dataContext);
+  const [definicao, setDefinicao] = useState<string>("relatoria");
 
-  useEffect(() => {
-    async function fetchData() {
-      const dadosCollectionRef = collection(db, "dados"); // Referência para a coleção 'dados'
-      const dadosQuery = query(
-        dadosCollectionRef,
-        where("assessor", "==", user?.identificador)
-      );
-      const dadosSnapshot = await getDocs(dadosQuery); // Busca os dados da coleção 'dados'
-      const fetchedData: Array<TipoDado> = []; // Cria um array para armazenar os dados buscados
-      dadosSnapshot.forEach((doc) => {
-        // Percorre os documentos retornados
-        const { id, ...rest } = doc.data() as TipoDado; // Extrai a propriedade 'id' e o restante das propriedades do documento
-        fetchedData.push({ id: doc.id, ...rest }); // Adiciona o documento ao array de dados buscados
-      });
-      setDados(fetchedData); // Atualiza o estado 'dado' com os dados buscados
-    }
-    fetchData(); // Chama a função 'fetchData' para buscar os dados usando o hook useEffect
-  }, []);
-
-  const [dataGrid, setDataGrid] = useState<Array<TipoDado>>(dados);
+  const filter = data?.filter((Processo) => Processo.assessor === Number(user?.identificador));
 
   const [sortModel, setSortModel] = useState<GridSortModel>([
     {
@@ -74,56 +58,71 @@ function Page() {
     setSortModel(newSortModel);
   };
 
-  useEffect(() => {
-    setDataGrid(dados);
-  }, [dados]);
+  const filteredValues = (filterValue: string): dataType[] => {
+    if (!filter) {
+      return [];
+    }
+    if (filterValue === "*") {
+      return filter;
+    } else {
+      return filter.filter(
+        (Processo) =>
+          Processo.definicao &&
+          Processo.definicao.toLowerCase() === filterValue.toLowerCase()
+      );
+    }
+  };
+
+  const handleSelectChange = (value: string) => {
+    setDefinicao(value);
+  };
 
   return (
     <>
       <div className="personal-container">
-        <div className="datagrid">
+          <SelectLocation onSelectChange={handleSelectChange}/>      
+          <div className="datagrid">
           <ThemeProvider theme={theme}>
             <StripedDataGrid
               sx={{
                 backgroundColor: "#fff",
                 color: "#000",
               }}
-              rows={dataGrid}
+              rows={filteredValues(definicao)}
               getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
               }
               columns={[
                 { field: "processo", headerName: "Processo", width: 75 },
                 { field: "assunto", headerName: "Assunto", width: 300 },
-                { field: "data", headerName: "Data de inserção", width: 155 },
+                {
+                  field: "data",
+                  headerName: "Data de inserção",
+                  width: 125,
+                  valueGetter: (params) => {
+                    const timestamp = params.row.data; 
+                    const date = new Date(timestamp.seconds * 1000); 
+                    return format(date, "dd/MM/yyyy");
+                  },
+                },
                 {
                   field: "dataDecisao",
                   headerName: "Data de decisão",
-                  width: 155,
+                  width: 125,
+                  valueGetter: (params) => {
+                    const timestamp = params.row.dataDecisao; 
+                    const date = new Date(timestamp.seconds * 1000); 
+                    return format(date, "dd/MM/yyyy");
+                  },
                 },
                 { field: "entidade", headerName: "Entidade", width: 300 },
                 { field: "vinculado", headerName: "Vinculado", width: 100 },
-                {
-                  field: "conselheiro",
-                  headerName: "Conselheiro",
-                  width: 75,
-                },
-                {
-                  field: "julgador",
-                  headerName: "Julgador",
-                  width: 100,
-                },
-                {
-                  field: "orgaoJulgador",
-                  headerName: "Órgão Julgador",
-                  width: 100,
-                },
-                {
-                  field: "encaminhamento",
-                  headerName: "Encaminhamento",
-                  width: 100,
-                },
+                { field: "conselheiro", headerName: "Conselheiro", width: 75 },
+                { field: "julgador", headerName: "Julgador", width: 75 },
+                { field: "orgaoJulgador", headerName: "Órgão Julgador", width: 100 },
+                { field: "encaminhamento", headerName: "Encaminhamento", width: 100 },
                 { field: "definicao", headerName: "Definição", width: 100 },
+                { field: "dias", headerName: "Dias", width: 50 },
                 { field: "meta", headerName: "Meta", width: 75 },
                 { field: "prioridade", headerName: "Prioridade", width: 75 },
               ]}

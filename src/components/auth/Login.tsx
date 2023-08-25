@@ -3,7 +3,7 @@ import { auth } from '../../api/firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import userContext, { fetchUserData } from '../../context/userContext.ts';
-import dataContext, {fetchData} from '../../context/dataContext.ts';
+import dataContext, { fetchData } from '../../context/dataContext.ts';
 import './styles.css';
 
 interface LoginProps {
@@ -16,7 +16,6 @@ const Login = ({ onLogIn }: LoginProps) => {
   const navigate = useNavigate();
   const { setUser } = useContext(userContext);
   const { setData } = useContext(dataContext);
-
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!(email.trim() === '' || password.trim() === '')) {
@@ -25,7 +24,11 @@ const Login = ({ onLogIn }: LoginProps) => {
         console.log(userCredential);
         onLogIn();
         navigate('/');
-        fetchData;
+        try {
+        fetchData(setData);
+        } catch (error) {
+          console.log(error);
+        }
         fetchUserData(email, setUser);
       } catch (error) {
         console.log(error);

@@ -21,47 +21,30 @@ type dataType = {
 };
 
 type DataContextType = {
-  data: dataType[];
-  loading: boolean;
+  data: dataType[] | undefined;
+  setData: Dispatch<SetStateAction<dataType[] | undefined>>;
 };
 
-const dataContext = createContext<DataContextType | undefined>(undefined);
-const [data, setData] = useState<dataType[]>([]);
+const dataContext = createContext<DataContextType>({
+  data: undefined,
+  setData: () => {},
+});
 
 export default dataContext;
 
-export const DataProvider = ( children ) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-      const dadosCollectionRef = collection(db, "dados");
-      const dadosQuery = query(dadosCollectionRef);
-      const dadosSnapshot = await getDocs(dadosQuery); 
-      const fetchedData: Array<dataType> = []; 
-      dadosSnapshot.forEach((doc) => {
-        const { id, ...rest } = doc.data() as dataType;
-        fetchedData.push({ id: doc.id, ...rest });
-      });
-      setData(fetchedData); 
-      setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
-
-return (
-  
-  );
-};
-
-export const useData = () => {
-  const context = useContext(DataContext);
-  if (context === undefined) {
-    throw new Error('useData deve ser usado dentro de um DataProvider');
+export const fetchData = async (setData: (Data: dataType[] | undefined) => void) => {
+  try {
+    const dataCollectionRef = collection(db, "dados");
+    const dataQuery = query(dataCollectionRef);
+    const querySnapshot = await getDocs(dataQuery);
+    const fetchedData: Array<dataType> = [];
+    querySnapshot.forEach((doc) => {
+      const { id, ...rest } = doc.data() as dataType;
+      fetchedData.push({ id: doc.id, ...rest });
+    });
+    setData(fetchedData);
+    console.log(fetchedData);
+  } catch (error) {
+    console.log(error);
   }
-  return context;
 };

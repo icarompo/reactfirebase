@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs, query } from "firebase/firestore";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { /* GridRowId, */ ptBR } from "@mui/x-data-grid";
+import { GridValidRowModel, ptBR } from "@mui/x-data-grid";
 import TableFilter from "../../components/filter/filter.tsx";
 import Header from "../../components/header/Header.tsx";
 import "./styles.css";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import Navigation from "../../components/navigation/Navigation.tsx";
 import { format } from "date-fns";
-import dataContext from "../../context/dataContext";
+import dataContext, { fetchData } from "../../context/dataContext";
 import { useContext } from 'react';
 
 const theme = createTheme(
@@ -27,7 +27,7 @@ interface PageProps {
 }
 
 function Page(props: PageProps) {
-  type TipoDado = {
+  type dataType = {
     id: string;
     processo: number;
     assunto: string;
@@ -45,27 +45,22 @@ function Page(props: PageProps) {
     prioridade: string;
   };
 
-  const dados = useContext(dataContext);
-  console.log(dados)
+const { data, setData } = useContext(dataContext);
 
-  useEffect(() => {
-    console.log(dados)
-  }, []);
-
-
-  const filteredValues = (filterValue: string): TipoDado[] => {
-    if (filterValue === "*") {
-      console.log(dados)
-      return dados;
-    } else {
-      console.log(dados)
-      return dados.filter(
-        (Processo) =>
-          Processo.definicao &&
-          Processo.definicao.toLowerCase() === filterValue.toLowerCase()
-      );
-    }
-  };
+const filteredValues = (filterValue: string): dataType[] => {
+  if (!data) {
+    return [];
+  }
+  if (filterValue === "*") {
+    return data;
+  } else {
+    return data.filter(
+      (Processo) =>
+        Processo.definicao &&
+        Processo.definicao.toLowerCase() === filterValue.toLowerCase()
+    );
+  }
+};
 
   return (
     <>

@@ -30,13 +30,13 @@ function Navigation() {
             <PersonIcon className="navigation-icon" />
             Pessoal
           </Link>
-          <Link to="/painel" className="link">
-            <DashboardIcon className="navigation-icon" />
-            Painel
-          </Link>
           <Link to="/processos" className="link">
             <TableRowsIcon className="navigation-icon" />
             Processos
+          </Link>
+          <Link to="/painel" className="link">
+            <DashboardIcon className="navigation-icon" />
+            Painel
           </Link>
           <Link to="/checagem" className="link">
             <LibraryAddCheckIcon className="navigation-icon" />

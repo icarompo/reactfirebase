@@ -7,8 +7,8 @@ import {
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import Home from "./pages/home/index";
 import Personal from "./pages/pessoal/index";
-import Painel from "./pages/painel/index";
 import Processes from "./pages/processos/index";
+import Painel from "./pages/painel/index";
 import Check from "./pages/checagem/index";
 import Login from "./components/auth/Login";
 import userContext from "./context/userContext";
@@ -17,12 +17,31 @@ import dataContext from "./context/dataContext";
 export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [data, setData] = useState(undefined);
 
   type User = {
     identificador: string;
     nome: string;
     email: string;
     tipo: string;
+  };
+
+  type dataType = {
+    id: string;
+    processo: number;
+    assunto: string;
+    data: Date;
+    dataDecisao: Date;
+    assessor: number;
+    entidade: string;
+    vinculado: string;
+    dias: number;
+    conselheiro: string;
+    orgaoJulgador: string;
+    encaminhamento: string;
+    definicao: string;
+    meta: string;
+    prioridade: string;
   };
 
   const handleLoginSucess = () => {
@@ -47,7 +66,12 @@ export const App = () => {
         >,
       }}
     >
-
+      <dataContext.Provider
+        value={{
+          data,
+          setData: setData as Dispatch<SetStateAction<dataType[] | undefined>>,
+        }}
+      >
       <Router>
         <Routes>
           <Route
@@ -107,6 +131,7 @@ export const App = () => {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
+          </dataContext.Provider>                   
     </userContext.Provider>
   );
 };

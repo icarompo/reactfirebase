@@ -11,7 +11,7 @@ import "./styles.css";
 function Page() {
   type TipoDado = {
     id: string;
-    proc: number;
+    processo: number;
     ano: number;
     assunto: string;
     data: Date;
@@ -166,7 +166,7 @@ function Page() {
       index.forEach((item) => {
       const processNumberDiv = document.createElement('div') as HTMLDivElement;
       processNumberDiv.classList.add('process-number');
-      processNumberDiv.innerHTML = `${item.proc}`; 
+      processNumberDiv.innerHTML = `${item.processo}`; 
       resultContainer.appendChild(processNumberDiv);
       });
     } else {
