@@ -14,35 +14,36 @@ import Login from "./components/auth/Login";
 import userContext from "./context/userContext";
 import dataContext from "./context/dataContext";
 
+export type userType = {
+  id: string;
+  identificador: string;
+  nome: string;
+  email: string;
+  tipo: string;
+};
+
+export type dataType = {
+  id: string;
+  processo: number;
+  assunto: string;
+  data: Date;
+  dataDecisao: Date;
+  assessor: number;
+  entidade: string;
+  vinculado: string;
+  dias: number;
+  conselheiro: string;
+  orgaoJulgador: string;
+  encaminhamento: string;
+  definicao: string;
+  meta: string;
+  prioridade: string;
+};
+
 export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [data, setData] = useState(undefined);
-
-  type User = {
-    identificador: string;
-    nome: string;
-    email: string;
-    tipo: string;
-  };
-
-  type dataType = {
-    id: string;
-    processo: number;
-    assunto: string;
-    data: Date;
-    dataDecisao: Date;
-    assessor: number;
-    entidade: string;
-    vinculado: string;
-    dias: number;
-    conselheiro: string;
-    orgaoJulgador: string;
-    encaminhamento: string;
-    definicao: string;
-    meta: string;
-    prioridade: string;
-  };
 
   const handleLoginSucess = () => {
     setIsAuthenticated(true);
@@ -60,7 +61,7 @@ export const App = () => {
     <userContext.Provider
       value={{
         user,
-        setUser: setUser as Dispatch<SetStateAction<User | null>>,
+        setUser: setUser as Dispatch<SetStateAction<userType | null>>,
         setIsAuthenticated: setIsAuthenticated as Dispatch<
           SetStateAction<boolean>
         >,

@@ -1,6 +1,4 @@
-import { useState, useEffect, useContext } from "react";
-import { db } from "../../api/firebase-config.ts";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { useState, useContext } from "react";
 import Header from "../../components/header/Header.tsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ptBR } from "@mui/x-data-grid";
@@ -12,6 +10,7 @@ import Navigation from "../../components/navigation/Navigation.tsx";
 import { format } from "date-fns";
 import "./styles.css";
 import SelectLocation from "../../components/select/Select.tsx";
+import { dataType } from "../../App.tsx";
 
 function Page() {
   const theme = createTheme(
@@ -22,24 +21,6 @@ function Page() {
     },
     ptBR
   );
-
-  type dataType = {
-    id: string;
-    processo: number;
-    assunto: string;
-    data: Date;
-    dataDecisao: Date;
-    assessor: number;
-    entidade: string;
-    vinculado: string;
-    dias: number;
-    conselheiro: string;
-    orgaoJulgador: string;
-    encaminhamento: string;
-    definicao: string;
-    meta: string;
-    prioridade: string;
-  };
 
   const { user } = useContext(userContext);
   const { data, setData } = useContext(dataContext);
