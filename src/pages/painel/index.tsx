@@ -86,7 +86,7 @@ function Page() {
   
     let filteredData = filteredValues(definicao);
     const meta = filteredData.filter((Processo) => Processo.meta === "sim").length;
-    const prioridade = filteredData.filter((Processo) => Processo.prioridade === "alta").length;
+    const prioridade = filteredData.filter((Processo) => Number(Processo.prioridade) === 1).length;
     const vinculado = filteredData.filter((Processo) => Processo.vinculado === "PRINCIPAL" || Processo.vinculado === "principal").length;
     
   const handleAnoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -100,17 +100,6 @@ function Page() {
       return "card-header-high-priority";
     } else {
       return "card-header-low-priority";
-    }};
-
-  const handleClick = (card: string) => {
-    if (card === "processos") {
-      console.log('opa');
-    } else if (card === "meta") {
-      console.log('opa');
-    } else if (card === "prioridade") {
-      console.log('opa');
-    } else if (card === "vinculado") {
-      console.log('opa');
     }};
 
   const handleDetalheClick = (index: Array<dataType>) => () => {
@@ -159,28 +148,24 @@ function Page() {
               value={filteredData.length}
               text="Quantidade de processos no total"
               id={verificaPrioridade(filteredData.length)}
-              onClick={() => handleClick("processos")}
             />
             <Card
               name="Meta"
               value={meta}
               text="Processos em meta"
               id={verificaPrioridade(meta)}
-              onClick={() => handleClick("meta")}
             />
             <Card
               name="Prioridade"
               value={prioridade}
               text="Processos em prioridade"
               id={verificaPrioridade(prioridade)}
-              onClick={() => handleClick("prioridade")}
             />
             <Card
               name="Vinculado"
               value={vinculado}
               text="Processos Principais"
               id={verificaPrioridade(vinculado)}
-              onClick={() => handleClick("vinculado")}
             />
           </div>
 
