@@ -19,7 +19,7 @@ body {
 .main-content {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 80vh;
 }
 
 .login-form {
