@@ -12,7 +12,7 @@ dist
 dist-ssr
 *.local
 firebase-config.ts
-firebase-config.js
+firebase-algolia-config.ts
 SignIn.tsx
 SignUp.tsx
 AuthDetails.tsx

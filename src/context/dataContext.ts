@@ -1,6 +1,7 @@
-import { useEffect, useState, useContext, createContext, Dispatch, SetStateAction } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 import { collection, query, getDocs } from "firebase/firestore";
 import { db } from "../api/firebase-config";
+import { algolia_index } from "../api/firebase-algolia-config"; 
 
 type dataType = {
   id: string;
@@ -43,7 +44,11 @@ export const fetchData = async (setData: (Data: dataType[] | undefined) => void)
       fetchedData.push({ id: doc.id, ...rest });
     });
     setData(fetchedData);
-    console.log(fetchedData);
+    console.log("data fetched");
+    if (fetchedData.length > 0) {
+      console.log("data inserted on algolia");
+      algolia_index.partialUpdateObjects(fetchedData, { createIfNotExists: true });
+    }
   } catch (error) {
     console.log(error);
   }

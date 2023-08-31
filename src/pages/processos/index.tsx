@@ -99,7 +99,6 @@ const filteredValues = (filterValue: string): dataType[] => {
                     return format(date, "dd/MM/yyyy");
                   },
                 },
-                
                 { field: "entidade", headerName: "Entidade", width: 300 },
                 { field: "vinculado", headerName: "Vinculado", width: 100 },
                 { field: "conselheiro", headerName: "Conselheiro", width: 75 },
