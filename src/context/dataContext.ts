@@ -46,7 +46,7 @@ export const fetchData = async (setData: (Data: dataType[] | undefined) => void)
     setData(fetchedData);
     console.log("data fetched");
     if (fetchedData.length > 0) {
-      console.log("data inserted on algolia");
+      console.log("data updated on algolia");
       algolia_index.partialUpdateObjects(fetchedData, { createIfNotExists: true });
     }
   } catch (error) {
