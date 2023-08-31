@@ -12,7 +12,6 @@ dist
 dist-ssr
 *.local
 firebase-config.ts
-firebase-algolia-config.ts
 
 # Editor directories and files
 .vscode/*
