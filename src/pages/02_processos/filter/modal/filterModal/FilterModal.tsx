@@ -63,8 +63,7 @@ function FilterProcessModal({
   };
 
   const handleClick = () => {
-    const campoPesquisa = pesquisaEm.value;
-    const pesquisaValor = pesquisa.value;
+
   };
 
   const handleClearClick = () => {

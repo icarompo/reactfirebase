@@ -1,16 +1,15 @@
-import { useState, useEffect } from "react";
-import { db } from "../../api/firebase-config.ts";
-import { collection, getDocs, query } from "firebase/firestore";
+import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { GridValidRowModel, ptBR } from "@mui/x-data-grid";
-import TableFilter from "../../components/filter/filter.tsx";
+import { ptBR } from "@mui/x-data-grid";
+import TableFilter from "./filter/filter.tsx";
 import Header from "../../components/header/Header.tsx";
 import "./styles.css";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import Navigation from "../../components/navigation/Navigation.tsx";
 import { format } from "date-fns";
-import dataContext, { fetchProcData } from "../../context/dataContext";
+import GlobalContext from "../../context/globalContext.ts";
 import { useContext } from 'react';
+import { Global } from "@emotion/react";
 
 const theme = createTheme(
   {
@@ -45,16 +44,16 @@ function Page(props: PageProps) {
     prioridade: string;
   };
 
-const { procData: data, setData } = useContext(dataContext);
+const data = useContext(GlobalContext);
 
 const filteredValues = (filterValue: string): dataType[] => {
-  if (!data) {
+  if (!data.procData) {
     return [];
   }
   if (filterValue === "*") {
-    return data;
+    return data.procData;
   } else {
-    return data.filter(
+    return data.procData.filter(
       (Processo) =>
         Processo.definicao &&
         Processo.definicao.toLowerCase() === filterValue.toLowerCase()

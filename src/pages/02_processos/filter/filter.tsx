@@ -1,7 +1,7 @@
-import AddProcessButton from "../Modal/addModal/AddModal.tsx";
-import EditProcessButton from "../Modal/editModal/EditModal.tsx";
-import FilterProcessButton from "../Modal/filterModal/FilterModal.tsx";
-import SelectLocation from "../select/Select.tsx";
+import AddProcessButton from "./modal/addModal/AddModal.tsx";
+import EditProcessButton from "./modal/editModal/EditModal.tsx";
+import FilterProcessButton from "./modal/filterModal/FilterModal.tsx";
+import SelectLocation from "../../../components/select/Select.tsx";
 import "./styles.css";
 
 interface TableFilterProps {

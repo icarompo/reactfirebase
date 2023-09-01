@@ -1,7 +1,7 @@
 import { FormEvent, useState, useContext } from 'react';
 import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence, inMemoryPersistence } from 'firebase/auth';
 import userContext, { fetchUserData } from '../../context/userContext.ts';
-import dataContext, { fetchProcData } from '../../context/dataContext.ts';
+import dataContext, { fetchProcData } from '../../context/globalContext.ts';
 import './styles.css';
 interface LoginProps {
   onLogIn: () => void;

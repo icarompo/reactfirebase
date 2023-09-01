@@ -2,7 +2,7 @@ import ReactModal from "react-modal";
 import EditIcon from "@mui/icons-material/Edit";
 import ProcessForm from "../form/Form.tsx";
 import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
-import { db } from "../../../api/firebase-config.ts";
+import { db } from "../../../../../api/firebase-config.ts";
 import { useState, useEffect } from "react";
 import "../form/modal.styles.css";
 

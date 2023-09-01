@@ -8,11 +8,11 @@ import {
 import { useState, useEffect, SetStateAction, Dispatch, createContext } from "react";
 import Home from "./pages/00_home/index";
 import Personal from "./pages/01_pessoal/index";
-import Processes from "./pages/processos/index";
-import Painel from "./pages/painel/index";
-import Check from "./pages/checagem/index";
+import Processes from "./pages/02_processos/index";
+import Painel from "./pages/03_painel/index";
+import Check from "./pages/04_checagem/index";
 import Login from "./components/auth/Login";
-import { fetchUserData, fetchProcData } from "./context/dataContext";
+import GlobalContext, { fetchUserData, fetchProcData } from "./context/globalContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "./api/firebase-config";
@@ -62,22 +62,6 @@ export const App = () => {
     setIsAuthenticated(false);
   };  
 
-  type DataContextType = {
-    user: userType | null;
-    procData: procType[] | null;
-    usersData: userType[] | null;
-    setUser: Dispatch<SetStateAction<userType | null>>;
-    setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
-  };
-
-  const GlobalContext = createContext<DataContextType>({
-    user: null,
-    procData: null,
-    usersData: null,
-    setUser: setUser,
-    setIsAuthenticated: setIsAuthenticated,
-  });
-
   return (
     <GlobalContext.Provider
       value={{
@@ -85,9 +69,7 @@ export const App = () => {
         procData: procData,
         usersData: usersData,
         setUser: setUser as Dispatch<SetStateAction<userType | null>>,
-        setIsAuthenticated: setIsAuthenticated as Dispatch<
-          SetStateAction<boolean>
-        >,
+        setIsAuthenticated: setIsAuthenticated as Dispatch<SetStateAction<boolean>>,
       }}
     >
         <Router>
@@ -176,7 +158,7 @@ function LoginListener(props: {
             email: doc.data().email,
             tipo: doc.data().tipo,
           };
-          props.setUser(userData); // Salvar os dados do usuário no estado do contexto
+          props.setUser(userData); 
           props.setIsAuthenticated && props.setIsAuthenticated(true);
         });
         navigate("/");

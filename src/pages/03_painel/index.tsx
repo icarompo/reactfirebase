@@ -1,5 +1,5 @@
 import Header from "../../components/header/Header.tsx";
-import PieChart from "../../components/piechart/PieChart";
+import PieChart from "./piechart/PieChart.tsx";
 import { useEffect, useState, useContext } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs } from "firebase/firestore";
@@ -7,12 +7,12 @@ import Card from "../../components/card/index.tsx";
 import SelectLocation from "../../components/select/Select.tsx";
 import Navigation from "../../components/navigation/Navigation.tsx";
 import { procType, userType } from "../../App.tsx";
-import dataContext from "../../context/dataContext.ts";
+import GlobalContext from "../../context/globalContext.ts";
 import "./styles.css";
 
 function Page() {
 
-  const { procData: data, setData } = useContext(dataContext);
+  const data = useContext(GlobalContext);
   const [definicao, setDefinicao] = useState<string>("relatoria");
   const [ano, setAno] = useState<string>("*");
 
@@ -33,13 +33,13 @@ function Page() {
   }, []);
 
   const filteredValues = (filterValue: string): procType[] => {
-    if (!data) {
+    if (!data.procData) {
       return [];
     }
     if (filterValue === "*") {
-      return data;
+      return data.procData;
     } else {
-      return data.filter(
+      return data.procData.filter(
         (Processo) =>
           Processo.definicao &&
           Processo.definicao.toLowerCase() === filterValue.toLowerCase()

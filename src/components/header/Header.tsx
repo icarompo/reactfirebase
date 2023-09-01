@@ -1,17 +1,16 @@
 import './styles.css';
-import userContext from "../../context/userContext";
 import { useContext } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../api/firebase-config';
 import { useNavigate } from 'react-router-dom'; 
-
+import GlobalContext from "../../context/globalContext";
 interface HeaderProps {
     subtitle: string;
     onLogOut: () => void;
   }
   
   function Header({ subtitle, onLogOut }: HeaderProps): JSX.Element {
-    const { user, setUser } = useContext(userContext);
+    const data = useContext(GlobalContext);
     const navigate = useNavigate();
     const logOut = () => {
       signOut(auth).then(() => {
@@ -31,7 +30,7 @@ interface HeaderProps {
             <h3 className='header-h3'>{subtitle}</h3>
           </div>
           <div className="header-buttons">
-            <span className="user">Bem vindo {user?.nome}</span>
+            <span className="user">Bem vindo {data?.user?.nome}</span>
               <button className="logout-button" onClick={logOut}>Sair</button>
             </div>
         </div>

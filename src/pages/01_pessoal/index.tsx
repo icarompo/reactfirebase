@@ -3,14 +3,13 @@ import Header from "../../components/header/Header.tsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ptBR } from "@mui/x-data-grid";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
-import userContext from "../../context/userContext";
-import dataContext from "../../context/dataContext.ts";
 import { GridSortModel } from "@mui/x-data-grid";
 import Navigation from "../../components/navigation/Navigation.tsx";
 import { format } from "date-fns";
 import "./styles.css";
-import SelectLocation from "../../components/select/Select.tsx";
 import { procType } from "../../App.tsx";
+import SelectLocation from "../../components/select/Select.tsx";
+import GlobalContext from "../../context/globalContext.ts";
 
 function Page() {
   const theme = createTheme(
@@ -22,11 +21,10 @@ function Page() {
     ptBR
   );
 
-  const { user } = useContext(userContext);
-  const { procData: data, setData } = useContext(dataContext);
+  const data = useContext(GlobalContext);
   const [definicao, setDefinicao] = useState<string>("relatoria");
 
-  const filter = data?.filter((Processo) => Processo.assessor === Number(user?.identificador));
+  const filter = data.procData?.filter((Processo) => Processo.assessor === Number(data?.user?.identificador));
 
   const [sortModel, setSortModel] = useState<GridSortModel>([
     {

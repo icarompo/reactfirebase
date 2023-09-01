@@ -1,6 +1,7 @@
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, getDocs } from "firebase/firestore";
 import { db } from "../api/firebase-config";
 import { userType, procType } from "../App";
+import { Dispatch, SetStateAction, createContext } from "react";
 
 export const fetchUserData = async () => {
   try {
@@ -38,3 +39,21 @@ export const fetchProcData = async () => {
     console.log(error);
   }
 };
+
+type DataContextType = {
+  user: userType | null;
+  procData: procType[] | null;
+  usersData: userType[] | null;
+  setUser: Dispatch<SetStateAction<userType | null>>;
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+};
+
+const GlobalContext = createContext<DataContextType>({
+  user: null,
+  procData: null,
+  usersData: null,
+  setUser: null as any,
+  setIsAuthenticated: null as any,
+});
+
+export default GlobalContext;
