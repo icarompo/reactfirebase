@@ -6,8 +6,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useState, useEffect, SetStateAction, Dispatch, createContext } from "react";
-import Home from "./pages/home/index";
-import Personal from "./pages/pessoal/index";
+import Home from "./pages/00_home/index";
+import Personal from "./pages/01_pessoal/index";
 import Processes from "./pages/processos/index";
 import Painel from "./pages/painel/index";
 import Check from "./pages/checagem/index";
