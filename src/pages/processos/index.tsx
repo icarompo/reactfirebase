@@ -9,7 +9,7 @@ import "./styles.css";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import Navigation from "../../components/navigation/Navigation.tsx";
 import { format } from "date-fns";
-import dataContext, { fetchData } from "../../context/dataContext";
+import dataContext, { fetchProcData } from "../../context/dataContext";
 import { useContext } from 'react';
 
 const theme = createTheme(
@@ -45,7 +45,7 @@ function Page(props: PageProps) {
     prioridade: string;
   };
 
-const { data, setData } = useContext(dataContext);
+const { procData: data, setData } = useContext(dataContext);
 
 const filteredValues = (filterValue: string): dataType[] => {
   if (!data) {

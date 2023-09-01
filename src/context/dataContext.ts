@@ -1,43 +1,35 @@
-import { createContext } from "react";
-import { collection, query, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../api/firebase-config";
+import { userType, procType } from "../App";
 
-type dataType = {
-  id: string;
-  processo: number;
-  assunto: string;
-  data: Date;
-  dataDecisao: Date;
-  assessor: number;
-  entidade: string;
-  vinculado: string;
-  dias: number;
-  conselheiro: string;
-  orgaoJulgador: string;
-  encaminhamento: string;
-  definicao: string;
-  meta: string;
-  prioridade: string;
+export const fetchUserData = async () => {
+  try {
+    const usersRef = collection(db, "colaboradores");
+    const userQuery = query(usersRef);
+    const querySnapshot = await getDocs(userQuery);
+    querySnapshot.forEach((doc) => {
+      const userData = {
+        id: doc.id,
+        identificador: doc.data().identificador,
+        nome: doc.data().nome,
+        email: doc.data().email,
+        tipo: doc.data().tipo,
+      };
+      return userData;
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-type DataContextType = {
-  data: dataType[] | undefined;
-};
-
-const dataContext = createContext<DataContextType>({
-  data: undefined
-});
-
-export default dataContext;
-
-export const fetchData = async () => {
+export const fetchProcData = async () => {
   try {
     const dataCollectionRef = collection(db, "dados");
-    const dataQuery = query(dataCollectionRef);
-    const querySnapshot = await getDocs(dataQuery);
-    const fetchedData: Array<dataType> = [];
+    const procQuery = query(dataCollectionRef);
+    const querySnapshot = await getDocs(procQuery);
+    const fetchedData: Array<procType> = [];
     querySnapshot.forEach((doc) => {
-      const { id, ...rest } = doc.data() as dataType;
+      const { id, ...rest } = doc.data() as procType;
       fetchedData.push({ id: doc.id, ...rest });
     });
     return fetchedData;

@@ -10,7 +10,7 @@ import Navigation from "../../components/navigation/Navigation.tsx";
 import { format } from "date-fns";
 import "./styles.css";
 import SelectLocation from "../../components/select/Select.tsx";
-import { dataType } from "../../App.tsx";
+import { procType } from "../../App.tsx";
 
 function Page() {
   const theme = createTheme(
@@ -23,7 +23,7 @@ function Page() {
   );
 
   const { user } = useContext(userContext);
-  const { data, setData } = useContext(dataContext);
+  const { procData: data, setData } = useContext(dataContext);
   const [definicao, setDefinicao] = useState<string>("relatoria");
 
   const filter = data?.filter((Processo) => Processo.assessor === Number(user?.identificador));
@@ -39,7 +39,7 @@ function Page() {
     setSortModel(newSortModel);
   };
 
-  const filteredValues = (filterValue: string): dataType[] => {
+  const filteredValues = (filterValue: string): procType[] => {
     if (!filter) {
       return [];
     }

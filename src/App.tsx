@@ -5,15 +5,14 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
-import { useState, useEffect, SetStateAction, Dispatch } from "react";
+import { useState, useEffect, SetStateAction, Dispatch, createContext } from "react";
 import Home from "./pages/home/index";
 import Personal from "./pages/pessoal/index";
 import Processes from "./pages/processos/index";
 import Painel from "./pages/painel/index";
 import Check from "./pages/checagem/index";
 import Login from "./components/auth/Login";
-import userContext, { fetchUserData } from "./context/userContext";
-import dataContext from "./context/dataContext";
+import { fetchUserData, fetchProcData } from "./context/dataContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "./api/firebase-config";
@@ -26,7 +25,7 @@ export type userType = {
   tipo: string;
 };
 
-export type dataType = {
+export type procType = {
   id: string;
   processo: number;
   assunto: string;
@@ -47,32 +46,50 @@ export type dataType = {
 export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null as any);
-  const [data, setData] = useState(undefined);
 
-  const handleLoginSucess = () => {
+  const [procData, setProcData] = useState(null as any);
+  const [usersData, setUsersData] = useState(null as any);
+
+  const handleLoginSucess = async () => {
     setIsAuthenticated(true);
+    const usersData = await fetchUserData();
+    const procData = await fetchProcData();
+    setUsersData(usersData);
+    setProcData(procData);
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
   };  
 
+  type DataContextType = {
+    user: userType | null;
+    procData: procType[] | null;
+    usersData: userType[] | null;
+    setUser: Dispatch<SetStateAction<userType | null>>;
+    setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+  };
+
+  const GlobalContext = createContext<DataContextType>({
+    user: null,
+    procData: null,
+    usersData: null,
+    setUser: setUser,
+    setIsAuthenticated: setIsAuthenticated,
+  });
+
   return (
-    <userContext.Provider
+    <GlobalContext.Provider
       value={{
-        user,
+        user: user,
+        procData: procData,
+        usersData: usersData,
         setUser: setUser as Dispatch<SetStateAction<userType | null>>,
         setIsAuthenticated: setIsAuthenticated as Dispatch<
           SetStateAction<boolean>
         >,
       }}
     >
-      <dataContext.Provider
-        value={{
-          data,
-          setData: setData as Dispatch<SetStateAction<dataType[] | undefined>>,
-        }}
-      >
         <Router>
           <Routes>
             <Route
@@ -133,11 +150,14 @@ export const App = () => {
           </Routes>
           <LoginListener setUser={setUser} setIsAuthenticated={setIsAuthenticated}/>
         </Router>
-      </dataContext.Provider>
-    </userContext.Provider>
+    </GlobalContext.Provider>
   );
 };
-function LoginListener(props: { setUser: Dispatch<SetStateAction<userType | null>>; setIsAuthenticated: Dispatch<SetStateAction<boolean>>;}) {
+function LoginListener(props: { 
+  setUser: Dispatch<SetStateAction<userType | null>>; 
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+}) 
+  {
   const navigate = useNavigate();
   useEffect(() => {
     const auth = getAuth();

@@ -6,13 +6,13 @@ import { collection, getDocs } from "firebase/firestore";
 import Card from "../../components/card/index.tsx";
 import SelectLocation from "../../components/select/Select.tsx";
 import Navigation from "../../components/navigation/Navigation.tsx";
-import { dataType, userType } from "../../App.tsx";
+import { procType, userType } from "../../App.tsx";
 import dataContext from "../../context/dataContext.ts";
 import "./styles.css";
 
 function Page() {
 
-  const { data, setData } = useContext(dataContext);
+  const { procData: data, setData } = useContext(dataContext);
   const [definicao, setDefinicao] = useState<string>("relatoria");
   const [ano, setAno] = useState<string>("*");
 
@@ -32,7 +32,7 @@ function Page() {
     fetchUsers(); // Chama a função 'fetchUsers' para buscar os dados usando o hook useEffect
   }, []);
 
-  const filteredValues = (filterValue: string): dataType[] => {
+  const filteredValues = (filterValue: string): procType[] => {
     if (!data) {
       return [];
     }
@@ -102,7 +102,7 @@ function Page() {
       return "card-header-low-priority";
     }};
 
-  const handleDetalheClick = (index: Array<dataType>) => () => {
+  const handleDetalheClick = (index: Array<procType>) => () => {
     const resultContainer = document.getElementById("result-container") as HTMLDivElement;
     if (index.length > 0) {
       resultContainer.innerHTML = ''; 
