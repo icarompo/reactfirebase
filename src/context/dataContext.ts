@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction } from "react";
+import { createContext } from "react";
 import { collection, query, getDocs } from "firebase/firestore";
 import { db } from "../api/firebase-config";
 
@@ -22,17 +22,15 @@ type dataType = {
 
 type DataContextType = {
   data: dataType[] | undefined;
-  setData: Dispatch<SetStateAction<dataType[] | undefined>>;
 };
 
 const dataContext = createContext<DataContextType>({
-  data: undefined,
-  setData: () => {},
+  data: undefined
 });
 
 export default dataContext;
 
-export const fetchData = async (setData: (Data: dataType[] | undefined) => void) => {
+export const fetchData = async () => {
   try {
     const dataCollectionRef = collection(db, "dados");
     const dataQuery = query(dataCollectionRef);
@@ -42,7 +40,7 @@ export const fetchData = async (setData: (Data: dataType[] | undefined) => void)
       const { id, ...rest } = doc.data() as dataType;
       fetchedData.push({ id: doc.id, ...rest });
     });
-    setData(fetchedData);
+    return fetchedData;
     console.log("data fetched");
   } catch (error) {
     console.log(error);

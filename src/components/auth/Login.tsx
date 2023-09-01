@@ -1,11 +1,8 @@
 import { FormEvent, useState, useContext } from 'react';
-import { auth } from '../../api/firebase-config';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence, inMemoryPersistence } from 'firebase/auth';
 import userContext, { fetchUserData } from '../../context/userContext.ts';
 import dataContext, { fetchData } from '../../context/dataContext.ts';
 import './styles.css';
-
 interface LoginProps {
   onLogIn: () => void;
 }
@@ -13,23 +10,20 @@ interface LoginProps {
 const Login = ({ onLogIn }: LoginProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-  const { setUser } = useContext(userContext);
   const { setData } = useContext(dataContext);
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!(email.trim() === '' || password.trim() === '')) {
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log(userCredential);
+        const auth = getAuth();
+        await setPersistence(auth, browserSessionPersistence);
+        await signInWithEmailAndPassword(auth, email, password);
         onLogIn();
-        navigate('/');
         try {
         fetchData(setData);
         } catch (error) {
           console.log(error);
         }
-        fetchUserData(email, setUser);
       } catch (error) {
         console.log(error);
         alert('Email ou senha incorretos');

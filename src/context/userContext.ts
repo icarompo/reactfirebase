@@ -17,7 +17,7 @@ const userContext = createContext<UserContextType>({
 
 export default userContext;
 
-export const fetchUserData = async (email: string, setUser: (user: userType | null) => void) => {
+export const fetchUserData = async (email: string) => {
   try {
     const usersRef = collection(db, "colaboradores");
     const q = query(usersRef, where("email", "==", email));
@@ -30,7 +30,7 @@ export const fetchUserData = async (email: string, setUser: (user: userType | nu
         email: doc.data().email,
         tipo: doc.data().tipo,
       };
-      setUser(userData); // Salvar os dados do usuário no estado do contexto
+      return userData;
     });
   } catch (error) {
     console.log(error);

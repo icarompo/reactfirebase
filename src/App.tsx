@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import Home from "./pages/home/index";
@@ -11,8 +12,11 @@ import Processes from "./pages/processos/index";
 import Painel from "./pages/painel/index";
 import Check from "./pages/checagem/index";
 import Login from "./components/auth/Login";
-import userContext from "./context/userContext";
+import userContext, { fetchUserData } from "./context/userContext";
 import dataContext from "./context/dataContext";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "./api/firebase-config";
 
 export type userType = {
   id: string;
@@ -42,7 +46,7 @@ export type dataType = {
 
 export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null as any);
   const [data, setData] = useState(undefined);
 
   const handleLoginSucess = () => {
@@ -51,11 +55,7 @@ export const App = () => {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-  };
-
-  useEffect(() => {
-    console.log("is authenticated: ", isAuthenticated);
-  }, [isAuthenticated]);
+  };  
 
   return (
     <userContext.Provider
@@ -73,66 +73,103 @@ export const App = () => {
           setData: setData as Dispatch<SetStateAction<dataType[] | undefined>>,
         }}
       >
-      <Router>
-        <Routes>
-          <Route
-            path="/login"
-            element={<Login onLogIn={handleLoginSucess} />}
-          />
-          <Route
-            path="/"
-            element={
-              isAuthenticated ? (
-                <Home onLogOut={handleLogout} />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/pessoal"
-            element={
-              isAuthenticated ? (
-                <Personal onLogOut={handleLogout} />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/painel"
-            element={
-              isAuthenticated ? (
-                <Painel onLogOut={handleLogout} />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/processos"
-            element={
-              isAuthenticated ? (
-                <Processes onLogOut={handleLogout} />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/checagem"
-            element={
-              isAuthenticated ? (
-                <Check onLogOut={handleLogout} />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Router>
-          </dataContext.Provider>                   
+        <Router>
+          <Routes>
+            <Route
+              path="/login"
+              element={<Login onLogIn={handleLoginSucess} />}
+            />
+            <Route
+              path="/"
+              element={
+                isAuthenticated ? (
+                  <Home onLogOut={handleLogout} />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/pessoal"
+              element={
+                isAuthenticated ? (
+                  <Personal onLogOut={handleLogout} />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/painel"
+              element={
+                isAuthenticated ? (
+                  <Painel onLogOut={handleLogout} />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/processos"
+              element={
+                isAuthenticated ? (
+                  <Processes onLogOut={handleLogout} />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/checagem"
+              element={
+                isAuthenticated ? (
+                  <Check onLogOut={handleLogout} />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+          <LoginListener setUser={setUser} setIsAuthenticated={setIsAuthenticated}/>
+        </Router>
+      </dataContext.Provider>
     </userContext.Provider>
   );
 };
+function LoginListener(props: { setUser: Dispatch<SetStateAction<userType | null>>; setIsAuthenticated: Dispatch<SetStateAction<boolean>>;}) {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const email = user?.email;
+        if (email == null) return;
+        const usersRef = collection(db, "colaboradores");
+        const q = query(usersRef, where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          const userData = {
+            id: doc.id,
+            identificador: doc.data().identificador,
+            nome: doc.data().nome,
+            email: doc.data().email,
+            tipo: doc.data().tipo,
+          };
+          props.setUser(userData); // Salvar os dados do usuário no estado do contexto
+          props.setIsAuthenticated && props.setIsAuthenticated(true);
+        });
+        navigate("/");
+        console.log(user);
+      } else {
+        props.setUser(null);
+        props.setIsAuthenticated && props.setIsAuthenticated(false);
+        navigate("/login");
+        console.log(user);
+      }
+    });
+    return unsubscribe;
+  }, []);
+  return <div></div>;
+}
+
