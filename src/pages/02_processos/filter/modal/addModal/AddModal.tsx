@@ -18,7 +18,6 @@ function AddProcessModal({
   closeModal: () => void;
 }) {
   const [newProcesso, setNewProcesso] = useState("");
-  const [newAno, setNewAno] = useState("");
   const [newAssunto, setNewAssunto] = useState("");
   const [newData, setNewData] = useState("");
   const [newDataDecisao, setNewDataDecisao] = useState("");
@@ -38,7 +37,6 @@ function AddProcessModal({
   const fullFilledProcessToDb = {
     //Preenche os campos do processo para serem enviados ao banco de dados
     proc: Number(newProcesso),
-    ano: Number(newAno),
     assunto: newAssunto,
     data: convertDateIn(newData),
     datadecisao: convertDateIn(newDataDecisao),
@@ -58,7 +56,6 @@ function AddProcessModal({
   const handleClearClick = () => {
     //Limpa os campos do formulário
     setNewProcesso("");
-    setNewAno("");
     setNewAssunto("");
     setNewData("");
     setNewDataDecisao("");
@@ -163,7 +160,6 @@ function AddProcessModal({
 
   useEffect(() => {
     if (Number(process.proc) === Number(newProcesso)) {
-      setNewAno(process.ano);
       setNewAssunto(process.assunto);
       setNewData(convertDateOut(process.data));
       setNewDataDecisao(convertDateOut(process.datadecisao));
@@ -246,10 +242,10 @@ function AddProcessModal({
 
 
               <ProcessForm 
-            setNewAno={setNewAno} setNewAssunto={setNewAssunto} setNewData={setNewData} setNewDataDecisao={setNewDataDecisao} setNewDias={setNewDias}
+            setNewAssunto={setNewAssunto} setNewData={setNewData} setNewDataDecisao={setNewDataDecisao} setNewDias={setNewDias}
             setNewAssessor={setNewAssessor}setNewEntidade={setNewEntidade}setNewVinculado={setNewVinculado}setNewConselheiro={setNewConselheiro}
             setNewOrgaoJulgador={setNewOrgaoJulgador}setNewEncaminhamento={setNewEncaminhamento}setNewDefinicao={setNewDefinicao}setNewMeta={setNewMeta}
-            setNewPrioridade={setNewPrioridade}setNewJulgador={setNewJulgador} /*aguardando*/ newAno={newAno}newAssunto={newAssunto}newData={newData}newDataDecisao={newDataDecisao}
+            setNewPrioridade={setNewPrioridade}setNewJulgador={setNewJulgador} /*aguardando*/ newAssunto={newAssunto}newData={newData}newDataDecisao={newDataDecisao}
             newDias={newDias}newAssessor={newAssessor}newEntidade={newEntidade}newVinculado={newVinculado}newConselheiro={newConselheiro}newOrgaoJulgador={newOrgaoJulgador}
             newEncaminhamento={newEncaminhamento}newDefinicao={newDefinicao}newMeta={newMeta}newPrioridade={newPrioridade}newJulgador={newJulgador}/*aguardando*//>
             </div>

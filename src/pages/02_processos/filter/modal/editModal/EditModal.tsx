@@ -14,7 +14,6 @@ function EditProcessModal({
   closeModal: () => void;
 }) {
   const [newProcesso, setNewProcesso] = useState("");
-  const [newAno, setNewAno] = useState("");
   const [newAssunto, setNewAssunto] = useState("");
   const [newData, setNewData] = useState("");
   const [newDataDecisao, setNewDataDecisao] = useState("");
@@ -36,7 +35,6 @@ function EditProcessModal({
   const handleClearClick = () => {
 
     setNewProcesso("");
-    setNewAno("");
     setNewAssunto("");
     setNewData("");
     setNewDataDecisao("");
@@ -60,7 +58,6 @@ function EditProcessModal({
   }
   
   const fieldsToCheck: FieldData[] = [
-    { field: "ano", value: Number(newAno) },
     { field: "assunto", value: newAssunto },
     { field: "data", value: newData },
     { field: "datadecisao", value: newDataDecisao },
@@ -140,7 +137,6 @@ function EditProcessModal({
       alert("Adicione um processo!");
     } else {
       if (
-        newAno === "" &&
         newAssunto === "" &&
         newData === "" &&
         newDataDecisao === "" &&
@@ -218,7 +214,6 @@ function EditProcessModal({
             <div className="columns">
             <div className="column1">
               <label className="label" htmlFor="proc">Processo:</label>
-              <label className="label" htmlFor="ano">Ano:</label>
               <label className="label" htmlFor="assunto">Assunto:</label>
               <label className="label" htmlFor="data">Data de inserção:</label>
               <label className="label" htmlFor="datadecisao">Data de decisão:</label>
@@ -254,7 +249,6 @@ function EditProcessModal({
                 </button>
                 </div>
               <ProcessForm
-                setNewAno={setNewAno}
                 setNewAssunto={setNewAssunto}
                 setNewData={setNewData}
                 setNewDataDecisao={setNewDataDecisao}
@@ -269,7 +263,6 @@ function EditProcessModal({
                 setNewMeta={setNewMeta}
                 setNewPrioridade={setNewPrioridade}
                 setNewJulgador={setNewJulgador}
-                newAno={newAno}
                 newAssunto={newAssunto}
                 newData={newData}
                 newDataDecisao={newDataDecisao}

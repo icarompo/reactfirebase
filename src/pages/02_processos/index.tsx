@@ -9,7 +9,6 @@ import Navigation from "../../components/navigation/Navigation.tsx";
 import { format } from "date-fns";
 import GlobalContext from "../../context/globalContext.ts";
 import { useContext } from 'react';
-import { Global } from "@emotion/react";
 
 const theme = createTheme(
   {

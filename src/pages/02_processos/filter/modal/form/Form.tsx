@@ -1,7 +1,6 @@
 import "./modal.styles.css";
 
 type ProcessFormProps = {
-  setNewAno: (value: string) => void;
   setNewAssunto: (value: string) => void;
   setNewData: (value: string) => void;
   setNewDataDecisao: (value: string) => void;
@@ -17,7 +16,6 @@ type ProcessFormProps = {
   setNewPrioridade: (value: string) => void;
   setNewJulgador: (value: string) => void;
   //aguardando
-  newAno: string;
   newAssunto: string;
   newData: string;
   newDataDecisao: string;
@@ -39,21 +37,6 @@ function ProcessForm(props: ProcessFormProps) {
   return (
     <>
       {/*ANO*/}
-
-      <select
-        className="input-form"
-        value={props.newAno}
-        onChange={(event) => {
-          props.setNewAno(event.target.value);
-        }}
-      >
-        <option value=""></option>
-        {Array.from({ length: 41 }, (_, index) => 1990 + index).map((ano) => (
-          <option key={ano} value={ano}>
-            {ano}
-          </option>
-        ))}
-      </select>
 
       <input
         onChange={(event) => {
