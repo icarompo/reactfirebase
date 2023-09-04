@@ -1,7 +1,5 @@
-import { FormEvent, useState, useContext } from 'react';
-import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence, inMemoryPersistence } from 'firebase/auth';
-import userContext, { fetchUserData } from '../../context/userContext.ts';
-import dataContext, { fetchProcData } from '../../context/globalContext.ts';
+import { FormEvent, useState } from 'react';
+import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
 import './styles.css';
 interface LoginProps {
   onLogIn: () => void;
@@ -10,7 +8,6 @@ interface LoginProps {
 const Login = ({ onLogIn }: LoginProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setData } = useContext(dataContext);
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!(email.trim() === '' || password.trim() === '')) {
@@ -20,7 +17,6 @@ const Login = ({ onLogIn }: LoginProps) => {
         await signInWithEmailAndPassword(auth, email, password);
         onLogIn();
         try {
-        fetchProcData(setData);
         } catch (error) {
           console.log(error);
         }

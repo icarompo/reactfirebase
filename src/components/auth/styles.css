@@ -9,17 +9,10 @@ body {
 
 #root {
   --blue: #2d3e9e;
-  width: auto;
 }
 
 .app {
     display: flex;
-}
-
-.main-content {
-    display: flex;
-    flex-direction: column;
-    width: 80vh;
 }
 
 .login-form {

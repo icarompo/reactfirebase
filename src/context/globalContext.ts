@@ -16,6 +16,7 @@ export const fetchUserData = async () => {
         email: doc.data().email,
         tipo: doc.data().tipo,
       };
+      console.log("user data fetched");
       return userData;
     });
   } catch (error) {
@@ -33,8 +34,8 @@ export const fetchProcData = async () => {
       const { id, ...rest } = doc.data() as procType;
       fetchedData.push({ id: doc.id, ...rest });
     });
+    console.log("process data fetched");
     return fetchedData;
-    console.log("data fetched");
   } catch (error) {
     console.log(error);
   }
