@@ -1,5 +1,17 @@
 import { FormEvent, useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../../../@/components/ui/alert-dialog"
+
 import './styles.css';
 interface LoginProps {
   onLogIn: () => void;
@@ -16,10 +28,6 @@ const Login = ({ onLogIn }: LoginProps) => {
         await setPersistence(auth, browserSessionPersistence);
         await signInWithEmailAndPassword(auth, email, password);
         onLogIn();
-        try {
-        } catch (error) {
-          console.log(error);
-        }
       } catch (error) {
         console.log(error);
         alert('Email ou senha incorretos');
@@ -48,9 +56,22 @@ const Login = ({ onLogIn }: LoginProps) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className='login-button' type='submit'>
+        <AlertDialog>
+        <AlertDialogTrigger>
+         <button className='login-button' type='submit'> 
           Login
-        </button>
+         </button> 
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+        <AlertDialogHeader>
+        <AlertDialogTitle>Alert title</AlertDialogTitle>
+        <AlertDialogDescription>Sucesso ao logar</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogAction>Continuar</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+        </AlertDialog>
       </form>
     </div>
   );
