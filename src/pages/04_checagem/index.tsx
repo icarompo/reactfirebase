@@ -11,7 +11,7 @@ function Check({ onLogOut } : CheckProps): JSX.Element {
         <div className="app">
         <Navigation />
         <div className="main-content">
-          <Header subtitle="Página de Checagem" onLogOut={onLogOut}/>
+          <Header pageName="Página de Checagem" onLogOut={onLogOut}/>
             </div>
         </div>
         </>

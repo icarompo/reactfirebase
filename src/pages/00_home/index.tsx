@@ -18,7 +18,7 @@ function Home({ onLogOut }: HomeProps): JSX.Element {
       <div className="app">
         <Navigation />
         <div className="main-content">
-          <Header subtitle="Página Principal" onLogOut={onLogOut} />
+          <Header pageName="Página Principal" onLogOut={onLogOut} />
       <Page />
         </div>
       </div>

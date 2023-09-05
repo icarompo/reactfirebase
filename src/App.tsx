@@ -12,10 +12,12 @@ import Processes from "./pages/02_processos/index";
 import Painel from "./pages/03_painel/index";
 import Check from "./pages/04_checagem/index";
 import Login from "./components/auth/Login";
-import GlobalContext, { fetchUserData, fetchProcData } from "./context/globalContext";
+import GlobalContext from "./context/globalContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "./api/firebase-config";
+import { fetchUserData, fetchProcData } from "./utils/fetchedData";
+import CustomizedSnackbars from "./components/snackbar";
 
 export type userType = {
   id: string;
@@ -63,6 +65,7 @@ export const App = () => {
   };  
 
   return (
+    <>
     <GlobalContext.Provider
       value={{
         user: user,
@@ -133,6 +136,7 @@ export const App = () => {
           <LoginListener setUser={setUser} setIsAuthenticated={setIsAuthenticated}/>
         </Router>
     </GlobalContext.Provider>
+    </>
   );
 };
 function LoginListener(props: { 

@@ -234,7 +234,7 @@ function Painel(props: PainelProps) {
       <div className="app">
         <Navigation />
         <div className="main-content">
-          <Header subtitle="Painel" onLogOut={props.onLogOut} />
+          <Header pageName="Painel" onLogOut={props.onLogOut} />
           <Page />
         </div>
       </div>

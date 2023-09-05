@@ -137,7 +137,7 @@ function Processes(props: ProcessesProps) {
       <div className="app">
         <Navigation />
         <div className="main-content">
-          <Header subtitle="Dados de Processos" onLogOut={props.onLogOut} />
+          <Header pageName="Dados de Processos" onLogOut={props.onLogOut} />
           <TableFilter onSelectChange={handleSelectChange} onFilterChange={handleFilterChange}/>
           <Page definitionValue={definitionValue} filterValue={filterValue}/>
         </div>

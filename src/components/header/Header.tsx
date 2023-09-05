@@ -4,17 +4,15 @@ import { signOut, getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom'; 
 import GlobalContext from "../../context/globalContext";
 interface HeaderProps {
-    subtitle: string;
-    onLogOut: () => void;
+    pageName: string;
   }
   
-  function Header({ subtitle, onLogOut }: HeaderProps): JSX.Element {
+  function Header(props: HeaderProps): JSX.Element {
     const data = useContext(GlobalContext);
     const auth = getAuth();
     const navigate = useNavigate();
     const logOut = () => {
       signOut(auth).then(() => {
-        onLogOut();
         console.log('Deslogado');
         navigate('/login');
       }).catch((error) => {
@@ -27,7 +25,7 @@ interface HeaderProps {
         <div className="header">
 
           <div className="text-container">
-            <h3 className='header-h3'>{subtitle}</h3>
+            <h3 className='header-h3'>{props.pageName}</h3>
           </div>
           <div className="header-buttons">
             <span className="user">Bem vindo {data?.user?.nome}</span>
