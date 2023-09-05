@@ -18,6 +18,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "./api/firebase-config";
 import { fetchUserData, fetchProcData } from "./utils/fetchedData";
 import CustomizedSnackbars from "./components/snackbar";
+import Layout from "./components/layout";
 
 export type userType = {
   id: string;
@@ -48,11 +49,12 @@ export type procType = {
 export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null as any);
-
+  const [showLoginSuccessAlert, setShowLoginSuccessAlert] = useState(false);
   const [procData, setProcData] = useState(null as any);
   const [usersData, setUsersData] = useState(null as any);
 
   const handleLoginSucess = async () => {
+    setShowLoginSuccessAlert(true);
     setIsAuthenticated(true);
     const usersData = await fetchUserData();
     const procData = await fetchProcData();
@@ -66,6 +68,9 @@ export const App = () => {
 
   return (
     <>
+     {showLoginSuccessAlert && (
+      <CustomizedSnackbars severity="success" message="Login bem-sucedido!" />
+    )}
     <GlobalContext.Provider
       value={{
         user: user,
@@ -85,7 +90,9 @@ export const App = () => {
               path="/"
               element={
                 isAuthenticated ? (
-                  <Home onLogOut={handleLogout} />
+                  <Layout pageName="Home" onLogOut={handleLogout}>
+                  <Home />
+                  </Layout>
                 ) : (
                   <Navigate to="/login" />
                 )
@@ -95,7 +102,9 @@ export const App = () => {
               path="/pessoal"
               element={
                 isAuthenticated ? (
-                  <Personal onLogOut={handleLogout} />
+                  <Layout pageName="Pessoal" onLogOut={handleLogout}>
+                  <Personal />
+                  </Layout>
                 ) : (
                   <Navigate to="/login" />
                 )
@@ -105,7 +114,9 @@ export const App = () => {
               path="/painel"
               element={
                 isAuthenticated ? (
-                  <Dashboard onLogOut={handleLogout} />
+                  <Layout pageName="Painel" onLogOut={handleLogout}>
+                  <Dashboard />
+                  </Layout>
                 ) : (
                   <Navigate to="/login" />
                 )
@@ -115,7 +126,9 @@ export const App = () => {
               path="/processos"
               element={
                 isAuthenticated ? (
-                  <Processes onLogOut={handleLogout} />
+                  <Layout pageName="Processos" onLogOut={handleLogout}>
+                  <Processes />
+                  </Layout>
                 ) : (
                   <Navigate to="/login" />
                 )
@@ -125,7 +138,9 @@ export const App = () => {
               path="/checagem"
               element={
                 isAuthenticated ? (
-                  <Check onLogOut={handleLogout} />
+                  <Layout pageName="Checagem" onLogOut={handleLogout}>
+                  <Check />
+                  </Layout>
                 ) : (
                   <Navigate to="/login" />
                 )

@@ -4,6 +4,7 @@ import Header from "../header/Header";
 type LayoutProps = {
   children: React.ReactNode;
   pageName: string;
+  onLogOut?: () => void;
 };
 
 const Layout = (props: LayoutProps) => {
