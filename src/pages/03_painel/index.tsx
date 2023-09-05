@@ -1,21 +1,17 @@
-import Header from "../../components/header/Header.tsx";
 import PieChart from "./piechart/PieChart.tsx";
 import { useEffect, useState, useContext } from "react";
 import { db } from "../../api/firebase-config.ts";
 import { collection, getDocs } from "firebase/firestore";
 import Card from "../../components/card/index.tsx";
 import SelectLocation from "../../components/select/Select.tsx";
-import Navigation from "../../components/navigation/Navigation.tsx";
 import { procType, userType } from "../../App.tsx";
 import GlobalContext from "../../context/globalContext.ts";
 import "./styles.css";
 
-function Page() {
+function Dashboard() {
 
   const data = useContext(GlobalContext);
   const [definicao, setDefinicao] = useState<string>("relatoria");
-  const [ano, setAno] = useState<string>("*");
-
   const [user, setUser] = useState<Array<userType>>([]);
 
   useEffect(() => {
@@ -88,10 +84,6 @@ function Page() {
     const meta = filteredData.filter((Processo) => Processo.meta === "sim").length;
     const prioridade = filteredData.filter((Processo) => Number(Processo.prioridade) === 1).length;
     const vinculado = filteredData.filter((Processo) => Processo.vinculado === "PRINCIPAL" || Processo.vinculado === "principal").length;
-    
-  const handleAnoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setAno(event.target.value);
-  };
 
   const verificaPrioridade = (quantidade: number) => {
     if (quantidade > 3 && quantidade <= 6) {
@@ -125,21 +117,6 @@ function Page() {
 
       <div className="filter-container">
               <SelectLocation onSelectChange={handleSelectChange} />
-              <select
-                className="ano"
-                onChange={handleAnoChange}
-                defaultValue={"*"}
-              >
-                <option value="*"> Anos </option>
-                {Array.from({ length: 41 }, (_, index) => 1990 + index).map(
-                  (ano) => (
-                    <option key={ano} value={ano}>
-                      
-                      {ano}
-                    </option>
-                  )
-                )}
-              </select>
             </div>
 
             <div className="cards">
@@ -224,22 +201,4 @@ function Page() {
   );
 }
 
-interface PainelProps {
-  onLogOut: () => void;
-}
-
-function Painel(props: PainelProps) {
-  return (
-    <>
-      <div className="app">
-        <Navigation />
-        <div className="main-content">
-          <Header pageName="Painel" onLogOut={props.onLogOut} />
-          <Page />
-        </div>
-      </div>
-    </>
-  );
-}
-
-export default Painel;
+export default Dashboard;

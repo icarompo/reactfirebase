@@ -1,19 +1,6 @@
-import Header from "../../components/header/Header.tsx"; 
-import Navigation from "../../components/navigation/Navigation.tsx"; 
-
-interface CheckProps {
-    onLogOut: () => void;
-}
-
-function Check({ onLogOut } : CheckProps): JSX.Element {
+function Check() {
     return (
         <>      
-        <div className="app">
-        <Navigation />
-        <div className="main-content">
-          <Header pageName="Página de Checagem" onLogOut={onLogOut}/>
-            </div>
-        </div>
         </>
     );
 }

@@ -9,7 +9,7 @@ import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import Home from "./pages/00_home/index";
 import Personal from "./pages/01_pessoal/index";
 import Processes from "./pages/02_processos/index";
-import Painel from "./pages/03_painel/index";
+import Dashboard from "./pages/03_painel/index";
 import Check from "./pages/04_checagem/index";
 import Login from "./components/auth/Login";
 import GlobalContext from "./context/globalContext";
@@ -105,7 +105,7 @@ export const App = () => {
               path="/painel"
               element={
                 isAuthenticated ? (
-                  <Painel onLogOut={handleLogout} />
+                  <Dashboard onLogOut={handleLogout} />
                 ) : (
                   <Navigate to="/login" />
                 )
