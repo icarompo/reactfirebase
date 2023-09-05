@@ -60,6 +60,7 @@ export const App = () => {
     const procData = await fetchProcData();
     setUsersData(usersData);
     setProcData(procData);
+    console.log('login success')
   };
 
   const handleLogout = () => {

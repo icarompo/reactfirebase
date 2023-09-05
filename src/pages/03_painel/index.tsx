@@ -79,7 +79,6 @@ function Dashboard() {
     setDefinicao(value);
   };
 
-  
     let filteredData = filteredValues(definicao);
     const meta = filteredData.filter((Processo) => Processo.meta === "sim").length;
     const prioridade = filteredData.filter((Processo) => Number(Processo.prioridade) === 1).length;
