@@ -5,13 +5,9 @@ interface CardProps {
   value: number;
   text: string;
   id: string;
-  onClick: (tipo: string) => void;
 }
 
 function Card(props: CardProps) {
-  const handleClick = () => {
-    props.onClick("");
-  };
 
   const verificaCorCorpo = (id: string) => {
     if (id === "card-header-high-priority") {
@@ -25,7 +21,7 @@ function Card(props: CardProps) {
   };
 
   return (
-    <div className="card" onClick={handleClick}>
+    <div className="card">
       <div className="card-header" id={props.id}>
         <h3 className="name-title">{props.name}</h3>
       </div>

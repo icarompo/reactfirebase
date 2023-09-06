@@ -1,0 +1,257 @@
+.filter-button {
+  border: none;
+  margin-left: 1rem;
+  background: none;
+  color: black;
+  width: 20px;
+}
+
+.filter-button:hover {
+  cursor: pointer;
+  color: #d8d8d8;
+}
+
+.addProcessButton {
+  width: auto;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding-right: 10px;
+  margin-left: 10px;
+}
+
+.addProcessButton:hover {
+  cursor: pointer;
+  background-color: #009900;
+}
+
+#addProcessFormButton {
+  margin-top: 1rem;
+  margin-right: auto;
+  display: flex;
+  background-color: #00cc00;
+  border: none;
+  color: white;
+}
+#addProcessFormButton:hover {
+  cursor: pointer;
+  background-color: #009900;
+  color: white;
+}
+
+.form {
+  display: flex;
+  width: 100%;
+  margin: 2rem;
+  color: black;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.columns {
+  display: flex;
+  margin-right: 1rem;
+}
+
+.column1 {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+.column2 {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.label {
+  margin-right: 1rem;
+  width: auto;
+  height: 1.5rem;
+  margin-top: 0.1rem;
+}
+
+.input-form {
+  display: flex;
+  border: none;
+  height: 1.5rem;
+  margin-top: 0.1rem;
+  align-items: center;
+  color: black;
+  border: 0.1px solid black;
+}
+
+.formRowProc {
+  width: 50%;
+  text-align: center;
+  height: 25px;
+  margin-top: 1px;
+}
+
+.modal {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+  background-color: #eceef2;
+  color: black;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  text-align: center;
+  align-items: center;
+}
+
+.closeModalButton {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  color: black;
+  background: white;
+  font-weight: bold;
+  border: none;
+  width: 2.7rem;
+  height: 2.3rem;
+  padding: 0.6rem;
+  margin: 0.3rem;
+  cursor: pointer;
+}
+
+.closeModalButton:hover {
+  background-color: red;
+  color: white;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  border-radius: 5px 5px 0px 0px;
+  background: white;
+  width: 100%;
+  height: 3rem;
+}
+
+.modal-title {
+  align-items: center;
+  text-align: center;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  color: #000;
+  margin: 1px;
+  padding: 5px;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: #dddddd;
+}
+
+.addbutton {
+  height: 25px;
+  width: 23px;
+  border: none;
+  background-color: white;
+  border-radius: 3px;
+  margin: 1px;
+}
+.addbutton:hover {
+  cursor: pointer;
+  background-color: #dddddd;
+}
+
+.select-form {
+  flex: 0;
+  border: none;
+  text-align: center;
+  height: 2rem;
+  margin-top: 1px;
+  border-radius: 0; /* Removendo o border-radius */
+}
+
+.select-form option {
+  text-align: left; /* Alinha o texto à direita */
+  width: 50px; /* Largura fixa para os itens do select */
+}
+
+#proc-list {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
+  max-width: 293px;
+  margin: auto;
+  margin-top: 10px;
+}
+
+#editProcessFormButton {
+  margin-top: 1rem;
+  margin-right: auto;
+  display: flex;
+  background-color: #2067eb;
+  border: none;
+  color: white;
+}
+
+#editProcessFormButton:hover {
+  cursor: pointer;
+  background-color: #0047b3;
+  color: white;
+}
+
+.proc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  background-color: #0ba044;
+  width: 71px; /* Largura fixa de 71px */
+  height: 17px;
+  margin: 1px;
+  padding-left: 5px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.remove-button {
+  border: none;
+  color: white;
+  background-color: #b91010;
+  width: 16px;
+  margin-left: 5px;
+}
+
+.remove-button:hover {
+  cursor: pointer;
+}
+
+#remove-all-button {
+  border: none;
+  color: white;
+  background-color: #b91010;
+  width: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#remove-all-button:hover {
+  cursor: pointer;
+}
