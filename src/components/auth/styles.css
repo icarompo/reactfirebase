@@ -3,13 +3,7 @@
 body {
     font-family: "IBM Plex Serif", serif;
     font-size: 0.9rem;
-    margin: 0;
-    padding: 0;
     background-color: #f4f4fc;
-}
-
-#root {
-  --blue: #2d3e9e;
 }
 
 .login-form {
