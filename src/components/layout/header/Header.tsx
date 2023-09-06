@@ -2,7 +2,7 @@ import './styles.css';
 import { useContext } from 'react';
 import { signOut, getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom'; 
-import GlobalContext from "../../context/globalContext";
+import GlobalContext from "../../../context/globalContext";
 interface HeaderProps {
     pageName: string;
   }
