@@ -15,19 +15,19 @@ type NavigationProps = {
 
 function Navigation (props: NavigationProps): JSX.Element {
   const [showText, setShowText] = useState(true);
-  const [navigationWidth, setNavigationWidth] = useState("15%");
+  const [navigationWidth, setNavigationWidth] = useState("16%");
   const navigationItems = [
-    { to: "/", icon: <HomeIcon className="navigation-icon" />, label: "Home" },
-    { to: "/pessoal", icon: <PersonIcon className="navigation-icon" />, label: "Pessoal" },
+    { to: "/", icon: <HomeIcon className="navigation-icon" />, label: "Página Inicial" },
+    { to: "/pessoal", icon: <PersonIcon className="navigation-icon" />, label: "Página Pessoal" },
     { to: "/processos", icon: <TableRowsIcon className="navigation-icon" />, label: "Processos" },
     { to: "/painel", icon: <DashboardIcon className="navigation-icon" />, label: "Painel" },
-    { to: "/checagem", icon: <LibraryAddCheckIcon className="navigation-icon" />, label: "Checagem" },
+    { to: "/checagem", icon: <LibraryAddCheckIcon className="navigation-icon" />, label: "Tela de Checagem" },
   ];
 
   const toggleText = () => {
     setShowText(!showText);
     props.onToggleText;
-    setNavigationWidth(showText ? "3rem" : "15%"); 
+    setNavigationWidth(showText ? "3rem" : "16%"); 
   };
 
   return (
@@ -40,10 +40,7 @@ function Navigation (props: NavigationProps): JSX.Element {
         />
         <div className="menu-header-text">
           {showText && (
-            <>
-              <h3>Controle</h3>
-              <h3>E-Contas</h3>
-            </>
+              <h3>Controle E-Contas</h3>
           )}
         </div>
       </div>

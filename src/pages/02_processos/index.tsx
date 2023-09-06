@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ptBR } from "@mui/x-data-grid";
 import TableFilter from "./filter/filter.tsx";
-import Header from "../../components/layout/header/Header.tsx";
+import Header from "../../components/layout/header/index.tsx";
 import "./styles.css";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import Navigation from "../../components/layout/navigation/index.tsx";

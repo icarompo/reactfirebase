@@ -92,7 +92,7 @@ export const App = () => {
               path="/"
               element={
                 isAuthenticated ? (
-                  <Layout pageName="Home" onLogOut={handleLogout}>
+                  <Layout pageName="Página Inicial" onLogOut={handleLogout}>
                   <Home />
                   </Layout>
                 ) : (
@@ -112,24 +112,24 @@ export const App = () => {
                 )
               }
             />
+              <Route
+                path="/processos"
+                element={
+                  isAuthenticated ? (
+                    <Layout pageName="Processos" onLogOut={handleLogout}>
+                    <Processes />
+                    </Layout>
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
             <Route
               path="/painel"
               element={
                 isAuthenticated ? (
                   <Layout pageName="Painel" onLogOut={handleLogout}>
                   <Dashboard />
-                  </Layout>
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/processos"
-              element={
-                isAuthenticated ? (
-                  <Layout pageName="Processos" onLogOut={handleLogout}>
-                  <Processes />
                   </Layout>
                 ) : (
                   <Navigate to="/login" />

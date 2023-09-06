@@ -1,5 +1,5 @@
 import Navigation from "./navigation/index.tsx";
-import Header from "./header/Header.tsx";
+import Header from "./header/index.tsx";
 import { useState } from "react";
 import "./styles.css";
 
@@ -20,9 +20,7 @@ const Layout = (props: LayoutProps) => {
     <div className="app">
         <Navigation onToggleText={handleToggleText} />
       <div className="app-content">
-        <div className="app-header">
           <Header pageName={props.pageName} />
-        </div>
         {props.children}
       </div>
     </div>
