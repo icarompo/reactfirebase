@@ -1,5 +1,6 @@
-import Navigation from "../navigation/Navigation";
+import Navigation from "../navigation/index.tsx";
 import Header from "../header/Header";
+import { useState } from "react";
 import "./styles.css";
 
 type LayoutProps = {
@@ -9,19 +10,23 @@ type LayoutProps = {
 };
 
 const Layout = (props: LayoutProps) => {
+  const [showText, setShowText] = useState(true);
+
+  const handleToggleText = () => {
+    setShowText(!showText);
+  };
+
   return (
-<div className="app">
-  <div className="app_navigation">
-    <Navigation />
-  </div>
-  <div className="app-content">
-    <div className="app-header">
-      <Header pageName={props.pageName} />
+    <div className="app">
+        <Navigation onToggleText={handleToggleText} />
+      <div className="app-content">
+        <div className="app-header">
+          <Header pageName={props.pageName} />
+        </div>
+        {props.children}
+      </div>
     </div>
-    {props.children}
-  </div>
-</div>
-  )
+  );
 };
 
 export default Layout;

@@ -1,29 +1,27 @@
 .navigation-icon {
   color: white;
-  align-items: center;
-  justify-content: center;
 }
 
 .navigation {
-  transition: 0s ease;
+  transition: width 0.3s ease; /* Adicione a transição aqui */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   background: #2d3e9e;
   color: white;
   height: 100%;
-  width: 10%;
+  width: 100%;
 }
 
 .navigation.collapsed {
-  width: 99%;
+  width: 3rem; /* Ajuste o tamanho conforme necessário */
 }
 
 .menu-header {
   background-color: #2d3e9e;
   border-bottom: 1px solid #4b59a6;
   display: flex;
-  align-items: center; /* Centralizar verticalmente */
+  align-items: center;
   padding: 7%;
   width: 100%;
   height: 10%;
@@ -32,7 +30,7 @@
 
 .menu-header-text h3 {
   margin-left: 1rem;
-  padding: 0rem; /* Ajuste o valor conforme necessário */
+  padding: 0rem;
 }
 
 .menu-links {
@@ -43,7 +41,7 @@
   margin-top: 2rem;
   font-size: 20px;
   width: 100%;
-  height: 85%;
+  height: calc(85% - 50px); /* Ajuste a altura de acordo com a altura do rodapé */
 }
 
 .link {
@@ -74,7 +72,7 @@
 .menu-footer {
   border-top: 1px solid #4b59a6;
   width: 100%;
-  height: 5%;
+  height: 50px; /* Altura fixa para o rodapé */
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;

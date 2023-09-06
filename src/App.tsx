@@ -5,19 +5,19 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
-import Home from "./pages/00_home/index";
-import Personal from "./pages/01_pessoal/index";
+import { fetchUserData, fetchProcData } from "./utils/fetchedData";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import CustomizedSnackbars from "./components/snackbar";
+import GlobalContext from "./context/globalContext";
 import Processes from "./pages/02_processos/index";
 import Dashboard from "./pages/03_painel/index";
+import Personal from "./pages/01_pessoal/index";
 import Check from "./pages/04_checagem/index";
 import Login from "./components/auth/Login";
-import GlobalContext from "./context/globalContext";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "./api/firebase-config";
-import { fetchUserData, fetchProcData } from "./utils/fetchedData";
-import CustomizedSnackbars from "./components/snackbar";
+import Home from "./pages/00_home/index";
 import Layout from "./components/layout";
 
 export type userType = {

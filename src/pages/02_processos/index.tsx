@@ -5,7 +5,7 @@ import TableFilter from "./filter/filter.tsx";
 import Header from "../../components/header/Header.tsx";
 import "./styles.css";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
-import Navigation from "../../components/navigation/Navigation.tsx";
+import Navigation from "../../components/navigation/index.tsx";
 import { format } from "date-fns";
 import GlobalContext from "../../context/globalContext.ts";
 import { useContext } from "react";
