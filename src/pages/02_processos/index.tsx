@@ -1,14 +1,12 @@
+import "./styles.css";
 import { useState } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { format } from "date-fns";
+import { useContext } from "react";
 import { ptBR } from "@mui/x-data-grid";
 import TableFilter from "./filter/filter.tsx";
-import Header from "../../components/layout/header/index.tsx";
-import "./styles.css";
-import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
-import Navigation from "../../components/layout/navigation/index.tsx";
-import { format } from "date-fns";
 import GlobalContext from "../../context/globalContext.ts";
-import { useContext } from "react";
+import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme(
   {

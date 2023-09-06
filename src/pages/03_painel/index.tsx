@@ -1,12 +1,12 @@
-import PieChart from "./piechart/PieChart.tsx";
-import { useEffect, useState, useContext } from "react";
-import { db } from "../../api/firebase-config.ts";
-import { collection, getDocs } from "firebase/firestore";
-import Card from "../../components/card/index.tsx";
-import SelectLocation from "../../components/select/Select.tsx";
-import { procType, userType } from "../../App.tsx";
-import GlobalContext from "../../context/globalContext.ts";
 import "./styles.css";
+import PieChart from "./piechart/PieChart.tsx";
+import { db } from "../../api/firebase-config.ts";
+import Card from "../../components/card/index.tsx";
+import { procType, userType } from "../../App.tsx";
+import { useEffect, useState, useContext } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import GlobalContext from "../../context/globalContext.ts";
+import SelectLocation from "../../components/select/Select.tsx";
 
 function Dashboard() {
 
@@ -113,7 +113,6 @@ function Dashboard() {
   return (
     <>
       <div className="painel-container">
-
       <div className="filter-container">
               <SelectLocation onSelectChange={handleSelectChange} />
             </div>
