@@ -112,7 +112,14 @@ function Dashboard() {
 
   return (
     <>
+
               <SelectLocation onSelectChange={handleSelectChange} />
+
+      <div className="painel-container">
+      <div className="filter-container">
+              <SelectLocation onSelectChange={handleSelectChange} />
+            </div>
+
             <div className="cards">
             <Card
               name="Processos"
@@ -190,6 +197,7 @@ function Dashboard() {
           <div className="column" id="result-container">
           </div>
         </div>
+      </div>
     </>
   );
 }

@@ -66,6 +66,8 @@ function Processes() {
 
   return (
     <>
+      <div className="proc-container">
+
         <TableFilter
           onSelectChange={handleSelectChange}
           onFilterChange={handleFilterChange}
@@ -118,6 +120,9 @@ function Processes() {
             disableRowSelectionOnClick
           />
         </ThemeProvider>
+
+      </div>
+
     </>
   );
 }
