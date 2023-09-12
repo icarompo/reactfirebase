@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
+import CustomizedSnackbars from '../snackbar';
 import './styles.css';
 interface LoginProps {
   onLogIn: () => void;
@@ -8,6 +9,7 @@ interface LoginProps {
 const Login = ({ onLogIn }: LoginProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null); 
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!(email.trim() === '' || password.trim() === '')) {
@@ -16,16 +18,12 @@ const Login = ({ onLogIn }: LoginProps) => {
         await setPersistence(auth, browserSessionPersistence);
         await signInWithEmailAndPassword(auth, email, password);
         onLogIn();
-        try {
-        } catch (error) {
-          console.log(error);
-        }
       } catch (error) {
         console.log(error);
-        alert('Email ou senha incorretos');
+        setError('Email ou senha incorretos');
       }
     } else {
-      alert('Preencha todos os campos');
+      setError('Preencha todos os campos');
     }
   };
 
@@ -52,6 +50,7 @@ const Login = ({ onLogIn }: LoginProps) => {
           Login
         </button>
       </form>
+      {error && <CustomizedSnackbars message={error} severity='error' />}
     </div>
   );
 };

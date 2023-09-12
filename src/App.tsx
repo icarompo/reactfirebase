@@ -5,17 +5,21 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
-import { useState, useEffect, SetStateAction, Dispatch } from "react";
+import Layout from "./components/layout";
 import Home from "./pages/00_home/index";
-import Personal from "./pages/01_pessoal/index";
-import Processes from "./pages/02_processos/index";
-import Painel from "./pages/03_painel/index";
-import Check from "./pages/04_checagem/index";
-import Login from "./components/auth/Login";
-import GlobalContext, { fetchUserData, fetchProcData } from "./context/globalContext";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "./api/firebase-config";
+import Login from "./components/auth/Login";
+import Check from "./pages/04_checagem/index";
+import Personal from "./pages/01_pessoal/index";
+import Dashboard from "./pages/03_painel/index";
+import Processes from "./pages/02_processos/index";
+import GlobalContext from "./context/globalContext";
+import CustomizedSnackbars from "./components/snackbar";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { fetchUserData, fetchProcData } from "./utils/fetchedData";
+import { useState, useEffect, SetStateAction, Dispatch } from "react";
+import { collection, query, where, getDocs } from "firebase/firestore";
+
 
 export type userType = {
   id: string;
@@ -46,16 +50,18 @@ export type procType = {
 export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null as any);
-
+  const [showLoginSuccessAlert, setShowLoginSuccessAlert] = useState(false);
   const [procData, setProcData] = useState(null as any);
   const [usersData, setUsersData] = useState(null as any);
 
   const handleLoginSucess = async () => {
+    setShowLoginSuccessAlert(true);
     setIsAuthenticated(true);
     const usersData = await fetchUserData();
     const procData = await fetchProcData();
     setUsersData(usersData);
     setProcData(procData);
+    console.log('login success')
   };
 
   const handleLogout = () => {
@@ -63,6 +69,10 @@ export const App = () => {
   };  
 
   return (
+    <>
+     {showLoginSuccessAlert && (
+      <CustomizedSnackbars severity="success" message="Login bem-sucedido!" />
+    )}
     <GlobalContext.Provider
       value={{
         user: user,
@@ -82,7 +92,9 @@ export const App = () => {
               path="/"
               element={
                 isAuthenticated ? (
-                  <Home onLogOut={handleLogout} />
+                  <Layout pageName="Página Inicial" onLogOut={handleLogout}>
+                  <Home />
+                  </Layout>
                 ) : (
                   <Navigate to="/login" />
                 )
@@ -92,27 +104,33 @@ export const App = () => {
               path="/pessoal"
               element={
                 isAuthenticated ? (
-                  <Personal onLogOut={handleLogout} />
+                  <Layout pageName="Pessoal" onLogOut={handleLogout}>
+                  <Personal />
+                  </Layout>
                 ) : (
                   <Navigate to="/login" />
                 )
               }
             />
+              <Route
+                path="/processos"
+                element={
+                  isAuthenticated ? (
+                    <Layout pageName="Processos" onLogOut={handleLogout}>
+                    <Processes />
+                    </Layout>
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
             <Route
               path="/painel"
               element={
                 isAuthenticated ? (
-                  <Painel onLogOut={handleLogout} />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/processos"
-              element={
-                isAuthenticated ? (
-                  <Processes onLogOut={handleLogout} />
+                  <Layout pageName="Painel" onLogOut={handleLogout}>
+                  <Dashboard />
+                  </Layout>
                 ) : (
                   <Navigate to="/login" />
                 )
@@ -122,7 +140,9 @@ export const App = () => {
               path="/checagem"
               element={
                 isAuthenticated ? (
-                  <Check onLogOut={handleLogout} />
+                  <Layout pageName="Checagem" onLogOut={handleLogout}>
+                  <Check />
+                  </Layout>
                 ) : (
                   <Navigate to="/login" />
                 )
@@ -133,6 +153,7 @@ export const App = () => {
           <LoginListener setUser={setUser} setIsAuthenticated={setIsAuthenticated}/>
         </Router>
     </GlobalContext.Provider>
+    </>
   );
 };
 function LoginListener(props: { 

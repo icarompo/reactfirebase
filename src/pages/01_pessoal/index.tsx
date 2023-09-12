@@ -1,17 +1,15 @@
 import { useState, useContext } from "react";
-import Header from "../../components/header/Header.tsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ptBR } from "@mui/x-data-grid";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import { GridSortModel } from "@mui/x-data-grid";
-import Navigation from "../../components/navigation/Navigation.tsx";
 import { format } from "date-fns";
 import "./styles.css";
 import { procType } from "../../App.tsx";
 import SelectLocation from "../../components/select/Select.tsx";
 import GlobalContext from "../../context/globalContext.ts";
 
-function Page() {
+function Personal() {
   const theme = createTheme(
     {
       palette: {
@@ -109,24 +107,6 @@ function Page() {
               onSortModelChange={handleSortModelChange}
             />
           </ThemeProvider>
-        </div>
-      </div>
-    </>
-  );
-}
-
-interface PersonalProps {
-  onLogOut: () => void;
-}
-
-function Personal({ onLogOut }: PersonalProps) {
-  return (
-    <>
-      <div className="app">
-        <Navigation />
-        <div className="main-content">
-          <Header subtitle="Página Pessoal" onLogOut={onLogOut} />
-          <Page />
         </div>
       </div>
     </>

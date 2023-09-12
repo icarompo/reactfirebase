@@ -8,7 +8,7 @@
 
 .input-section {
   width: 90%;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .search {
@@ -17,8 +17,8 @@
   padding: 0rem 1rem 0rem 1rem;
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .input {
@@ -40,8 +40,8 @@
 .order {
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 60%;
   height: 100%;
   padding: 0rem 1rem 0rem 1rem;
@@ -50,8 +50,8 @@
 .section {
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 40%;
   height: 100%;
   padding-right: 1rem;
@@ -64,7 +64,7 @@
 .input {
   display: flex;
   flex-direction: row;
-  align-items: start;
+  align-items: flex-start;
   column-gap: 0.5rem;
 }
 
@@ -78,9 +78,8 @@
   width: auto;
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: start;
-
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .input {
@@ -122,14 +121,14 @@
   display: flex;
   flex-direction: column;
   padding-left: 1rem;
-  align-items: start;
+  align-items: flex-start;
   background: white;
 }
 
 .button-field {
   display: inline-flex;
-  align-items: end;
-  justify-content: end;
+  align-items: flex-end;
+  justify-content: flex-end;
   width: 100%;
   height: 100%;
 }

@@ -124,7 +124,6 @@ function EditProcessModal({
         procDiv.appendChild(div);
       });
     }
-    console.log(procList);
   }, [procList]);
   
   const removeProcess = (id: String) => {
