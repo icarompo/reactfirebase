@@ -56,7 +56,6 @@ function Personal() {
 
   return (
     <>
-      <div className="personal-container">
           <SelectLocation onSelectChange={handleSelectChange}/>      
           <div className="datagrid">
           <ThemeProvider theme={theme}>
@@ -108,7 +107,6 @@ function Personal() {
             />
           </ThemeProvider>
         </div>
-      </div>
     </>
   );
 }
