@@ -12,6 +12,11 @@
     flex-direction: column;
 }
 
+.app-content-body {
+    padding: 1rem;
+}
+
 .app-navigation.collapsed {
     width: 3rem /* Ajuste o tamanho conforme necessário */
   }
+

@@ -66,63 +66,66 @@ function Processes() {
 
   return (
     <>
-      <div className="proc-container">
-
-        <TableFilter
-          onSelectChange={handleSelectChange}
-          onFilterChange={handleFilterChange}
+      <TableFilter
+        onSelectChange={handleSelectChange}
+        onFilterChange={handleFilterChange}
+      />
+      <ThemeProvider theme={theme}>
+        <StripedDataGrid
+          sx={{
+            backgroundColor: "#fff",
+            color: "#000",
+          }}
+          rows={filteredValues(definitionValue)}
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+          }
+          columns={[
+            { field: "processo", headerName: "Processo", width: 75 },
+            { field: "assunto", headerName: "Assunto", width: 300 },
+            { field: "assessor", headerName: "Assessor", width: 75 },
+            {
+              field: "data",
+              headerName: "Data de inserção",
+              width: 125,
+              valueGetter: (params) => {
+                const timestamp = params.row.data;
+                const date = new Date(timestamp.seconds * 1000);
+                return format(date, "dd/MM/yyyy");
+              },
+            },
+            {
+              field: "dataDecisao",
+              headerName: "Data de decisão",
+              width: 125,
+              valueGetter: (params) => {
+                const timestamp = params.row.dataDecisao;
+                const date = new Date(timestamp.seconds * 1000);
+                return format(date, "dd/MM/yyyy");
+              },
+            },
+            { field: "entidade", headerName: "Entidade", width: 300 },
+            { field: "vinculado", headerName: "Vinculado", width: 100 },
+            { field: "conselheiro", headerName: "Conselheiro", width: 75 },
+            { field: "julgador", headerName: "Julgador", width: 75 },
+            {
+              field: "orgaoJulgador",
+              headerName: "Órgão Julgador",
+              width: 100,
+            },
+            {
+              field: "encaminhamento",
+              headerName: "Encaminhamento",
+              width: 100,
+            },
+            { field: "definicao", headerName: "Definição", width: 100 },
+            { field: "dias", headerName: "Dias", width: 50 },
+            { field: "meta", headerName: "Meta", width: 75 },
+            { field: "prioridade", headerName: "Prioridade", width: 75 },
+          ]}
+          disableRowSelectionOnClick
         />
-        <ThemeProvider theme={theme}>
-          <StripedDataGrid
-            sx={{
-              backgroundColor: "#fff",
-              color: "#000",
-            }}
-            rows={filteredValues(definitionValue)}
-            getRowClassName={(params) =>
-              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-            }
-            columns={[
-              { field: "processo", headerName: "Processo", width: 75 },
-              { field: "assunto", headerName: "Assunto", width: 300 },
-              { field: "assessor", headerName: "Assessor", width: 75 },
-              {
-                field: "data",
-                headerName: "Data de inserção",
-                width: 125,
-                valueGetter: (params) => {
-                  const timestamp = params.row.data;
-                  const date = new Date(timestamp.seconds * 1000);
-                  return format(date, "dd/MM/yyyy");
-                },
-              },
-              {
-                field: "dataDecisao",
-                headerName: "Data de decisão",
-                width: 125,
-                valueGetter: (params) => {
-                  const timestamp = params.row.dataDecisao;
-                  const date = new Date(timestamp.seconds * 1000);
-                  return format(date, "dd/MM/yyyy");
-                },
-              },
-              { field: "entidade", headerName: "Entidade", width: 300 },
-              { field: "vinculado", headerName: "Vinculado", width: 100 },
-              { field: "conselheiro", headerName: "Conselheiro", width: 75 },
-              { field: "julgador", headerName: "Julgador", width: 75 },
-              { field: "orgaoJulgador", headerName: "Órgão Julgador", width: 100 },
-              { field: "encaminhamento", headerName: "Encaminhamento", width: 100 },
-              { field: "definicao", headerName: "Definição", width: 100 },
-              { field: "dias", headerName: "Dias", width: 50 },
-              { field: "meta", headerName: "Meta", width: 75 },
-              { field: "prioridade", headerName: "Prioridade", width: 75 },
-            ]}
-            disableRowSelectionOnClick
-          />
-        </ThemeProvider>
-
-      </div>
-
+      </ThemeProvider>
     </>
   );
 }

@@ -57,7 +57,6 @@ function Personal() {
   return (
     <>
           <SelectLocation onSelectChange={handleSelectChange}/>      
-          <div className="datagrid">
           <ThemeProvider theme={theme}>
             <StripedDataGrid
               sx={{
@@ -106,7 +105,6 @@ function Personal() {
               onSortModelChange={handleSortModelChange}
             />
           </ThemeProvider>
-        </div>
     </>
   );
 }

@@ -8,7 +8,7 @@ const ODD_OPACITY = 0.1;
 
 export const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "90%",
-  height: "90%",
+  height: "60%",
   [`& .${gridClasses.row}.even`]: {
     backgroundColor: theme.palette.grey[200],
     "&:hover, &.Mui-hovered": {

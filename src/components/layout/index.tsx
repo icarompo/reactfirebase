@@ -18,10 +18,10 @@ const Layout = (props: LayoutProps) => {
 
   return (
     <div className="app">
-        <Navigation onToggleText={handleToggleText} />
+      <Navigation onToggleText={handleToggleText} />
       <div className="app-content">
-          <Header pageName={props.pageName} />
-        {props.children}
+        <Header pageName={props.pageName} />
+        <div className="app-content-body">{props.children}</div>
       </div>
     </div>
   );
