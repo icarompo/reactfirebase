@@ -2,6 +2,7 @@ import AddProcessButton from "./modal/addModal/AddModal.tsx";
 import EditProcessButton from "./modal/editModal/EditModal.tsx";
 import FilterProcessButton from "./modal/filterModal/FilterModal.tsx";
 import SelectLocation from "../../../components/select/Select.tsx";
+import AddDialog from "./dialog/addDialog.tsx";
 import "./styles.css";
 
 interface TableFilterProps {
@@ -25,6 +26,7 @@ function TableFilter(props: TableFilterProps ) {
       <AddProcessButton/>
       <EditProcessButton/>
       <FilterProcessButton onFilterChange={handleFilterChange}/>
+      <AddDialog/>
     </div>
   );
 }

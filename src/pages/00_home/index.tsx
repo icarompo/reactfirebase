@@ -1,4 +1,5 @@
 import "./styles.css";
+import CustomizedDialogs from "../../components/dialog";
 
 function Home() {
   return (
