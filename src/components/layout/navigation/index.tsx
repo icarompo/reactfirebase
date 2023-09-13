@@ -15,7 +15,7 @@ type NavigationProps = {
 
 function Navigation (props: NavigationProps): JSX.Element {
   const [showText, setShowText] = useState(true);
-  const [navigationWidth, setNavigationWidth] = useState("18rem");
+  const [navigationWidth, setNavigationWidth] = useState("16%");
   const navigationItems = [
     { to: "/", icon: <HomeIcon className="navigation-icon" />, label: "Página Inicial" },
     { to: "/pessoal", icon: <PersonIcon className="navigation-icon" />, label: "Página Pessoal" },
@@ -25,9 +25,9 @@ function Navigation (props: NavigationProps): JSX.Element {
   ];
 
   const toggleText = () => {
-    setShowText(!showText);
     props.onToggleText;
-    setNavigationWidth(showText ? "3rem" : "18rem"); 
+    setNavigationWidth(showText ? "3rem" : "16%"); 
+    setShowText(!showText);
   };
 
   return (

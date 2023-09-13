@@ -1,14 +1,15 @@
 import {
   alpha,
-  styled,
+  styled,  
 } from "@mui/material/styles";
-import { DataGrid, gridClasses} from "@mui/x-data-grid";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
 
 const ODD_OPACITY = 0.1;
 
 export const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  width: "90%",
-  height: "60%",
+  marginTop: theme.spacing(2),
+  width: '85vw',
+  height: '80vh',
   [`& .${gridClasses.row}.even`]: {
     backgroundColor: theme.palette.grey[200],
     "&:hover, &.Mui-hovered": {
