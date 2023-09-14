@@ -16,7 +16,7 @@ import Processes from "./pages/02_processos/index";
 import GlobalContext from "./context/globalContext";
 import CustomizedSnackbars from "./components/snackbar";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { fetchUserData, fetchProcData } from "./utils/fetchedData";
+import { fetchUserData, fetchProcData, listenForFirestoreChanges } from "./utils/fetchedData";
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
@@ -57,6 +57,7 @@ export const App = () => {
   const handleLoginSucess = async () => {
     setShowLoginSuccessAlert(true);
     setIsAuthenticated(true);
+    listenForFirestoreChanges();
     const usersData = await fetchUserData();
     const procData = await fetchProcData();
     setUsersData(usersData);
