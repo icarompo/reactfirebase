@@ -21,7 +21,7 @@ type CustomDialogProps = {
     open: boolean;
     onClose: (value: boolean) => void;
     title: string;
-    content: string;
+    content: any;
 }
 
 export default function CustomDialog(props: CustomDialogProps) {

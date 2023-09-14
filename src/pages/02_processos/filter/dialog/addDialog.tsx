@@ -9,17 +9,31 @@ function AddDialog() {
     setOpen(true);
   };
 
+  const title = 'Adcionar Processo';
+
+  const content = (
+    <>
+      <form>
+        <label>
+          Nome:
+          <input type="text" name="name" />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    </>
+  );
+
   return (
     <>
-      <button type="button" onClick={handleOpen}>
+      <button className="filter-button" type="button" onClick={handleOpen}>
         {<AddIcon />}
         </button>
       <CustomDialog
         open={open}
         onClose={setOpen}
-        title="Título Personalizado"
-        content="Conteúdo Personalizado"
-      />
+        title={title}
+        content={content}      
+        />
     </>
   );
 }

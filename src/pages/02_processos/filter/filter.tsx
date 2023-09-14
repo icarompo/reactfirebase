@@ -23,10 +23,9 @@ function TableFilter(props: TableFilterProps ) {
   return (
     <div className="filterContainer">
       <SelectLocation onSelectChange={handleSelectChange} />
-      <AddProcessButton/>
+      <AddDialog/>
       <EditProcessButton/>
       <FilterProcessButton onFilterChange={handleFilterChange}/>
-      <AddDialog/>
     </div>
   );
 }
