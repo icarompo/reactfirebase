@@ -1,13 +1,13 @@
-import { useState, useContext } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { ptBR } from "@mui/x-data-grid";
-import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
-import { GridSortModel } from "@mui/x-data-grid";
-import { format } from "date-fns";
 import "./styles.css";
+import { format } from "date-fns";
+import { ptBR } from "@mui/x-data-grid";
 import { procType } from "../../App.tsx";
-import SelectLocation from "../../components/select/Select.tsx";
+import { useState, useContext } from "react";
+import { GridSortModel } from "@mui/x-data-grid";
 import GlobalContext from "../../context/globalContext.ts";
+import SelectLocation from "../../components/select/Select.tsx";
+import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Personal() {
   const theme = createTheme(
@@ -56,9 +56,7 @@ function Personal() {
 
   return (
     <>
-      <div className="personal-container">
           <SelectLocation onSelectChange={handleSelectChange}/>      
-          <div className="datagrid">
           <ThemeProvider theme={theme}>
             <StripedDataGrid
               sx={{
@@ -107,8 +105,6 @@ function Personal() {
               onSortModelChange={handleSortModelChange}
             />
           </ThemeProvider>
-        </div>
-      </div>
     </>
   );
 }

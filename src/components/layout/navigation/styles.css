@@ -9,13 +9,9 @@
   align-items: flex-start;
   background: #2d3e9e;
   color: white;
-  height: 100%;
-  width: 100%;
+  width: 15rem;
 }
 
-.navigation.collapsed {
-  width: 3rem; /* Ajuste o tamanho conforme necessário */
-}
 
 .menu-header {
   background-color: #2d3e9e;

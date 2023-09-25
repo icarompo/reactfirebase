@@ -25,9 +25,9 @@ function Navigation (props: NavigationProps): JSX.Element {
   ];
 
   const toggleText = () => {
-    setShowText(!showText);
     props.onToggleText;
     setNavigationWidth(showText ? "3rem" : "16%"); 
+    setShowText(!showText);
   };
 
   return (

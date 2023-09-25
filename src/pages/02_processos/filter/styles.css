@@ -2,11 +2,9 @@
 .filterContainer {
   background: #4256c9;
   color: white;
-  box-sizing: border-box;
   height: 35px;
-  width: max-content;
+  width: 17rem;
   padding: 1rem;
-  margin: 10px 0 0 10px;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -64,7 +62,6 @@
   height: 25px;
   border: none;
   border-radius: 5px;
-  padding: 1px;
 }
 .select:hover {
   cursor: pointer;
