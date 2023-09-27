@@ -16,10 +16,9 @@ import Processes from "./pages/02_processos/index";
 import GlobalContext from "./context/globalContext";
 import CustomizedSnackbars from "./components/snackbar";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { fetchUserData, fetchProcData, listenForFirestoreChanges } from "./utils/fetchedData";
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
-
+import { fetchUserData, fetchProcData } from "./utils/fetchedData";
 
 export type userType = {
   id: string;
@@ -47,6 +46,11 @@ export type procType = {
   prioridade: string;
 };
 
+
+
+const LOCAL_STORAGE_KEY_USERS = "usersData";
+const LOCAL_STORAGE_KEY_PROC = "procData";
+
 export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null as any);
@@ -57,13 +61,23 @@ export const App = () => {
   const handleLoginSucess = async () => {
     setShowLoginSuccessAlert(true);
     setIsAuthenticated(true);
-    listenForFirestoreChanges();
-    const usersData = await fetchUserData();
-    const procData = await fetchProcData();
-    setUsersData(usersData);
-    setProcData(procData);
-    console.log('login success')
+  
+    const localStorageUserData = localStorage.getItem(LOCAL_STORAGE_KEY_USERS);
+    const localStorageProcData = localStorage.getItem(LOCAL_STORAGE_KEY_PROC);
+  
+    if (localStorageUserData && localStorageProcData) {
+      // Usar dados do localStorage
+      setUsersData(JSON.parse(localStorageUserData));
+      setProcData(JSON.parse(localStorageProcData));
+    } else {
+      // Buscar dados no Firestore e atualizar o localStorage
+      const usersData = await fetchUserData();
+      const procData = await fetchProcData();
+      setUsersData(usersData);
+      setProcData(procData);
+    }
   };
+  
 
   const handleLogout = () => {
     setIsAuthenticated(false);
