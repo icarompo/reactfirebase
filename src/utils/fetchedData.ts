@@ -13,7 +13,7 @@ export const fetchUserData = async () => {
       const parsedData: Array<userType> = JSON.parse(localStorageData);
       console.log("Users data fetched from localStorage");
       return parsedData;
-    }
+    } else {
 
     // Se não houver dados no localStorage, busca no Firestore
     const usersRef = collection(db, "colaboradores");
@@ -35,20 +35,23 @@ export const fetchUserData = async () => {
     localStorage.setItem(LOCAL_STORAGE_KEY_USERS, JSON.stringify(fetchedData));
 
     return fetchedData;
+  }
   } catch (error) {
     console.log(error);
   }
 };
 
 export const fetchProcData = async () => {
+  let cont =0;
   try {
     // Verifica se há dados no localStorage
-    const progress = 0;
     const localStorageData = localStorage.getItem(LOCAL_STORAGE_KEY_PROC);
     if (localStorageData) {
       const parsedData: Array<procType> = JSON.parse(localStorageData);
+      cont = cont + 1;
+      console.log(cont);
       return parsedData;
-    }
+    } else {
     // Se não houver dados no localStorage, busca no Firestore
     const dataCollectionRef = collection(db, "dados");
     const procQuery = query(dataCollectionRef);
@@ -64,6 +67,7 @@ export const fetchProcData = async () => {
 
     console.log("Process data fetched from Firestore");
     return fetchedData;
+  }
   } catch (error) {
     console.log(error);
   }
@@ -79,7 +83,9 @@ export const listenForFirestoreChanges = () => {
     snapshot.docChanges().forEach((change) => {
       if (change.type === "added" || change.type === "modified" || change.type === "removed") {
         // Buscar e atualizar os dados no localStorage
-        fetchUserData();
+        fetchUserData().then((userData) => {
+          localStorage.setItem(LOCAL_STORAGE_KEY_USERS, JSON.stringify(userData));
+        });
       }
     });
   });
@@ -89,7 +95,9 @@ export const listenForFirestoreChanges = () => {
     snapshot.docChanges().forEach((change) => {
       if (change.type === "added" || change.type === "modified" || change.type === "removed") {
         // Buscar e atualizar os dados no localStorage
-        fetchProcData();
+        fetchProcData().then((procData) => {
+          localStorage.setItem(LOCAL_STORAGE_KEY_PROC, JSON.stringify(procData));
+        });
       }
     });
   });
