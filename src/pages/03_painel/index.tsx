@@ -1,12 +1,12 @@
 import "./styles.css";
-import PieChart from "./piechart/PieChart.tsx";
+import PieChart from "./PieChart/PieChart.tsx";
 import { db } from "../../api/firebase-config.ts";
-import Card from "../../components/card/index.tsx";
+import Card from "../../components/Card/Card.tsx";
 import { procType, userType } from "../../App.tsx";
 import { useEffect, useState, useContext } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import GlobalContext from "../../context/globalContext.ts";
-import SelectLocation from "../../components/select/Select.tsx";
+import SelectLocation from "../../components/Select/Select.tsx";
 
 function Dashboard() {
   const data = useContext(GlobalContext);

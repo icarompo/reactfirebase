@@ -1,5 +1,5 @@
 import AddIcon from "@material-ui/icons/Add";
-import CustomDialog from "../../../../components/dialog";
+import CustomDialog from "../../../../components/Dialog/Dialog";
 import { useState } from "react";
 
 function AddDialog() {

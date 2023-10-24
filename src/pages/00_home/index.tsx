@@ -1,5 +1,5 @@
 import "./styles.css";
-import CustomizedDialogs from "../../components/dialog";
+import CustomizedDialogs from "../../components/Dialog/Dialog";
 
 function Home() {
   return (

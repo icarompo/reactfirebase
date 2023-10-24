@@ -1,5 +1,5 @@
-import Navigation from "./navigation/index.tsx";
-import Header from "./header/index.tsx";
+import Navigation from "./Navigation/Navigation.tsx";
+import Header from "./Header/Header.tsx";
 import { useState } from "react";
 import "./styles.css";
 

@@ -5,7 +5,7 @@ import { procType } from "../../App.tsx";
 import { useState, useContext } from "react";
 import { GridSortModel } from "@mui/x-data-grid";
 import GlobalContext from "../../context/globalContext.ts";
-import SelectLocation from "../../components/select/Select.tsx";
+import SelectLocation from "../../components/Select/Select.tsx";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 

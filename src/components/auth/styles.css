@@ -16,6 +16,8 @@ body {
     background-color: #2d3e9e;
     color: white;
     font-weight: bold;
+    text-shadow: #4c4c4c 2px 2px 2px;
+    box-shadow: 2px 2px 2px #4c4c4c;
 }
 
 .login-input {
@@ -27,6 +29,7 @@ body {
     box-sizing: border-box;
     margin: 3px;
     text-align: center;
+    box-shadow: 1px 1px 1px #000000;
 }
 
 .login-input:focus {
@@ -36,14 +39,16 @@ body {
 .login-button {
     width: 100%;
     height: 30px;
-    border: 1px solid black;
+    border: none;
     border-radius: 10px;
+    box-shadow: 5px black;
     padding: 5px;
     box-sizing: border-box;
     margin: 3px;
     background-color: #5263c2;
     color: white;
     text-align: center;
+    box-shadow: 1px 1px 1px #000000;
 }
 
 .login-button:hover {
@@ -54,4 +59,5 @@ body {
 
 .login-container {
     text-align: center;
+    text-shadow: black 5px;
 }

@@ -5,16 +5,16 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
-import Layout from "./components/layout";
+import Layout from "./components/layout/Layout";
 import Home from "./pages/00_home/index";
 import { db } from "./api/firebase-config";
 import Login from "./components/auth/Login";
 import Check from "./pages/04_checagem/index";
 import Personal from "./pages/01_pessoal/index";
 import Dashboard from "./pages/03_painel/index";
-import Processes from "./pages/02_processos/index";
+import Processes from "./pages/02_processos";
 import GlobalContext from "./context/globalContext";
-import CustomizedSnackbars from "./components/snackbar";
+import CustomizedSnackbars from "./components/Snackbar/Snackbar";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
