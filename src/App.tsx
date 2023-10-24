@@ -6,13 +6,13 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-import Home from "./pages/00_home/index";
+import Home from "./pages/01_home/index";
 import { db } from "./api/firebase-config";
-import Login from "./components/auth/Login";
-import Check from "./pages/04_checagem/index";
-import Personal from "./pages/01_pessoal/index";
-import Dashboard from "./pages/03_painel/index";
-import Processes from "./pages/02_processos";
+import Login from "./pages/00_Login/Login";
+import Check from "./pages/05_checagem/index";
+import Personal from "./pages/02_pessoal/index";
+import Dashboard from "./pages/04_painel/index";
+import Processes from "./pages/03_processos";
 import GlobalContext from "./context/globalContext";
 import CustomizedSnackbars from "./components/Snackbar/Snackbar";
 import { getAuth, onAuthStateChanged } from "firebase/auth";

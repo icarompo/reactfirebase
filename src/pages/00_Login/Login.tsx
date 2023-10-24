@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
-import CustomizedSnackbars from '../Snackbar/Snackbar';
+import CustomizedSnackbars from '../../components/Snackbar/Snackbar';
 import './styles.css';
 interface LoginProps {
   onLogIn: () => void;

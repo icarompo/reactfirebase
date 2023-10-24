@@ -3,7 +3,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useContext } from "react";
 import { ptBR } from "@mui/x-data-grid";
-import TableFilter from "./filter/filter.tsx";
+import TableFilter from "./FilterSection/filter.tsx";
 import GlobalContext from "../../context/globalContext.ts";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import { createTheme, ThemeProvider } from "@mui/material/styles";

@@ -7,6 +7,7 @@ interface CardProps {
   id: string;
 }
 
+
 function Card(props: CardProps) {
 
   const verificaCorCorpo = (id: string) => {
