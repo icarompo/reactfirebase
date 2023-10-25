@@ -40,7 +40,7 @@ function Navigation (props: NavigationProps): JSX.Element {
         />
         <div className="menu-header-text">
           {showText && (
-              <h3>Controle E-Contas</h3>
+              <h3>Controle e-Contas</h3>
           )}
         </div>
       </div>
