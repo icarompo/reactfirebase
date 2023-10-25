@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300&family=IBM+Plex+Serif:wght@300&display=swap');
+
+body {
+    font-family: "IBM Plex Serif", serif;
+    font-size: 0.9rem;
+    background-color: #f4f4fc;
+}

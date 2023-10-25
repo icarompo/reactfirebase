@@ -30,7 +30,7 @@ const Login = ({ onLogIn }: LoginProps) => {
     <div className="bg-primary min-h-screen flex items-center justify-center">
     <form className="bg-white shadow-md rounded p-8 login-form" onSubmit={login}>
       <h1 className="text-2xl font-bold mb-4">Login</h1>
-      <h2 className="text-sm text-gray-600 mb-6">Controle E-Contas</h2>
+      <h2 className="text-sm text-gray-600 mb-6">Controle e-Contas</h2>
       <input
         className="w-full py-2 px-4 border rounded mb-4 login-input"
         type="email"
