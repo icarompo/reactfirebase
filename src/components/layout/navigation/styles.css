@@ -7,15 +7,15 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: #2d3e9e;
+  background: #03467d;
   color: white;
   width: 15rem;
 }
 
 
 .menu-header {
-  background-color: #2d3e9e;
-  border-bottom: 1px solid #4b59a6;
+  background-color: #03467d;
+  border-bottom: 1px solid #1c598a;
   display: flex;
   align-items: center;
   padding: 7%;
@@ -50,7 +50,7 @@
 }
 
 .link:hover {
-  background-color: #3246b6;
+  background-color: #1c598a;
   cursor: pointer;
   transform: scale(1.05);
 }
@@ -62,7 +62,7 @@
 }
 
 .menu-footer {
-  border-top: 1px solid #4b59a6;
+  border-top: 1px solid #1c598a;
   width: 100%;
   height: 50px; /* Altura fixa para o rodapé */
   display: flex;

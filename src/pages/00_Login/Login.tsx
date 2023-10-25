@@ -1,7 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
 import CustomizedSnackbars from '../../components/Snackbar/Snackbar';
-import './styles.css';
 interface LoginProps {
   onLogIn: () => void;
 }
@@ -28,30 +27,34 @@ const Login = ({ onLogIn }: LoginProps) => {
   };
 
   return (
-    <div className='login-container'>
-      <form className='login-form' onSubmit={login}>
-        <h1>Login</h1>
-        <h2>Controle E-Contas</h2>
-        <input
-          className='login-input'
-          type='email'
-          placeholder='Insira o email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          className='login-input'
-          type='password'
-          placeholder='Insira a Senha'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className='login-button' type='submit'>
-          Login
-        </button>
-      </form>
-      {error && <CustomizedSnackbars message={error} severity='error' />}
-    </div>
+    <div className="bg-primary min-h-screen flex items-center justify-center">
+    <form className="bg-white shadow-md rounded p-8 login-form" onSubmit={login}>
+      <h1 className="text-2xl font-bold mb-4">Login</h1>
+      <h2 className="text-sm text-gray-600 mb-6">Controle E-Contas</h2>
+      <input
+        className="w-full py-2 px-4 border rounded mb-4 login-input"
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        className="w-full py-2 px-4 border rounded mb-4 login-input"
+        type="password"
+        placeholder="Senha"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button
+        className="w-full bg-primary hover:bg-primary-dark text-white py-2 rounded login-button hover:bg-secondary"
+        type="submit"
+      >
+        Login
+      </button>
+    </form>
+    {error && <CustomizedSnackbars message={error} severity="error" />}
+  </div>
+  
   );
 };
 
