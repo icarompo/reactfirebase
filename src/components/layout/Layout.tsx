@@ -1,4 +1,4 @@
-import Navigation from "./Navigation/Navigation.tsx";
+import Sidebar from "./Sidebar/Sidebar.tsx";
 import Header from "./Header/Header.tsx";
 import { useState } from "react";
 import "./styles.css";
@@ -18,7 +18,7 @@ const Layout = (props: LayoutProps) => {
 
   return (
     <div className="app">
-      <Navigation onToggleText={handleToggleText} />
+      <Sidebar onToggleText={handleToggleText} />
       <div className="app-content">
         <Header pageName={props.pageName} />
         <div className="app-content-body">{props.children}</div>

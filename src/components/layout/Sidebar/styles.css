@@ -1,8 +1,8 @@
-.navigation-icon {
+.sidebar-icon {
   color: white;
 }
 
-.navigation {
+.sidebar {
   transition: width 0.3s ease; /* Adicione a transição aqui */
   display: flex;
   flex-direction: column;
