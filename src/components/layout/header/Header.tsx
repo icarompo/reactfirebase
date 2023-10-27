@@ -24,7 +24,7 @@ function Header(props: HeaderProps): JSX.Element {
 
   return (
     <>
-      <div className="h-24 bg-white border-b border-gray-300 text-black font-semibold p-4 flex items-center">
+      <div className=" w-full h-[6rem] bg-white border-b border-gray-300 text-black font-semibold p-4 flex items-center">
         <div className="text-container flex items-center">
           <h3 className="header-h3">{props.pageName}</h3>
         </div>
