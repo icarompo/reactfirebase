@@ -4,7 +4,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#03467d",
-        secondary: "#1c598a",
+        secondary: "#235191",
         },
       fontFamily: {
         title: ['Open Sans', "sans-serif"],

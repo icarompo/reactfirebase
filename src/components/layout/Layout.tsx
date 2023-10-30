@@ -11,16 +11,27 @@ type LayoutProps = {
 
 const Layout = (props: LayoutProps) => {
   const [showText, setShowText] = useState(true);
+  const [showMenu, setShowMenu] = useState("hidden");
 
   const handleToggleText = () => {
     setShowText(!showText);
   };
 
+  const handleToggleMenu = () => {
+    if (showMenu === "block") {
+      setShowMenu("hidden");
+    } else {
+      setShowMenu("block");
+    }
+  };
+
   return (
     <div className="app">
-      <Sidebar onToggleText={handleToggleText} />
-      <div className="app-content">
-        <Header pageName={props.pageName} />
+      <div className={`${showMenu} md:block `}>
+      <Sidebar onToggleText={handleToggleText}/>
+      </div>
+      <div className="w-full h-full absolute md:relative">
+        <Header pageName={props.pageName} onHamburgerClick={handleToggleMenu} />
         <div className="app-content-body">{props.children}</div>
       </div>
     </div>
