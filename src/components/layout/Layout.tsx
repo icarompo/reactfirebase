@@ -1,7 +1,6 @@
 import Sidebar from "./Sidebar/Sidebar.tsx";
 import Header from "./Header/Header.tsx";
 import { useState } from "react";
-import "./styles.css";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -34,9 +33,9 @@ const Layout = (props: LayoutProps) => {
       <div className={`${showMenu} md:block absolute md:relative`}>
         <Sidebar onToggleText={handleToggleText} />
       </div>
-      <div className="w-full h-full">
+      <div className="w-full h-full flex flex-col">
         <Header pageName={props.pageName} onHamburgerClick={handleToggleMenu} />
-        <div className="app-content-body">{props.children}</div>
+        <div className="">{props.children}</div>
       </div>
     </div>
   );
