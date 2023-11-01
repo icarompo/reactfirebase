@@ -1,9 +1,8 @@
 import AddProcessButton from "./modal/addModal/AddModal.tsx";
 import EditProcessButton from "./modal/editModal/EditModal.tsx";
 import FilterProcessButton from "./modal/filterModal/FilterModal.tsx";
-import SelectLocation from "../../../components/select/Select.tsx";
-import AddDialog from "./dialog/addDialog.tsx";
-import "./styles.css";
+import SelectLocation from "../../../components/Select/Select.tsx";
+import AddDialog from "./Dialog/Dialog.tsx";
 
 interface TableFilterProps {
   onSelectChange: (value: string) => void;
@@ -21,7 +20,7 @@ function TableFilter(props: TableFilterProps ) {
   }
 
   return (
-    <div className="filterContainer">
+    <div className="filterContainer bg-primary w-20 h-20 rounded ">
       <SelectLocation onSelectChange={handleSelectChange} />
       <AddDialog/>
       <EditProcessButton/>
