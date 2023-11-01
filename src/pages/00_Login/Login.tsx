@@ -25,10 +25,11 @@ const Login = ({ onLogIn }: LoginProps) => {
       setError('Preencha todos os campos');
     }
   };
-
+  
   return (
-    <div className="bg-primary min-h-screen flex items-center justify-center">
-    <form className="bg-white shadow-md rounded p-8 login-form" onSubmit={login}>
+    <div className="flex h-screen w-screen items-center justify-center">
+    <div className=" bg-gradient-to-r from-primary to-[#0181E9] h-full w-full"/>
+    <form className="bg-white shadow-md rounded p-8 login-form absolute " onSubmit={login}>
       <h1 className="text-2xl font-bold mb-4">Login</h1>
       <h2 className="text-sm text-gray-600 mb-6">Controle e-Contas</h2>
       <input
@@ -46,15 +47,15 @@ const Login = ({ onLogIn }: LoginProps) => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button
-        className="w-full bg-primary hover:bg-primary-dark text-white py-2 rounded login-button hover:bg-secondary"
+        className="w-full bg-gradient-to-r bg-primary hover:bg-primary-dark text-white py-2 rounded login-button hover:bg-secondary"
         type="submit"
       >
         Login
       </button>
     </form>
     {error && <CustomizedSnackbars message={error} severity="error" />}
-  </div>
-  
+    <div className=" bg-gradient-to-l from-primary to-[#0181E9] h-full w-full"/>
+    </div>
   );
 };
 
