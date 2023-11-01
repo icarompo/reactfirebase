@@ -17,6 +17,7 @@ const Sidebar = (props: SidebarProps) => {
   const [sidebarWidth, setSidebarWidth] = useState("60");
   const [sidebarPadding, setSidebarPadding] = useState("3");
   const [sidebarText, setSidebarText] = useState(true);
+  const [selectedItem, setSelectedItem] = useState("Página Inicial");
   const sidebarItems = [
     { to: "/", icon: <HomeIcon className="sidebar-icon" />, label: "Página Inicial"},
     { to: "/pessoal", icon: <PersonIcon className="sidebar-icon" />, label: "Pessoal"},
@@ -37,30 +38,35 @@ const Sidebar = (props: SidebarProps) => {
     }
   }
 
+  const handleItemClick = (label: string) => {
+    setSelectedItem(label);
+  };
+
   return (
     <>
-<div className={`bg-primary block w-${sidebarWidth} text-white h-full transition-all duration-500`}>
-        <div className={` h-[6rem] flex items-center justify-start p-${sidebarPadding} transition-all duration-500`}>
+<div className={`bg-tertiary md:bg-primary block w-${sidebarWidth} border border-secondary md:border-none text-white h-screen transition-all duration-500`}>
+        <div className={` h-[6rem] flex items-center justify-start transition-all duration-500 p-0.5`}>
           <img
             src="https://irbcontas.org.br/wp-content/uploads/2020/03/associado-titular-logo-tce-to.png"
             alt="Logo do TCE-TO"
-            className="Header-logo w-10 h-12"
+            className="Header-logo w-10 h-12 m-1"
           />
-          {sidebarText && <h1 className="text-white font-bold font-title text-xl text-start w-3/6 sm:text ml-4">Controle e-Contas</h1>}
+          {sidebarText && <h1 className="text-white font-bold font-title text-xl text-center ml-1">Controle e-Contas</h1>}
         </div>
 
-        <div className="border border-secondary h-4/6">
-          {sidebarItems.map((item) => (
-            <Link
-              to={item.to}
-              className=" hover:scale-105 hover:rounded p-2 flex items-center justify-start text-white font-highlight text-l font-semibold h-16 hover:bg-secondary "
-            >
-              <span className={`m-1`}>{item.icon}</span>
-              {sidebarText && <span className="ml-4">{item.label}</span>}
-            </Link>
-          ))}
+        <div className="border border-secondary h-[80%]">
+        {sidebarItems.map((item) => (
+        <Link
+        to={item.to}
+        className={`hover:scale-105 hover:rounded hover:text-slate-50 p-2 flex items-center justify-start text-gray-400 font-highlight text-l font-semibold h-16 hover:bg-secondary ${selectedItem === item.label ? 'text-slate-50' : ''}`}
+        onClick={() => handleItemClick(item.label)}
+      >
+        <span className={`m-1`}>{item.icon}</span>
+        {sidebarText && <span className="ml-4">{item.label}</span>}
+      </Link>
+      ))}
         </div>
-        <div className="h-auto text-right text-white">
+        <div className="h-auto text-right text-white hidden md:block">
           <button
             className="sidebar-toggle-button w-10 h-10 transition-transform duration-500"
             onClick={toggleSidebar}>

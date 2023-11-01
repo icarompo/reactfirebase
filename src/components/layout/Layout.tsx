@@ -26,11 +26,15 @@ const Layout = (props: LayoutProps) => {
   };
 
   return (
-    <div className="app">
-      <div className={`${showMenu} md:block `}>
-      <Sidebar onToggleText={handleToggleText}/>
+    <div className="flex w-screen h-screen">
+      <div
+        className={`fixed bg-opacity-40 inset-0 bg-black ${showMenu} md:hidden`}
+        onClick={handleToggleMenu}
+      ></div>
+      <div className={`${showMenu} md:block absolute md:relative`}>
+        <Sidebar onToggleText={handleToggleText} />
       </div>
-      <div className="w-full h-full absolute md:relative">
+      <div className="w-full h-full">
         <Header pageName={props.pageName} onHamburgerClick={handleToggleMenu} />
         <div className="app-content-body">{props.children}</div>
       </div>

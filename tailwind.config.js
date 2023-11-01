@@ -5,6 +5,7 @@ module.exports = {
       colors: {
         primary: "#03467d",
         secondary: "#235191",
+        tertiary: "#2e77b4",
         },
       fontFamily: {
         title: ['Open Sans', "sans-serif"],
