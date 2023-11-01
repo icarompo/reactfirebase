@@ -1,4 +1,3 @@
-import "./styles.css";
 import { format } from "date-fns";
 import { ptBR } from "@mui/x-data-grid";
 import { procType } from "../../App.tsx";

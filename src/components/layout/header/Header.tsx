@@ -30,7 +30,7 @@ function Header(props: HeaderProps): JSX.Element {
 
   return (
     <>
-      <div className=" w-full h-[6rem] bg-tertiary border-b border-gray-300 text-white font-semibold p-3 flex items-center">
+      <div className="shadow w-full h-[6rem] bg-tertiary border-b border-gray-300 text-white font-semibold p-3 flex items-center">
         <button
           className="rounded-full hover:bg-[#4385bc] w-12 h-12 mr-2 transition-colors duration-100 md:hidden"
           onClick={onHamburguerClick}
@@ -46,7 +46,7 @@ function Header(props: HeaderProps): JSX.Element {
             {data?.user?.nome}
           </button>
           <button
-            className="logout-button w-full h-7 rounded-md bg-primary hover:bg-secondary text-white my-2"
+            className="logout-button w-full h-7 rounded-md bg-primary hover:bg-secondary text-white my-2 shadow"
             onClick={logOut}
           >
             Sair

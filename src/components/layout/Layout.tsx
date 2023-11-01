@@ -9,12 +9,7 @@ type LayoutProps = {
 };
 
 const Layout = (props: LayoutProps) => {
-  const [showText, setShowText] = useState(true);
   const [showMenu, setShowMenu] = useState("hidden");
-
-  const handleToggleText = () => {
-    setShowText(!showText);
-  };
 
   const handleToggleMenu = () => {
     if (showMenu === "block") {
@@ -31,11 +26,11 @@ const Layout = (props: LayoutProps) => {
         onClick={handleToggleMenu}
       ></div>
       <div className={`${showMenu} md:block absolute md:relative`}>
-        <Sidebar onToggleText={handleToggleText} />
+        <Sidebar />
       </div>
       <div className="w-full h-full flex flex-col">
         <Header pageName={props.pageName} onHamburgerClick={handleToggleMenu} />
-        <div className="">{props.children}</div>
+        <div className="p-3">{props.children}</div>
       </div>
     </div>
   );
