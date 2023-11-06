@@ -9,28 +9,24 @@ type LayoutProps = {
 };
 
 const Layout = (props: LayoutProps) => {
-  const [showMenu, setShowMenu] = useState("hidden");
+  const [isHidden, setIsHidden] = useState(true);
 
   const handleToggleMenu = () => {
-    if (showMenu === "block") {
-      setShowMenu("hidden");
-    } else {
-      setShowMenu("block");
-    }
+    setIsHidden(!isHidden);
   };
 
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-screen h-screen static">
       <div
-        className={`fixed bg-opacity-40 inset-0 bg-black ${showMenu} md:hidden`}
+        className={`fixed bg-opacity-40 inset-0 bg-black ${isHidden ? 'hidden' : 'block'} md:hidden`}
         onClick={handleToggleMenu}
       ></div>
-      <div className={`${showMenu} md:block absolute md:relative`}>
+      <div className={`${isHidden ? 'hidden' : 'block'} md:block fixed md:relative`}>
         <Sidebar />
       </div>
       <div className="w-full h-full flex flex-col">
         <Header pageName={props.pageName} onHamburgerClick={handleToggleMenu} />
-        <div className="p-3">{props.children}</div>
+        <div className={`p-3 h-auto w-full ${isHidden ? 'block' : 'hidden'} relative md:block`}>{props.children}</div>
       </div>
     </div>
   );
