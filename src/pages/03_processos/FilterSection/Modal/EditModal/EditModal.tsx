@@ -1,6 +1,6 @@
 import ReactModal from "react-modal";
 import EditIcon from "@mui/icons-material/Edit";
-import ProcessForm from "../form/Form.tsx";
+import ProcessForm from "../Form/Form.tsx";
 import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../../../../api/firebase-config.ts";
 import { useState, useEffect } from "react";
@@ -313,7 +313,6 @@ function EditProcessButton() {
     <>
       <button
         type="button"
-        className="filter-button"
         onClick={() => {
           setModalOpen(true);
         }}

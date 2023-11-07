@@ -8,7 +8,6 @@ import {
   convertDateOut,
 } from "../../../../../utils/dateTypeConverter.ts";
 import { useState, useEffect } from "react";
-import "../form/modal.styles.css";
 
 function AddProcessModal({
   isOpen,
@@ -293,7 +292,6 @@ function AddProcessButton() {
     <>
       <button
         type="button"
-        className="filter-button"
         onClick={() => {
           setModalOpen(true);
         }}
