@@ -17,6 +17,7 @@ function SelectLocation(props: SelectLocationProps) {
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     console.log(event.target.value);
+    props.onSelectChange(event.target.value as string);
     if (event.target.value === "sim") {
       setSelectedColor(3);
     } else if (event.target.value === "TRAMIT.") {

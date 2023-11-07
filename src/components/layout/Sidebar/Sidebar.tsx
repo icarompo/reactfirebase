@@ -90,7 +90,7 @@ const Sidebar = () => {
         </div>
         <div className="h-auto text-right text-white hidden md:block">
           <button
-            className={`sidebar-toggle-button w-10 h-10 transition-all duration-500 rotate-${isExpanded ? '0' : '180'}`}
+            className={`sidebar-toggle-button w-10 h-16 transition-all duration-500 rotate-${isExpanded ? '0' : '180'}`}
             onClick={toggleSidebar}
           >
             {<ArrowBackIosSharpIcon />}
