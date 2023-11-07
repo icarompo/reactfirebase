@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { signOut, getAuth } from "firebase/auth";
 import GlobalContext from "../../../context/globalContext";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Tooltip } from "@mui/material";
 
 interface HeaderProps {
   pageName: string;
@@ -30,7 +31,7 @@ function Header(props: HeaderProps): JSX.Element {
 
   return (
     <>
-      <div className=" w-full h-[6rem] bg-tertiary border-b border-gray-300 text-white font-semibold p-3 flex items-center">
+      <div className="shadow w-full h-[6rem] bg-tertiary border-b border-gray-300 text-white font-semibold p-3 flex items-center">
         <button
           className="rounded-full hover:bg-[#4385bc] w-12 h-12 mr-2 transition-colors duration-100 md:hidden"
           onClick={onHamburguerClick}
@@ -42,15 +43,19 @@ function Header(props: HeaderProps): JSX.Element {
           <h3>{props.pageName}</h3>
         </div>
         <div className="ml-auto mr-8 flex flex-col">
+          <Tooltip title="Perfil" placement="left">
           <button className="underline cursor-pointer text-center">
             {data?.user?.nome}
           </button>
+          </Tooltip>
+          <Tooltip title="Deslogar" placement="left">
           <button
-            className="logout-button w-full h-7 rounded-md bg-primary hover:bg-secondary text-white my-2"
+            className="logout-button w-full h-7 rounded-md bg-primary hover:bg-secondary text-white my-2 shadow"
             onClick={logOut}
           >
             Sair
           </button>
+          </Tooltip>
         </div>
       </div>
     </>

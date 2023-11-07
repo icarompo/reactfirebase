@@ -1,7 +1,6 @@
 import Sidebar from "./Sidebar/Sidebar.tsx";
 import Header from "./Header/Header.tsx";
 import { useState } from "react";
-import "./styles.css";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -10,33 +9,24 @@ type LayoutProps = {
 };
 
 const Layout = (props: LayoutProps) => {
-  const [showText, setShowText] = useState(true);
-  const [showMenu, setShowMenu] = useState("hidden");
-
-  const handleToggleText = () => {
-    setShowText(!showText);
-  };
+  const [isHidden, setIsHidden] = useState(true);
 
   const handleToggleMenu = () => {
-    if (showMenu === "block") {
-      setShowMenu("hidden");
-    } else {
-      setShowMenu("block");
-    }
+    setIsHidden(!isHidden);
   };
 
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-screen h-screen static">
       <div
-        className={`fixed bg-opacity-40 inset-0 bg-black ${showMenu} md:hidden`}
+        className={`fixed bg-opacity-40 inset-0 bg-black ${isHidden ? 'hidden' : 'block'} md:hidden`}
         onClick={handleToggleMenu}
       ></div>
-      <div className={`${showMenu} md:block absolute md:relative`}>
-        <Sidebar onToggleText={handleToggleText} />
+      <div className={`${isHidden ? 'hidden' : 'block'} md:block fixed md:relative`}>
+        <Sidebar />
       </div>
-      <div className="w-full h-full">
+      <div className="w-full h-full flex flex-col">
         <Header pageName={props.pageName} onHamburgerClick={handleToggleMenu} />
-        <div className="app-content-body">{props.children}</div>
+        <div className={`p-3 h-auto w-full ${isHidden ? 'block' : 'hidden'} relative md:block`}>{props.children}</div>
       </div>
     </div>
   );

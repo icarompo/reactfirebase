@@ -248,7 +248,6 @@ function FilterProcessButton(props: FilterProcessButtonProps) {
     <>
       <button
         type="button"
-        className="filter-button"
         onClick={() => {
           setModalOpen(true);
         }}

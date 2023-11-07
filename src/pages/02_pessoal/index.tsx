@@ -1,4 +1,3 @@
-import "./styles.css";
 import { format } from "date-fns";
 import { ptBR } from "@mui/x-data-grid";
 import { procType } from "../../App.tsx";
@@ -8,6 +7,7 @@ import GlobalContext from "../../context/globalContext.ts";
 import SelectLocation from "../../components/Select/Select.tsx";
 import { StripedDataGrid } from "../../utils/stripedDataGrid.ts";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import StyledDataGrid from "../../components/DataGrid/DataGrid.tsx";
 
 function Personal() {
   const theme = createTheme(
@@ -22,7 +22,9 @@ function Personal() {
   const data = useContext(GlobalContext);
   const [definicao, setDefinicao] = useState<string>("relatoria");
 
-  const filter = data.procData?.filter((Processo) => Processo.assessor === Number(data?.user?.identificador));
+  const filter = data.procData?.filter(
+    (Processo) => Processo.assessor === Number(data?.user?.identificador)
+  );
 
   const [sortModel, setSortModel] = useState<GridSortModel>([
     {
@@ -55,58 +57,98 @@ function Personal() {
   };
 
   return (
-    <>
-          <SelectLocation onSelectChange={handleSelectChange}/>      
-          <ThemeProvider theme={theme}>
-            <StripedDataGrid
-              sx={{
-                backgroundColor: "#fff",
-                color: "#000",
-              }}
-              rows={filteredValues(definicao)}
-              getRowClassName={(params) =>
-                params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-              }
-              columns={[
-                { field: "processo", headerName: "Processo", width: 75 },
-                { field: "assunto", headerName: "Assunto", width: 300 },
-                {
-                  field: "data",
-                  headerName: "Data de inserção",
-                  width: 125,
-                  valueGetter: (params) => {
-                    const timestamp = params.row.data; 
-                    const date = new Date(timestamp.seconds * 1000); 
-                    return format(date, "dd/MM/yyyy");
-                  },
-                },
-                {
-                  field: "dataDecisao",
-                  headerName: "Data de decisão",
-                  width: 125,
-                  valueGetter: (params) => {
-                    const timestamp = params.row.dataDecisao; 
-                    const date = new Date(timestamp.seconds * 1000); 
-                    return format(date, "dd/MM/yyyy");
-                  },
-                },
-                { field: "entidade", headerName: "Entidade", width: 300 },
-                { field: "vinculado", headerName: "Vinculado", width: 100 },
-                { field: "conselheiro", headerName: "Conselheiro", width: 75 },
-                { field: "julgador", headerName: "Julgador", width: 75 },
-                { field: "orgaoJulgador", headerName: "Órgão Julgador", width: 100 },
-                { field: "encaminhamento", headerName: "Encaminhamento", width: 100 },
-                { field: "definicao", headerName: "Definição", width: 100 },
-                { field: "dias", headerName: "Dias", width: 50 },
-                { field: "meta", headerName: "Meta", width: 75 },
-                { field: "prioridade", headerName: "Prioridade", width: 75 },
-              ]}
-              sortModel={sortModel}
-              onSortModelChange={handleSortModelChange}
-            />
-          </ThemeProvider>
-    </>
+    <section className="flex flex-col gap-3">
+      <SelectLocation onSelectChange={handleSelectChange} />
+      <StyledDataGrid
+        checkboxselection={false}
+        disablerowselection={true}
+        rows={filteredValues(definicao)}
+        columns={[
+          { field: "processo", headerName: "Processo", width: 75 },
+          { field: "assunto", headerName: "Assunto", width: 300 },
+          {
+            field: "data",
+            headerName: "Data de inserção",
+            width: 125,
+            valueGetter: (params) => {
+              const timestamp = params.row.data;
+              const date = new Date(timestamp.seconds * 1000);
+              return format(date, "dd/MM/yyyy");
+            },
+          },
+          {
+            field: "dataDecisao",
+            headerName: "Data de decisão",
+            width: 125,
+            valueGetter: (params) => {
+              const timestamp = params.row.dataDecisao;
+              const date = new Date(timestamp.seconds * 1000);
+              return format(date, "dd/MM/yyyy");
+            },
+          },
+          { field: "entidade", headerName: "Entidade", width: 300 },
+          { field: "vinculado", headerName: "Vinculado", width: 100 },
+          { field: "conselheiro", headerName: "Conselheiro", width: 75 },
+          { field: "julgador", headerName: "Julgador", width: 75 },
+          { field: "orgaoJulgador", headerName: "Órgão Julgador", width: 100 },
+          { field: "encaminhamento", headerName: "Encaminhamento", width: 100 },
+          { field: "definicao", headerName: "Definição", width: 100 },
+          { field: "dias", headerName: "Dias", width: 50 },
+          { field: "meta", headerName: "Meta", width: 75 },
+          { field: "prioridade", headerName: "Prioridade", width: 75 },
+        ]}
+      />
+    </section>
   );
 }
 
 export default Personal;
+
+{
+  /* <StripedDataGrid
+sx={{
+  backgroundColor: "#fff",
+  color: "#000",
+}}
+rows={filteredValues(definicao)}
+getRowClassName={(params) =>
+  params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+}
+columns={[
+  { field: "processo", headerName: "Processo", width: 75 },
+  { field: "assunto", headerName: "Assunto", width: 300 },
+  {
+    field: "data",
+    headerName: "Data de inserção",
+    width: 125,
+    valueGetter: (params) => {
+      const timestamp = params.row.data; 
+      const date = new Date(timestamp.seconds * 1000); 
+      return format(date, "dd/MM/yyyy");
+    },
+  },
+  {
+    field: "dataDecisao",
+    headerName: "Data de decisão",
+    width: 125,
+    valueGetter: (params) => {
+      const timestamp = params.row.dataDecisao; 
+      const date = new Date(timestamp.seconds * 1000); 
+      return format(date, "dd/MM/yyyy");
+    },
+  },
+  { field: "entidade", headerName: "Entidade", width: 300 },
+  { field: "vinculado", headerName: "Vinculado", width: 100 },
+  { field: "conselheiro", headerName: "Conselheiro", width: 75 },
+  { field: "julgador", headerName: "Julgador", width: 75 },
+  { field: "orgaoJulgador", headerName: "Órgão Julgador", width: 100 },
+  { field: "encaminhamento", headerName: "Encaminhamento", width: 100 },
+  { field: "definicao", headerName: "Definição", width: 100 },
+  { field: "dias", headerName: "Dias", width: 50 },
+  { field: "meta", headerName: "Meta", width: 75 },
+  { field: "prioridade", headerName: "Prioridade", width: 75 },
+]}
+sortModel={sortModel}
+onSortModelChange={handleSortModelChange}
+/> */
+}
