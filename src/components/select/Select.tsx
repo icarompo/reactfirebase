@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import { useState } from "react";
 
 type SelectLocationProps = {
@@ -33,6 +34,7 @@ function SelectLocation(props: SelectLocationProps) {
 
   return (
     <div>
+      <Tooltip title="Selecionar tipo">
       <select
         className={`${colorRange[selectedColor]} w-32 h-7 rounded-md cursor-pointer`}
         onChange={handleChange}
@@ -43,6 +45,7 @@ function SelectLocation(props: SelectLocationProps) {
         <option className={`${colorRange[1]}`} value="sobrest.">Sobrestado</option>
         <option className={`${colorRange[0]}`} value="relatoria">Relatoria</option>
       </select>
+      </Tooltip>
     </div>
   );
 }

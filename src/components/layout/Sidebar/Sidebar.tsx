@@ -6,6 +6,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import TableRowsIcon from "@mui/icons-material/TableRows";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import ArrowBackIosSharpIcon from "@mui/icons-material/ArrowBackIosSharp";
+import { Tooltip } from "@mui/material";
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -73,6 +74,7 @@ const Sidebar = () => {
 
         <div className=" border-t border-b border-secondary h-[80%]">
           {sidebarItems.map((item) => (
+            <Tooltip title={item.label} key={item.label} placement="right">
             <Link
               key={item.label}
               to={item.to}
@@ -86,15 +88,18 @@ const Sidebar = () => {
               <span className={`m-1`}>{item.icon}</span>
               {isExpanded && <span className="ml-4">{item.label}</span>}
             </Link>
+            </Tooltip>
           ))}
         </div>
         <div className="h-auto text-right text-white hidden md:block">
+          <Tooltip title={isExpanded ? 'Minimizar menu' : 'Expandir menu'} placement="right">
           <button
             className={`sidebar-toggle-button w-10 h-16 transition-all duration-500 rotate-${isExpanded ? '0' : '180'}`}
             onClick={toggleSidebar}
           >
             {<ArrowBackIosSharpIcon />}
           </button>
+          </Tooltip>
         </div>
       </div>
     </>
