@@ -14,7 +14,7 @@ import Personal from "./pages/02_pessoal/index";
 import Dashboard from "./pages/04_painel/index";
 import Processes from "./pages/03_processos";
 import GlobalContext from "./context/globalContext";
-import CustomizedSnackbars from "./components/Snackbar/Snackbar";
+import CustomizedSnackbars from "./components/Snackbar";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";

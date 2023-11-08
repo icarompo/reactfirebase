@@ -1,5 +1,5 @@
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
-import StyledModal from "../../../../components/Modal";
+import StyledModal from "../../components/Modal";
 import { Tooltip } from "@mui/material";
 
 const AddModal = () => {

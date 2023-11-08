@@ -2,12 +2,12 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useContext } from "react";
 import GlobalContext from "../../context/globalContext.ts";
-import StyledDataGrid from "../../components/DataGrid/DataGrid.tsx";
-import SelectLocation from "../../components/Select/Select.tsx";
+import StyledDataGrid from "../../components/DataGrid.tsx";
+import SelectLocation from "../../components/Select.tsx";
 
-import AddModal from "./FilterSection/Modal/AddModal.tsx";
-import EditModal from "./FilterSection/Modal/EditModal.tsx";
-import FilterModal from "./FilterSection/Modal/FilterModal.tsx";
+import AddModal from "./AddModal.tsx";
+import EditModal from "./EditModal.tsx";
+import FilterModal from "./FilterModal.tsx";
 
 function Processes() {
   type dataType = {

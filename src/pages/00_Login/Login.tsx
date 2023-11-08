@@ -1,14 +1,16 @@
 import { FormEvent, useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
-import CustomizedSnackbars from '../../components/Snackbar/Snackbar';
+import CustomizedSnackbars from '../../components/Snackbar';
 interface LoginProps {
   onLogIn: () => void;
 }
 
 const Login = ({ onLogIn }: LoginProps) => {
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null); 
+
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!(email.trim() === '' || password.trim() === '')) {
