@@ -1,5 +1,5 @@
-import Sidebar from "./Sidebar/Sidebar.tsx";
-import Header from "./Header/Header.tsx";
+import Sidebar from "./Sidebar.tsx";
+import Header from "./Header.tsx";
 import { useState } from "react";
 
 type LayoutProps = {

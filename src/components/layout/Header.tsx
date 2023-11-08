@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut, getAuth } from "firebase/auth";
-import GlobalContext from "../../../context/globalContext";
+import GlobalContext from "../../context/globalContext";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Tooltip } from "@mui/material";
 
